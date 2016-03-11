@@ -4,7 +4,7 @@ import {Model, indexKey, List} from  "tsmvc";
  */
 //import {OTHERMODELSHERE, TODO!} from "./AddressModel";
 
-  export class <%= entityName %> extends Model   {
+  export class <%= model.entityName %> extends Model   {
 
 
   }
