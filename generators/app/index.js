@@ -12,7 +12,6 @@ var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
 
 generateBasic: function() {
-debugger;
   this.getObjectModel = function(){
     return [
        {
