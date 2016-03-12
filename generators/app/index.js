@@ -28,8 +28,8 @@ generateBasic: function() {
             "entityType": "entity"
           },
           {
-            "name": "Address",
-            "type": "string",
+            "name": "addresses",
+            "type": "Address",
             "entityType": "entityList"
           }
         ]
@@ -54,8 +54,10 @@ generateBasic: function() {
   var models = this.getObjectModel();
   var vm = this;
 
+
   _.each(models, function(m){
     vm.model = m;
+    vm.allModels = models;
     //TODO: this.imports = ;
     vm.template('_model.ts', generateDir + m.entityName + '.ts')
   });
