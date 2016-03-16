@@ -13,27 +13,59 @@ var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
 generateBasic: function() {
   this.getObjectModel = function(){
+
+    var urls = [{
+      "request" : "/user/{id}",
+      "requestModel" : "UserReq",
+      "responseModel" : "UserResp"
+      "requestType" : 'GET'
+    },
+    {
+      "request" : "/user/{id}",
+      "requestModel" : "UserReq",
+      "responseModel" : "UserResp"
+      "requestType" : 'PUT'
+    },
+
+  ];
+
     return [
+
        {
         "entityName" : "User",
+        "modelType" : "Response",
         "properties": [
           {
             "name": "name",
-            "type": "string",
-            "entityType": "entity"
+            "type": "string"
           },
           {
             "name": "surname",
-            "type": "string",
-            "entityType": "entity"
+            "type": "string"
           },
           {
             "name": "addresses",
             "type": "Address",
             "entityType": "entityList"
           }
-        ]
+        ],
       },
+      {
+       "entityName" : "UserReq",
+       "modelType" : "Request",
+       "properties": [
+         {
+           "name": "id",
+           "type": "string"
+         },
+         {
+           "name": "page",
+           "type": "number",
+           "optional" : true
+         }
+       ],
+     },
+
       {
        "entityName" : "Address",
         "properties": [
