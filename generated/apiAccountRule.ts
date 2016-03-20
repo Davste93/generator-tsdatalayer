@@ -1,12 +1,12 @@
 import {Model, indexKey, List} from  "tsmvc";
 
-import apiAccountEntry from "./apiAccountEntry";
 import apiAccountPermission from "./apiAccountPermission";
-import apiFee from "./apiFee";
+import apiAccountEntry from "./apiAccountEntry";
 import apiAccount from "./apiAccount";
+import apiFee from "./apiFee";
 import apiAccountRule from "./apiAccountRule";
 
-export class  extends Model {
+export class apiAccountRule extends Model {
     allowedToTxOut : boolean;
     description : string;
     accountPermissions : string;
