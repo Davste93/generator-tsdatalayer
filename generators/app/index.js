@@ -1,66 +1,32 @@
 'use strict';
+
+var rootUrl = '';
+
+
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var _ = require('underscore');
+var alpsCrawler = require('./alpsCrawler');
 var generateDir = 'generated/';
+
+
 var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
-//We will need to build this:
-
-
-
 generateBasic: function() {
-  this.getObjectModel = function(){
-    return [
-       {
-        "entityName" : "User",
-        "properties": [
-          {
-            "name": "name",
-            "type": "string",
-            "entityType": "entity"
-          },
-          {
-            "name": "surname",
-            "type": "string",
-            "entityType": "entity"
-          },
-          {
-            "name": "addresses",
-            "type": "Address",
-            "entityType": "entityList"
-          }
-        ]
-      },
-      {
-       "entityName" : "Address",
-        "properties": [
-          {
-            "name": "street",
-            "type": "string",
-            "entityType": "entity"
-          },
-          {
-            "name": "country",
-            "type": "string",
-            "entityType": "entity"
-          }
-        ]
-      }
-    ];
-  }
-  var models = this.getObjectModel();
-  var vm = this;
 
+  var self = this;
 
-  _.each(models, function(m){
-    vm.model = m;
-    vm.allModels = models;
-    //TODO: this.imports = ;
-    vm.template('_model.ts', generateDir + m.entityName + '.ts')
+  alpsCrawler.profileCrawler(rootUrl).then( om => {
+    _.each(om, function(m){
+      self.model = m;
+      self.allModels = om;
+      self.template('_model.ts', generateDir + m.name + '.ts')
+    });
   });
+
+
 }
   // //Configurations will be loaded here.
   // //Ask for user input
