@@ -28,9 +28,7 @@ generateBasic: function() {
   var self = this;
 
   alpsCrawler.profileCrawler(rootUrl).then( om => {
-
     _.each(om, function(m){
-
       self.model = m;
       self.strImports = "";
 
@@ -41,11 +39,7 @@ generateBasic: function() {
 
         self.template('_model.ts', modelDepDir + m.name + '.ts');
       } else {
-        console.log("m=");
-        console.log(m);
         _.each(modelutils.getDependencies(m), p => {
-          console.log("p=");
-          console.log(p);
           if (p.isDepEntity) {
             self.strImports += `import ${p.type} from "./dep/${p.type}";\n`;
           } else {
