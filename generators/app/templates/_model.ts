@@ -1,11 +1,11 @@
 import {Model, indexKey, List} from  "tsmvc";
 
 <% allModels.forEach(function(currentModel){ -%>
-import <%= currentModel.entityName %> from "./<%= currentModel.entityName %>";
+import <%= currentModel.name %> from "./<%= currentModel.name %>";
 <% }) -%>
 
-export class <%= model.entityName %> extends Model {
+export class <%= model.name %> extends Model {
 <% model.properties.forEach(function(property){ -%>
-    <%= property.name -%> : <%- property.entityType!='entityList'? property.type : 'List<'+property.type+'>' -%>;
+    <%= property.name -%> : <%- property.type -%>;
 <% }) -%>
 }
