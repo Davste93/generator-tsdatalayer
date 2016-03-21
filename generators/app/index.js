@@ -1,98 +1,63 @@
 'use strict';
+var rootUrl = '';
+
 var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var _ = require('underscore');
+var alpsCrawler = require('./alpsCrawler');
 var generateDir = 'generated/';
+
+
+var modelutils = require('./modelutils');
+
+var modelDir = generateDir + 'models/';
+var modelDepDir = generateDir + 'models/dep/';
+
+
 var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
-//We will need to build this:
 
 
+  //Returns import string from a given model.
 
 generateBasic: function() {
-  this.getObjectModel = function(){
 
-    var urls = [{
-      "request" : "/user/{id}",
-      "requestModel" : "UserReq",
-      "responseModel" : "UserResp"
-      "requestType" : 'GET'
-    },
-    {
-      "request" : "/user/{id}",
-      "requestModel" : "UserReq",
-      "responseModel" : "UserResp"
-      "requestType" : 'PUT'
-    },
 
-  ];
+  var self = this;
 
-    return [
+  alpsCrawler.profileCrawler(rootUrl).then( om => {
 
-       {
-        "entityName" : "User",
-        "modelType" : "Response",
-        "properties": [
-          {
-            "name": "name",
-            "type": "string"
-          },
-          {
-            "name": "surname",
-            "type": "string"
-          },
-          {
-            "name": "addresses",
-            "type": "Address",
-            "entityType": "entityList"
+    _.each(om, function(m){
+
+      self.model = m;
+      self.strImports = "";
+
+      if (m.isDepEntity) {
+        _.each(modelutils.getDependencies(m), p => {
+            self.strImports += `import ${p.type} from "./${p.type}";\n`;
+        });
+
+        self.template('_model.ts', modelDepDir + m.name + '.ts');
+      } else {
+        console.log("m=");
+        console.log(m);
+        _.each(modelutils.getDependencies(m), p => {
+          console.log("p=");
+          console.log(p);
+          if (p.isDepEntity) {
+            self.strImports += `import ${p.type} from "./dep/${p.type}";\n`;
+          } else {
+            self.strImports += `import ${p.type} from "./${p.type}";\n`;
           }
-        ],
-      },
-      {
-       "entityName" : "UserReq",
-       "modelType" : "Request",
-       "properties": [
-         {
-           "name": "id",
-           "type": "string"
-         },
-         {
-           "name": "page",
-           "type": "number",
-           "optional" : true
-         }
-       ],
-     },
+        });
 
-      {
-       "entityName" : "Address",
-        "properties": [
-          {
-            "name": "street",
-            "type": "string",
-            "entityType": "entity"
-          },
-          {
-            "name": "country",
-            "type": "string",
-            "entityType": "entity"
-          }
-        ]
+        self.template('_model.ts', modelDir + m.name + '.ts');
       }
-    ];
-  }
-  var models = this.getObjectModel();
-  var vm = this;
-
-
-  _.each(models, function(m){
-    vm.model = m;
-    vm.allModels = models;
-    //TODO: this.imports = ;
-    vm.template('_model.ts', generateDir + m.entityName + '.ts')
+    });
   });
+
 }
   // //Configurations will be loaded here.
   // //Ask for user input

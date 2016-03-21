@@ -1,6 +1,9 @@
+'use strict';
 var request = require('request');
 var _ = require('underscore');
 var tense = new (require('tense'))();
+
+var typeHandler = require('./alpsTypeHandler');
 
 var app = {};
 
@@ -23,12 +26,23 @@ String.prototype.toCamelCase = function() {
 };
 
 //App
+//KeyValuePair of unique models:
+app.generatedModels = {};
+app.addGeneratedModel = function(model, key)
+{
+  var k = key || tense.singularize(model.name || model.title).toCamelCase();
+  app.generatedModels[k] = model;
+};
+app.generatedModelsToArray = function() {
+  return Object.keys(app.generatedModels).map(key => app.generatedModels[key]);
+};
+
+
 
 app.profileCrawler = function(url){
     return new Promise( (resolve, reject) => {
       request(url, function(error, response, body) {
         var profile = JSON.parse(body);
-        var objectModel = [];
 
         var entityCrawlerPromises = [];
 
@@ -37,14 +51,11 @@ app.profileCrawler = function(url){
               var currentPromise = app.entityCrawler(profile._links[e].href);
 
               entityCrawlerPromises.push(currentPromise);
-                currentPromise.then(respEntity => {
-                  objectModel.push(respEntity);
-                });
             }
         }
 
         Promise.all(entityCrawlerPromises).then( () => {
-          resolve(objectModel);
+          resolve(app.generatedModelsToArray());
         });
       });
   });
@@ -61,57 +72,59 @@ app.entityCrawler = function(url){
     function(error, response, body) {
       body = JSON.parse(body);
 
-      var defs = body.definitions;
 
       //First, we need our typescript object:
-      var model = {};
-      model.name = tense.singularize(body.title).toCamelCase();
-
-      model.properties = body.properties.map( (p, i, arr) => {
-        var currentProperty = arr[i];
-        currentProperty = app.typeHandler(currentProperty);
-        currentProperty.name = i;
-
-        return currentProperty;
-      });
-
-      //Convert properties obj to array:
-      model.properties = Object.keys(model.properties).map(key =>   model.properties[key]);
-
-      //Now we need all the complex entities it depends on:
-      var modelDeps = [];
+      var model = app.entityHandler(body);
       resolve(model);
     });
-
-
-
   });
 };
 
-app.typeHandler = function(prop){
-  var cpropRef = prop.$ref;
+//Returns an array of entity + deps. A "DepEntity" is an entity which we
+//can't directly read or write, so it should be flagged as such
+app.entityHandler = function(entity, entityName, isDepEntity){
+  var ret = [];
 
-  if (!_.isUndefined(cpropRef)) {
-    if (prop.type === "object"){
-        var complexEntityName = cpropRef.split("/").pop();
-        prop.type = complexEntityName;
-        delete prop.$ref;
-    }
+  if (!_.isObject(entity)){
+    return null;
   }
 
-  return app.dateTypeHandler(prop);
+  var model = {};
+  model.name = tense.singularize(entityName || entity.title).toCamelCase();
+
+  model.properties = entity.properties.map( (p, i, arr) => {
+    var currentProperty = arr[i];
+    currentProperty = typeHandler.convertTypesInProperty(currentProperty);
+    currentProperty.name = i;
+
+    return currentProperty;
+  });
+
+  //Convert properties obj to array:
+  model.properties = Object.keys(model.properties).map(key =>   model.properties[key]);
+  model.isDepEntity = (isDepEntity || false);
+  app.addGeneratedModel(model);
+
+  //Now we need all the complex entities it depends on:
+  var modelDeps = app.dependencyHandler(entity.definitions);
+
+  return ret;
 };
 
-//Supply a property and it will return modified property with dates ready for consumption
-app.dateTypeHandler = function(prop){
-    var cpropRef = prop.$ref;
-      if (prop.type === "string" && cpropRef && ~cpropRef.indexOf('localDateTime')){
-          prop.type = 'Date';
-          delete prop.$ref;
-      }
+//Parse dependency recursively, build dependencies.
+app.dependencyHandler = function(deps){
+  var depModels = [];
 
-      return prop;
+  _.each(deps, (d, k) => {
+    if (d.type === 'object'){
+      app.entityHandler(d, k, true);
+    }
+  });
+
+  return depModels;
 };
+
+
 
 
 module.exports = app;

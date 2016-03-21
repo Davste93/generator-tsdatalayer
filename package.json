@@ -1,13 +1,12 @@
 {
   "name": "generator-tsdatalayer",
-  "esnext" : true,
+  "esnext": true,
   "dependencies": {
     "chalk": "^1.0.0",
     "request": "^2.69.0",
     "tense": "^1.0.0",
     "underscore": "^1.8.3",
     "yeoman-generator": "^0.21.1",
-
     "yosay": "^1.0.2"
   },
   "devDependencies": {
