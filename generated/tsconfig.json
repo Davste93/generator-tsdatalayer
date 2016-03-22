@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es5",
+        "noImplicitAny": false,
+        "sourceMap": false
+    },
+    "filesGlob": [
+        "app.ts",
+        "models/**.ts",
+        "typings/main.d.ts"
+    ],
+    "files": [
+        "app.ts",
+        "models/apiAccount.ts",
+        "models/apiAccountEntry.ts",
+        "models/apiAccountPermission.ts",
+        "models/apiAccountRule.ts",
+        "models/apiFee.ts",
+        "typings/main.d.ts"
+    ],
+    "atom": {
+        "rewriteTsconfig": true
+    }
+}
