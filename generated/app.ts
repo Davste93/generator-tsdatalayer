@@ -52,7 +52,7 @@ class Requester {
 }
 
 //curl -u 35679111111:123456 -H 'Accept: application/json'  -H 'Content-type: application/json' -X GET accounts
-var r : Requester = new Requester('', '35679111111', '123456');
+var r : Requester = new Requester('https://api.fundsrouter.com/', '35679111111', '123456');
 r.makeRequest('accounts', {method : 'GET'}).then(response => {
   console.log(response.body);
 });

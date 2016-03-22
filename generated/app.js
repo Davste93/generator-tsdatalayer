@@ -40,7 +40,7 @@ var Requester = (function () {
     };
     return Requester;
 }());
-var r = new Requester('', '35679111111', '123456');
+var r = new Requester('https://api.fundsrouter.com/', '35679111111', '123456');
 r.makeRequest('accounts', { method: 'GET' }).then(function (response) {
     console.log(response.body);
 });
