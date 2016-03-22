@@ -5,7 +5,10 @@ var modelutils = require('./modelutils');
 
 app.convertibleTypes = {
   "integer" : "number",
-  "localDateTime" : "Date"
+  "Integer" : "number",
+  "long" : "number",
+  "localDateTime" : "Date",
+  "object" : "Object"
 };
 
 

@@ -1,7 +1,7 @@
-import {Model, indexKey, List} from  "tsmvc";
+/* import {Model, indexKey, List} from  "tsmvc"; */
 
 
-export class apiMoney extends Model {
+export class apiMoney /* extends Model */ {
     currency : string;
     value : number;
 }

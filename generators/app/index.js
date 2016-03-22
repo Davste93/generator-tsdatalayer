@@ -1,5 +1,5 @@
 'use strict';
-var rootUrl = '';
+var rootUrl = 'http://api.fundsrouter.com/profile/';
 
 var util = require('util');
 var path = require('path');
@@ -34,16 +34,16 @@ generateBasic: function() {
 
       if (m.isDepEntity) {
         _.each(modelutils.getDependencies(m), p => {
-            self.strImports += `import ${p.type} from "./${p.type}";\n`;
+            self.strImports += `import {${p.type}} from "./${p.type}";\n`;
         });
 
         self.template('_model.ts', modelDepDir + m.name + '.ts');
       } else {
         _.each(modelutils.getDependencies(m), p => {
           if (p.isDepEntity) {
-            self.strImports += `import ${p.type} from "./dep/${p.type}";\n`;
+            self.strImports += `import {${p.type}} from "./dep/${p.type}";\n`;
           } else {
-            self.strImports += `import ${p.type} from "./${p.type}";\n`;
+            self.strImports += `import {${p.type}} from "./${p.type}";\n`;
           }
         });
 

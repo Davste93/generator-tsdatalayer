@@ -2,7 +2,7 @@ var modelUtils = {};
 
 var _ = require('underscore');
 
-const nativeTypes = ['number', 'object', 'Date', 'string', 'boolean', 'symbol', 'void', 'null', 'undefined', 'any'];
+const nativeTypes = ['number', 'Object', 'Date', 'string', 'boolean', 'symbol', 'void', 'null', 'undefined', 'any'];
 modelUtils.isNativeType = function(type){
   return _.contains(nativeTypes, type);
 };
