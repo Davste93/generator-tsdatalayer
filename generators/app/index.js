@@ -14,7 +14,7 @@ var modelutils = require('./modelutils');
 
 var modelDir = generateDir + 'models/';
 var modelDepDir = generateDir + 'models/dep/';
-
+var dataDir = generateDir + 'data/';
 
 var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
@@ -48,10 +48,16 @@ generateBasic: function() {
         });
 
         self.template('_model.ts', modelDir + m.name + '.ts');
+
+        self.strImports = "";
+        _.each(modelutils.getResourceDeps(m), mName => {
+            self.strImports += `import {${mName}} from "./${mName}";\n`;
+        });
+
+        self.template('_modelDataRepository.ts', dataDir + m.name + 'DataRepositoryImpl.ts');
       }
     });
   });
-
 }
   // //Configurations will be loaded here.
   // //Ask for user input

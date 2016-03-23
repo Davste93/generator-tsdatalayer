@@ -29,21 +29,21 @@ var en = require('lingo').en;
  */
 //Call only after all the schema has been populated
 app.addOperationsToOM = function(om) {
-  console.log(app._resourceMap);
+
 _.each(om, currentModel => {
 
   var url = app._resourceMap[currentModel.name];
 
 
-    if (!_.isUndefined(url)) {
+    if (!_.isUndefined(url) && !_.isUndefined(url.uri)) {
     //1. CRUD
       currentModel.operations = {
         crud : {
-          "create": url + "/{id}/",
-          "read": url + "/{id}/",
-          "readAll": url,
-          "update": url + "/{id}/",
-          "delete": url + "/{id}/"
+          "create": url.uri + "/{id}/",
+          "read": url.uri + "/{id}/",
+          "readAll": url.uri,
+          "update": url.uri + "/{id}/",
+          "delete": url.uri + "/{id}/"
         },
         custom : {}
       };
@@ -69,7 +69,7 @@ _.each(om, currentModel => {
 
                   currentModel.operations.custom[funcName] = {
                     url : urlData.uri,
-                    model : p.name,
+                    model : urlData.className,
                     isList : urlData.isList
                   };
                 }
@@ -87,8 +87,8 @@ _.each(om, currentModel => {
 app._resourceMap = {};
 app.addToResourceMap = function(className, uri) {
   var lastPartofUri = uri.split('/').pop();
-  app._resourceMap[lastPartofUri] = uri; //Map entity name in both api_.. format
-  app._resourceMap[className] = uri; //and url format
+  app._resourceMap[lastPartofUri] = {uri : uri, className : className}; //Map entity name in both api_.. format
+  app._resourceMap[className] = {uri : uri, className : className}; //and url format
   //We want to be able to find the entity either way.
 };
 
@@ -104,9 +104,11 @@ app.getFromResourceMap = function(key) {
 
   if (!ret.isList){
     var pluralKey = en.pluralize(key);
-    ret.uri = app._resourceMap[pluralKey];
+    ret.uri = app._resourceMap[pluralKey].uri;
+    ret.className = app._resourceMap[pluralKey].className;
   } else {
-    ret.uri = app._resourceMap[key];
+    ret.uri = app._resourceMap[key].uri;
+    ret.className = app._resourceMap[key].className;
   }
 
 
