@@ -1,7 +1,7 @@
-/* import {Model, indexKey, List} from  "tsmvc"; */
+import {Model, indexKey, List} from  "tsmvc";
 
 
-export class currencyContext /* extends Model */ {
+export class currencyContext  extends Model {
     providerName : string;
     empty : boolean;
 }

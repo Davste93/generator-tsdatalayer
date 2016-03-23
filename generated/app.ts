@@ -1,8 +1,8 @@
 import request = require('request');
 import {Promise} from 'es6-promise';
 import * as _ from 'underscore';
-
-
+import {Model} from "tsmvc";
+import {apiAccount} from "./models/apiAccount";
 
 class Requester {
   private _authHeader : string;
@@ -21,7 +21,8 @@ class Requester {
     return this._authHeader;
   }
 
-  makeRequest(partialUrl : string, requestOpts : any) : Promise<any> {
+
+  makeRequest<T>(partialUrl : string, requestOpts : any) : Promise<T> {
     //Add auth header:
     var headers = {
       'Accept' : 'application/json',
@@ -36,7 +37,6 @@ class Requester {
     }
     _.extend(requestOpts, {url : this.baseUrl + '/' + partialUrl});
 
-    console.log(requestOpts);
 
     return new Promise( (resolve, reject) => {
       request(requestOpts,
@@ -52,7 +52,9 @@ class Requester {
 }
 
 //curl -u 35679111111:123456 -H 'Accept: application/json'  -H 'Content-type: application/json' -X GET accounts
-var r : Requester = new Requester('https://api.fundsrouter.com/', '35679111111', '123456');
-r.makeRequest('accounts', {method : 'GET'}).then(response => {
-  console.log(response.body);
+var r : Requester = new Requester('', '35679111111', '123456');
+r.makeRequest<any>('accounts', {method : 'GET'}).then(response => {
+  var jsonObj = JSON.parse(response.body);
+
+  console.log(<apiAccount> jsonObj._embedded[Object.keys(jsonObj._embedded)[0]][0]);
 });

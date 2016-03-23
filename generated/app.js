@@ -26,7 +26,6 @@ var Requester = (function () {
             _.extend(requestOpts.headers, headers);
         }
         _.extend(requestOpts, { url: this.baseUrl + '/' + partialUrl });
-        console.log(requestOpts);
         return new es6_promise_1.Promise(function (resolve, reject) {
             request(requestOpts, function (error, response, body) {
                 if (error) {
@@ -40,7 +39,8 @@ var Requester = (function () {
     };
     return Requester;
 }());
-var r = new Requester('https://api.fundsrouter.com/', '35679111111', '123456');
+var r = new Requester('', '35679111111', '123456');
 r.makeRequest('accounts', { method: 'GET' }).then(function (response) {
-    console.log(response.body);
+    var jsonObj = JSON.parse(response.body);
+    console.log(jsonObj._embedded[Object.keys(jsonObj._embedded)[0]][0]);
 });

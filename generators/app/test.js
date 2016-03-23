@@ -1,5 +1,5 @@
 var alpsCrawler = require('./alpsCrawler');
-var rootUrl = '';
+var rootUrl = 'http://api.fundsrouter.com/profile';
 
 alpsCrawler.profileCrawler(rootUrl).then( om => {
   var fs = require('fs');

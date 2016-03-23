@@ -1,8 +1,15 @@
-/* import {Model, indexKey, List} from  "tsmvc"; */
 "use strict";
-var money /* extends Model */ = (function () {
-    function money /* extends Model */() {
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+var tsmvc_1 = require("tsmvc");
+var money = (function (_super) {
+    __extends(money, _super);
+    function money() {
+        _super.apply(this, arguments);
     }
-    return money /* extends Model */;
-}());
-exports.money /* extends Model */ = money /* extends Model */;
+    return money;
+}(tsmvc_1.Model));
+exports.money = money;

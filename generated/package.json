@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "request": "^2.69.0"
+    "request": "^2.69.0",
+    "tsmvc": "^1.0.39"
   }
 }

@@ -1,8 +1,8 @@
-/* import {Model, indexKey, List} from  "tsmvc"; */
+import {Model, indexKey, List} from  "tsmvc";
 
 import {currencyUnit} from "./currencyUnit";
 
-export class money /* extends Model */ {
+export class money  extends Model {
     zero : boolean;
     number : number;
     factory : Object;

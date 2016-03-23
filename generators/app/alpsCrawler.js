@@ -51,6 +51,7 @@ app.profileCrawler = function(url){
               var currentPromise = app.entityCrawler(profile._links[e].href);
 
               entityCrawlerPromises.push(currentPromise);
+
             }
         }
 
@@ -71,7 +72,7 @@ app.entityCrawler = function(url){
     },
     function(error, response, body) {
       body = JSON.parse(body);
-
+      console.log(body);
 
       //First, we need our typescript object:
       var model = app.entityHandler(body);
