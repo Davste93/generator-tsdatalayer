@@ -9,11 +9,14 @@ import <%= model.name %>DataRepository from "./<%= model.name %>DataRepository";
 
 export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model.name %>> implements <%= model.name %>DataRepository
 {
+  //TODO: This method probably must be removed/optional.
   getUrl() : string{
-    return <%= model.operations.crud.readAll %>;
+    return '<%= model.operations.crud.readAll %>;'
   }
 
-  //CRUD Operations
+  //CRUD Operations - Only here for the sake of verbosity and flexibility.
+  //Any operations that have standard http://url/up/to/entity/{id} are
+  //handled out of the box by APIRepository (this is the overriden method).
   getItem(modelID : string) : Promise<T> {
     return this.buildRequestAndParseAsModel(
       '<%= model.operations.crud.read %>'.replace('{id}', modelID),
@@ -55,7 +58,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     );
   }
 
-  //Dynamic Operations from linked resources
+  //Dynamically generated operations from linked resources (the exciting part)
   <% Object.keys(model.operations.custom).forEach(function(k){  ops = model.operations.custom[k]; -%>
   <%= k %>() : Promise<<%- ops.isList? `List<${ops.model}>` : ops.model %>> {
     return this.buildRequestAndParseAsModelList(

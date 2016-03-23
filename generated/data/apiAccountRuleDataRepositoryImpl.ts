@@ -10,11 +10,14 @@ import {apiAccountPermission} from "./apiAccountPermission";
 
 export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRule> implements apiAccountRuleDataRepository
 {
+  //TODO: This method probably must be removed/optional.
   getUrl() : string{
-    return http://api.fundsrouter.com/profile/accountrules;
+    return 'http://api.fundsrouter.com/profile/accountrules;'
   }
 
-  //CRUD Operations
+  //CRUD Operations - Only here for the sake of verbosity and flexibility.
+  //Any operations that have standard http://url/up/to/entity/{id} are
+  //handled out of the box by APIRepository (this is the overriden method).
   getItem(modelID : string) : Promise<T> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID),
@@ -56,7 +59,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
     );
   }
 
-  //Dynamic Operations from linked resources
+  //Dynamically generated operations from linked resources (the exciting part)
     getAccountPermissions() : Promise<List<apiAccountPermission>> {
     return this.buildRequestAndParseAsModelList(
       'http://api.fundsrouter.com/profile/accountpermissions',

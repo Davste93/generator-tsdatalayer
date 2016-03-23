@@ -9,11 +9,14 @@ import apiFeeDataRepository from "./apiFeeDataRepository";
 
 export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements apiFeeDataRepository
 {
+  //TODO: This method probably must be removed/optional.
   getUrl() : string{
-    return http://api.fundsrouter.com/profile/fees;
+    return 'http://api.fundsrouter.com/profile/fees;'
   }
 
-  //CRUD Operations
+  //CRUD Operations - Only here for the sake of verbosity and flexibility.
+  //Any operations that have standard http://url/up/to/entity/{id} are
+  //handled out of the box by APIRepository (this is the overriden method).
   getItem(modelID : string) : Promise<T> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/fees/{id}/'.replace('{id}', modelID),
@@ -55,6 +58,6 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
     );
   }
 
-  //Dynamic Operations from linked resources
+  //Dynamically generated operations from linked resources (the exciting part)
   
 }
