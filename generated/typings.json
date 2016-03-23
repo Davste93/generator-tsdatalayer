@@ -1,8 +1,11 @@
 {
   "ambientDependencies": {
+    "node": "registry:dt/node#4.0.0+20160319033040",
     "underscore": "registry:dt/underscore#1.7.0+20160316155526"
   },
   "dependencies": {
+    "es6-promise": "registry:npm/es6-promise#3.0.0+20160211003958",
+    "request": "registry:npm/request#2.69.0+20160304121250",
     "tsmvc": "npm:tsmvc"
   }
 }

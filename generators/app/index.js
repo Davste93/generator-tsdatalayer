@@ -1,5 +1,5 @@
 'use strict';
-var rootUrl = '';
+var rootUrl = 'http://api.fundsrouter.com/profile';
 
 var util = require('util');
 var path = require('path');

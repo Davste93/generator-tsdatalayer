@@ -14,6 +14,7 @@ var Requester = (function () {
         return this._authHeader;
     };
     Requester.prototype.makeRequest = function (partialUrl, requestOpts) {
+        //Add auth header:
         var headers = {
             'Accept': 'application/json',
             'Content-type': 'application/json',
@@ -39,6 +40,7 @@ var Requester = (function () {
     };
     return Requester;
 }());
+//curl -u 35679111111:123456 -H 'Accept: application/json'  -H 'Content-type: application/json' -X GET accounts
 var r = new Requester('', '35679111111', '123456');
 r.makeRequest('accounts', { method: 'GET' }).then(function (response) {
     var jsonObj = JSON.parse(response.body);

@@ -3,6 +3,7 @@
   "esnext": true,
   "dependencies": {
     "chalk": "^1.0.0",
+    "lingo": "0.0.5",
     "request": "^2.69.0",
     "tense": "^1.0.0",
     "underscore": "^1.8.3",

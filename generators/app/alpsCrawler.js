@@ -4,6 +4,7 @@ var _ = require('underscore');
 var tense = new (require('tense'))();
 
 var typeHandler = require('./alpsTypeHandler');
+var opsCrawler = require('./alpsOperationsCrawler');
 
 var app = {};
 
@@ -49,14 +50,15 @@ app.profileCrawler = function(url){
         for (let e in profile._links) {
             if (e !== 'self'){
               var currentPromise = app.entityCrawler(profile._links[e].href);
-
               entityCrawlerPromises.push(currentPromise);
-
             }
         }
 
         Promise.all(entityCrawlerPromises).then( () => {
-          resolve(app.generatedModelsToArray());
+          var result = app.generatedModelsToArray();
+          opsCrawler.addOperationsToOM(result);
+          console.log(result);
+          resolve(result);
         });
       });
   });
@@ -72,11 +74,13 @@ app.entityCrawler = function(url){
     },
     function(error, response, body) {
       body = JSON.parse(body);
-      console.log(body);
 
       //First, we need our typescript object:
-      var model = app.entityHandler(body);
-      resolve(model);
+      body.sourceUrl = url;
+      app.entityHandler(body);
+
+
+      resolve();
     });
   });
 };
@@ -84,14 +88,18 @@ app.entityCrawler = function(url){
 //Returns an array of entity + deps. A "DepEntity" is an entity which we
 //can't directly read or write, so it should be flagged as such
 app.entityHandler = function(entity, entityName, isDepEntity){
-  var ret = [];
-
   if (!_.isObject(entity)){
     return null;
   }
 
   var model = {};
+
+
   model.name = tense.singularize(entityName || entity.title).toCamelCase();
+
+  if (!_.isUndefined(entity.sourceUrl)) {
+    opsCrawler.addToResourceMap(model.name, entity.sourceUrl);
+  }
 
   model.properties = entity.properties.map( (p, i, arr) => {
     var currentProperty = arr[i];
@@ -106,10 +114,10 @@ app.entityHandler = function(entity, entityName, isDepEntity){
   model.isDepEntity = (isDepEntity || false);
   app.addGeneratedModel(model);
 
+
+
   //Now we need all the complex entities it depends on:
   var modelDeps = app.dependencyHandler(entity.definitions);
-
-  return ret;
 };
 
 //Parse dependency recursively, build dependencies.
@@ -124,8 +132,5 @@ app.dependencyHandler = function(deps){
 
   return depModels;
 };
-
-
-
 
 module.exports = app;

@@ -12,6 +12,8 @@ app.convertibleTypes = {
 };
 
 
+
+
 app.isNativeOrConvertible = function(type) {
   return (modelutils.isNativeType(type) || !_.isUndefined(app.convertibleTypes[type])) ;
 };
@@ -44,6 +46,9 @@ app.convertTypesInProperty = function(prop) {
   //Check for dates:
   prop = app.dateTypeHandler(prop);
 
+  //Check for resource:
+  prop = app.resourceTypeHandler(prop);
+
   //return the converted property.
   return prop;
 };
@@ -59,6 +64,14 @@ app.dateTypeHandler = function(prop){
 
       return prop;
 };
+
+
+ app.resourceTypeHandler = function(prop) {
+   if (prop.type === "string" && prop.format === 'uri'){
+       prop.isResource = true;
+   }
+   return prop;
+ };
 
 
 module.exports = app;
