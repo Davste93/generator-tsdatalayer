@@ -13,6 +13,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     return <%= model.operations.crud.readAll %>;
   }
 
+  //CRUD Operations
   getItem(modelID : string) : Promise<T> {
     return this.buildRequestAndParseAsModel(
       '<%= model.operations.crud.read %>'.replace('{id}', modelID),
@@ -20,7 +21,6 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
       null
     );
   }
-
 
   getAllItems() : Promise<List<T>> {
     return this.buildRequestAndParseAsModelList(
@@ -55,6 +55,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     );
   }
 
+  //Dynamic Operations from linked resources
   <% Object.keys(model.operations.custom).forEach(function(k){  ops = model.operations.custom[k]; -%>
   <%= k %>() : Promise<<%- ops.isList? `List<${ops.model}>` : ops.model %>> {
     return this.buildRequestAndParseAsModelList(
@@ -63,6 +64,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
       null
       );
   }
+
   <% }) -%>
 
 }

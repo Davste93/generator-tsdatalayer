@@ -14,6 +14,7 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
     return http://api.fundsrouter.com/profile/accountentries;
   }
 
+  //CRUD Operations
   getItem(modelID : string) : Promise<T> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountentries/{id}/'.replace('{id}', modelID),
@@ -21,7 +22,6 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
       null
     );
   }
-
 
   getAllItems() : Promise<List<T>> {
     return this.buildRequestAndParseAsModelList(
@@ -56,6 +56,7 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
     );
   }
 
+  //Dynamic Operations from linked resources
     getAccount() : Promise<apiAccount> {
     return this.buildRequestAndParseAsModelList(
       'http://api.fundsrouter.com/profile/accounts',
@@ -63,5 +64,6 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
       null
       );
   }
+
   
 }

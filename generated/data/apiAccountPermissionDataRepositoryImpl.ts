@@ -15,6 +15,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
     return http://api.fundsrouter.com/profile/accountpermissions;
   }
 
+  //CRUD Operations
   getItem(modelID : string) : Promise<T> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelID),
@@ -22,7 +23,6 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
       null
     );
   }
-
 
   getAllItems() : Promise<List<T>> {
     return this.buildRequestAndParseAsModelList(
@@ -57,6 +57,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
     );
   }
 
+  //Dynamic Operations from linked resources
     getAccountRule() : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModelList(
       'http://api.fundsrouter.com/profile/accountrules',
@@ -64,6 +65,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
       null
       );
   }
+
     getAccount() : Promise<apiAccount> {
     return this.buildRequestAndParseAsModelList(
       'http://api.fundsrouter.com/profile/accounts',
@@ -71,5 +73,6 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
       null
       );
   }
+
   
 }

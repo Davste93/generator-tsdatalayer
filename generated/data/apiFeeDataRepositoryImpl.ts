@@ -13,6 +13,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
     return http://api.fundsrouter.com/profile/fees;
   }
 
+  //CRUD Operations
   getItem(modelID : string) : Promise<T> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/fees/{id}/'.replace('{id}', modelID),
@@ -20,7 +21,6 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
       null
     );
   }
-
 
   getAllItems() : Promise<List<T>> {
     return this.buildRequestAndParseAsModelList(
@@ -55,5 +55,6 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
     );
   }
 
+  //Dynamic Operations from linked resources
   
 }
