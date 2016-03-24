@@ -5,6 +5,7 @@
         "noImplicitAny": false,
         "sourceMap": false,
         "moduleResolution": "node",
+        "experimentalDecorators": true,
         "outDir": "build"
     },
     "filesGlob": [
@@ -35,6 +36,11 @@
         "data/apiAccountRuleDataRepositoryImpl.ts",
         "data/apiFeeDataRepository.ts",
         "data/apiFeeDataRepositoryImpl.ts",
+        "services/apiAccountEntryService.ts",
+        "services/apiAccountPermissionService.ts",
+        "services/apiAccountRuleService.ts",
+        "services/apiAccountService.ts",
+        "services/apiFeeService.ts",
         "services/injector.conf.ts",
         "typings/main.d.ts",
         "customTypings/typings.d.ts"

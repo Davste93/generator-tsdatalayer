@@ -114,6 +114,7 @@ export abstract class ApiRepository<T extends Model> implements DataRepository<T
     exists(modelID: string): Promise<boolean>;
     getRange(modelIDList: List<string>): Promise<List<T>>;
     count(): number;
+    findAllWith(query: string): Promise<List<T>>;
     buildReqOptions(requestType: string, url: string, model: any): any;
     buildRequestAndParseAsT<T extends Model>(url: string, requestType: string, model: T): Promise<T>;
     buildRequestAndParseAsTList<T extends Model>(url: string, requestType: string, model: T): Promise<List<T>>;
@@ -164,6 +165,7 @@ export interface DataRepository<T extends Model> {
     find(modelID: string): Promise<T>;
     exists(modelID: string): Promise<boolean>;
     findAll(): Promise<List<T>>;
+    findAllWith(query: string): Promise<List<T>>;
     getRange(modelIDList: List<string>): Promise<List<T>>;
     count(): number;
     addItem(modelItem: T): Promise<T>;

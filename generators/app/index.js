@@ -17,6 +17,7 @@ var modelutils = require('./modelutils');
 var modelDir = generateDir + 'models/';
 var modelDepDir = generateDir + 'models/dep/';
 var dataDir = generateDir + 'data/';
+var serviceDir = generateDir + 'services/';
 
 var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
@@ -30,6 +31,9 @@ generateBasic: function() {
   var self = this;
 
   alpsCrawler.profileCrawler(rootUrl).then( om => {
+    self.models = om;
+    self.template('_injector.conf.ts', serviceDir + 'injector.conf.ts');
+
     _.each(om, function(m){
       modelutils.addBaseUrls(m, baseUrl);
       self.model = m;
@@ -53,12 +57,16 @@ generateBasic: function() {
         self.template('_model.ts', modelDir + m.name + '.ts');
 
         self.strImports = "";
-        _.each(modelutils.getResourceDeps(m), mName => {
+        self.dependencies = modelutils.getResourceDeps(m);
+        _.each(self.dependencies, mName => {
             self.strImports += `import {${mName}} from "../models/${mName}";\n`;
         });
 
         self.template('_modelDataRepositoryImpl.ts', dataDir + m.name + 'DataRepositoryImpl.ts');
         self.template('_modelDataRepository.ts', dataDir + m.name + 'DataRepository.ts');
+
+        self.svcDeps = self.dependencies.concat(m.name);
+        self.template('_service.ts', serviceDir + m.name + 'Service.ts');
       }
     });
   });
