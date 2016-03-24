@@ -1,15 +1,21 @@
 import {ApiRepository, List, Model} from  "tsmvc";
+import {Promise} from "es6-promise";
 
 //Current Import
-import {apiAccountRule} from from "./apiAccountRule"
-import apiAccountRuleDataRepository from "./apiAccountRuleDataRepository";
+import {apiAccountRule} from "../models/apiAccountRule";
+/*import apiAccountRuleDataRepository from "./apiAccountRuleDataRepository";*/
 
 //Linked Resources
-import {apiAccountPermission} from "./apiAccountPermission";
+import {apiAccountPermission} from "../models/apiAccountPermission";
 
 
-export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRule> implements apiAccountRuleDataRepository
+export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRule> /*implements apiAccountRuleDataRepository*/
 {
+
+  getModelType() : {new (): apiAccountRule} {
+    return apiAccountRule;
+  }
+
   //TODO: This method probably must be removed/optional.
   getUrl() : string{
     return 'http://api.fundsrouter.com/profile/accountrules;'
@@ -18,7 +24,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
   //Any operations that have standard http://url/up/to/entity/{id} are
   //handled out of the box by APIRepository (this is the overriden method).
-  getItem(modelID : string) : Promise<T> {
+  find(modelID : string) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID),
       'GET',
@@ -26,7 +32,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
     );
   }
 
-  getAllItems() : Promise<List<T>> {
+  findAll() : Promise<List<apiAccountRule>> {
     return this.buildRequestAndParseAsModelList(
       'http://api.fundsrouter.com/profile/accountrules',
       'GET',
@@ -34,7 +40,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
     );
   }
 
-  addItem(modelItem : T) : Promise<T> {
+  addItem(modelItem : apiAccountRule) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountrules/{id}/',
       'POST',
@@ -42,7 +48,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
     );
   }
 
-  removeItem(modelID : string) : Promise<T> {
+  removeItem(modelID : string) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID),
       'DELETE',
@@ -51,7 +57,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
   }
 
 
-  saveItem(modelItem : T) : Promise<T> {
+  saveItem(modelItem : apiAccountRule) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountrules/{id}/',
       'PUT',
@@ -60,9 +66,9 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
   }
 
   //Dynamically generated operations from linked resources (the exciting part)
-    getAccountPermissions() : Promise<List<apiAccountPermission>> {
-    return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/profile/accountpermissions',
+    getAccountPermissions(modelItem : apiAccountRule) : Promise<List<apiAccountPermission>> {
+    return this.buildRequestAndParseAsTList<apiAccountPermission>(
+      modelItem.accountPermissions,
       'GET',
       null
       );

@@ -9,6 +9,7 @@
     "filesGlob": [
         "app.ts",
         "models/**.ts",
+        "data/**.ts",
         "typings/main.d.ts"
     ],
     "files": [
@@ -18,6 +19,11 @@
         "models/apiAccountPermission.ts",
         "models/apiAccountRule.ts",
         "models/apiFee.ts",
+        "data/apiAccountDataRepositoryImpl.ts",
+        "data/apiAccountEntryDataRepositoryImpl.ts",
+        "data/apiAccountPermissionDataRepositoryImpl.ts",
+        "data/apiAccountRuleDataRepositoryImpl.ts",
+        "data/apiFeeDataRepositoryImpl.ts",
         "typings/main.d.ts"
     ],
     "atom": {

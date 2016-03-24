@@ -51,7 +51,7 @@ generateBasic: function() {
 
         self.strImports = "";
         _.each(modelutils.getResourceDeps(m), mName => {
-            self.strImports += `import {${mName}} from "./${mName}";\n`;
+            self.strImports += `import {${mName}} from "../models/${mName}";\n`;
         });
 
         self.template('_modelDataRepository.ts', dataDir + m.name + 'DataRepositoryImpl.ts');

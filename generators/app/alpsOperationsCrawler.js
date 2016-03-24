@@ -68,8 +68,9 @@ _.each(om, currentModel => {
                   }
 
                   currentModel.operations.custom[funcName] = {
-                    url : urlData.uri,
+                    /* url : urlData.uri, */
                     model : urlData.className,
+                    accessorProperty : p.name,
                     isList : urlData.isList
                   };
                 }

@@ -1,16 +1,22 @@
 import {ApiRepository, List, Model} from  "tsmvc";
+import {Promise} from "es6-promise";
 
 //Current Import
-import {apiAccount} from from "./apiAccount"
-import apiAccountDataRepository from "./apiAccountDataRepository";
+import {apiAccount} from "../models/apiAccount";
+/*import apiAccountDataRepository from "./apiAccountDataRepository";*/
 
 //Linked Resources
-import {apiAccountEntry} from "./apiAccountEntry";
-import {apiAccountPermission} from "./apiAccountPermission";
+import {apiAccountEntry} from "../models/apiAccountEntry";
+import {apiAccountPermission} from "../models/apiAccountPermission";
 
 
-export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> implements apiAccountDataRepository
+export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*implements apiAccountDataRepository*/
 {
+
+  getModelType() : {new (): apiAccount} {
+    return apiAccount;
+  }
+
   //TODO: This method probably must be removed/optional.
   getUrl() : string{
     return 'http://api.fundsrouter.com/profile/accounts;'
@@ -19,7 +25,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
   //Any operations that have standard http://url/up/to/entity/{id} are
   //handled out of the box by APIRepository (this is the overriden method).
-  getItem(modelID : string) : Promise<T> {
+  find(modelID : string) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accounts/{id}/'.replace('{id}', modelID),
       'GET',
@@ -27,7 +33,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
     );
   }
 
-  getAllItems() : Promise<List<T>> {
+  findAll() : Promise<List<apiAccount>> {
     return this.buildRequestAndParseAsModelList(
       'http://api.fundsrouter.com/profile/accounts',
       'GET',
@@ -35,7 +41,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
     );
   }
 
-  addItem(modelItem : T) : Promise<T> {
+  addItem(modelItem : apiAccount) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accounts/{id}/',
       'POST',
@@ -43,7 +49,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
     );
   }
 
-  removeItem(modelID : string) : Promise<T> {
+  removeItem(modelID : string) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accounts/{id}/'.replace('{id}', modelID),
       'DELETE',
@@ -52,7 +58,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
   }
 
 
-  saveItem(modelItem : T) : Promise<T> {
+  saveItem(modelItem : apiAccount) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accounts/{id}/',
       'PUT',
@@ -61,17 +67,17 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
   }
 
   //Dynamically generated operations from linked resources (the exciting part)
-    getAccountEntries() : Promise<List<apiAccountEntry>> {
-    return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/profile/accountentries',
+    getAccountEntries(modelItem : apiAccount) : Promise<List<apiAccountEntry>> {
+    return this.buildRequestAndParseAsTList<apiAccountEntry>(
+      modelItem.accountEntries,
       'GET',
       null
       );
   }
 
-    getAccountPermissions() : Promise<List<apiAccountPermission>> {
-    return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/profile/accountpermissions',
+    getAccountPermissions(modelItem : apiAccount) : Promise<List<apiAccountPermission>> {
+    return this.buildRequestAndParseAsTList<apiAccountPermission>(
+      modelItem.accountPermissions,
       'GET',
       null
       );

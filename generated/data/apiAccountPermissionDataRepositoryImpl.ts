@@ -1,16 +1,22 @@
 import {ApiRepository, List, Model} from  "tsmvc";
+import {Promise} from "es6-promise";
 
 //Current Import
-import {apiAccountPermission} from from "./apiAccountPermission"
-import apiAccountPermissionDataRepository from "./apiAccountPermissionDataRepository";
+import {apiAccountPermission} from "../models/apiAccountPermission";
+/*import apiAccountPermissionDataRepository from "./apiAccountPermissionDataRepository";*/
 
 //Linked Resources
-import {apiAccountRule} from "./apiAccountRule";
-import {apiAccount} from "./apiAccount";
+import {apiAccountRule} from "../models/apiAccountRule";
+import {apiAccount} from "../models/apiAccount";
 
 
-export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAccountPermission> implements apiAccountPermissionDataRepository
+export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAccountPermission> /*implements apiAccountPermissionDataRepository*/
 {
+
+  getModelType() : {new (): apiAccountPermission} {
+    return apiAccountPermission;
+  }
+
   //TODO: This method probably must be removed/optional.
   getUrl() : string{
     return 'http://api.fundsrouter.com/profile/accountpermissions;'
@@ -19,7 +25,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
   //Any operations that have standard http://url/up/to/entity/{id} are
   //handled out of the box by APIRepository (this is the overriden method).
-  getItem(modelID : string) : Promise<T> {
+  find(modelID : string) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelID),
       'GET',
@@ -27,7 +33,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
     );
   }
 
-  getAllItems() : Promise<List<T>> {
+  findAll() : Promise<List<apiAccountPermission>> {
     return this.buildRequestAndParseAsModelList(
       'http://api.fundsrouter.com/profile/accountpermissions',
       'GET',
@@ -35,7 +41,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
     );
   }
 
-  addItem(modelItem : T) : Promise<T> {
+  addItem(modelItem : apiAccountPermission) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountpermissions/{id}/',
       'POST',
@@ -43,7 +49,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
     );
   }
 
-  removeItem(modelID : string) : Promise<T> {
+  removeItem(modelID : string) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelID),
       'DELETE',
@@ -52,7 +58,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
   }
 
 
-  saveItem(modelItem : T) : Promise<T> {
+  saveItem(modelItem : apiAccountPermission) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountpermissions/{id}/',
       'PUT',
@@ -61,17 +67,17 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
   }
 
   //Dynamically generated operations from linked resources (the exciting part)
-    getAccountRule() : Promise<apiAccountRule> {
-    return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/profile/accountrules',
+    getAccountRule(modelItem : apiAccountPermission) : Promise<apiAccountRule> {
+    return this.buildRequestAndParseAsT<apiAccountRule>(
+      modelItem.accountRule,
       'GET',
       null
       );
   }
 
-    getAccount() : Promise<apiAccount> {
-    return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/profile/accounts',
+    getAccount(modelItem : apiAccountPermission) : Promise<apiAccount> {
+    return this.buildRequestAndParseAsT<apiAccount>(
+      modelItem.account,
       'GET',
       null
       );
