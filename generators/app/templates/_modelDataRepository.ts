@@ -39,6 +39,15 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     );
   }
 
+  //Finds all entities 
+  findAllWith(query : string) : Promise<List<<%= model.name %>>> {
+      return this.buildRequestAndParseAsModelList(
+        '<%= model.operations.crud.readAll %>/' + query,
+        'GET',
+        null
+      );
+    }
+
   addItem(modelItem : <%= model.name %>) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
       '<%= model.operations.crud.create %>',

@@ -40,6 +40,15 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
     );
   }
 
+  //Finds all entities 
+  findAllWith(query : string) : Promise<List<apiAccountRule>> {
+      return this.buildRequestAndParseAsModelList(
+        'http://api.fundsrouter.com/profile/accountrules/' + query,
+        'GET',
+        null
+      );
+    }
+
   addItem(modelItem : apiAccountRule) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountrules/{id}/',

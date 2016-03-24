@@ -30,6 +30,10 @@ var apiFeeDataRepositoryImpl = (function (_super) {
     apiFeeDataRepositoryImpl.prototype.findAll = function () {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/fees', 'GET', null);
     };
+    //Finds all entities 
+    apiFeeDataRepositoryImpl.prototype.findAllWith = function (query) {
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/fees/' + query, 'GET', null);
+    };
     apiFeeDataRepositoryImpl.prototype.addItem = function (modelItem) {
         return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/fees/{id}/', 'POST', modelItem);
     };

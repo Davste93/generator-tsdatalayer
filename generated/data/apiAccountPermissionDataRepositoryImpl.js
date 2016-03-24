@@ -28,6 +28,10 @@ var apiAccountPermissionDataRepositoryImpl = (function (_super) {
     apiAccountPermissionDataRepositoryImpl.prototype.findAll = function () {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountpermissions', 'GET', null);
     };
+    //Finds all entities 
+    apiAccountPermissionDataRepositoryImpl.prototype.findAllWith = function (query) {
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountpermissions/' + query, 'GET', null);
+    };
     apiAccountPermissionDataRepositoryImpl.prototype.addItem = function (modelItem) {
         return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountpermissions/{id}/', 'POST', modelItem);
     };

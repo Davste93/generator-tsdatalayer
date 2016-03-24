@@ -41,6 +41,15 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*im
     );
   }
 
+  //Finds all entities 
+  findAllWith(query : string) : Promise<List<apiAccount>> {
+      return this.buildRequestAndParseAsModelList(
+        'http://api.fundsrouter.com/profile/accounts/' + query,
+        'GET',
+        null
+      );
+    }
+
   addItem(modelItem : apiAccount) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accounts/{id}/',

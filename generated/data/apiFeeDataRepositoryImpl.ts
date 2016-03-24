@@ -39,6 +39,15 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> /*implements
     );
   }
 
+  //Finds all entities 
+  findAllWith(query : string) : Promise<List<apiFee>> {
+      return this.buildRequestAndParseAsModelList(
+        'http://api.fundsrouter.com/profile/fees/' + query,
+        'GET',
+        null
+      );
+    }
+
   addItem(modelItem : apiFee) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/fees/{id}/',

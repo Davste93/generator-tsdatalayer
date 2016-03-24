@@ -41,6 +41,15 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
     );
   }
 
+  //Finds all entities 
+  findAllWith(query : string) : Promise<List<apiAccountPermission>> {
+      return this.buildRequestAndParseAsModelList(
+        'http://api.fundsrouter.com/profile/accountpermissions/' + query,
+        'GET',
+        null
+      );
+    }
+
   addItem(modelItem : apiAccountPermission) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
       'http://api.fundsrouter.com/profile/accountpermissions/{id}/',

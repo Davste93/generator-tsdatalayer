@@ -28,6 +28,10 @@ var apiAccountDataRepositoryImpl = (function (_super) {
     apiAccountDataRepositoryImpl.prototype.findAll = function () {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accounts', 'GET', null);
     };
+    //Finds all entities 
+    apiAccountDataRepositoryImpl.prototype.findAllWith = function (query) {
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accounts/' + query, 'GET', null);
+    };
     apiAccountDataRepositoryImpl.prototype.addItem = function (modelItem) {
         return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accounts/{id}/', 'POST', modelItem);
     };
