@@ -3,13 +3,13 @@ import {Promise} from "es6-promise";
 
 //Current Import
 import {apiAccountRule} from "../models/apiAccountRule";
-/*import apiAccountRuleDataRepository from "./apiAccountRuleDataRepository";*/
+import {apiAccountRuleDataRepository} from "./apiAccountRuleDataRepository";
 
 //Linked Resources
 import {apiAccountPermission} from "../models/apiAccountPermission";
 
 
-export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRule> /*implements apiAccountRuleDataRepository*/
+export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRule> implements apiAccountRuleDataRepository
 {
 
   getModelType() : {new (): apiAccountRule} {
@@ -40,7 +40,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
     );
   }
 
-  //Finds all entities 
+  //Finds all entities
   findAllWith(query : string) : Promise<List<apiAccountRule>> {
       return this.buildRequestAndParseAsModelList(
         'http://api.fundsrouter.com/profile/accountrules/' + query,
@@ -51,7 +51,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
 
   addItem(modelItem : apiAccountRule) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountrules/{id}/',
+      'http://api.fundsrouter.com/profile/accountrules',
       'POST',
       modelItem
     );
@@ -66,9 +66,9 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
   }
 
 
-  saveItem(modelItem : apiAccountRule) : Promise<apiAccountRule> {
+  saveItem(modelItem : apiAccountRule, modelId : string) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountrules/{id}/',
+      'http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );
@@ -82,6 +82,5 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
       null
       );
   }
-
   
 }

@@ -7,7 +7,6 @@ var __extends = (this && this.__extends) || function (d, b) {
 var tsmvc_1 = require("tsmvc");
 //Current Import
 var apiFee_1 = require("../models/apiFee");
-/*import apiFeeDataRepository from "./apiFeeDataRepository";*/
 //Linked Resources
 var apiFeeDataRepositoryImpl = (function (_super) {
     __extends(apiFeeDataRepositoryImpl, _super);
@@ -30,18 +29,18 @@ var apiFeeDataRepositoryImpl = (function (_super) {
     apiFeeDataRepositoryImpl.prototype.findAll = function () {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/fees', 'GET', null);
     };
-    //Finds all entities 
+    //Finds all entities
     apiFeeDataRepositoryImpl.prototype.findAllWith = function (query) {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/fees/' + query, 'GET', null);
     };
     apiFeeDataRepositoryImpl.prototype.addItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/fees/{id}/', 'POST', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/fees', 'POST', modelItem);
     };
     apiFeeDataRepositoryImpl.prototype.removeItem = function (modelID) {
         return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/fees/{id}/'.replace('{id}', modelID), 'DELETE', null);
     };
-    apiFeeDataRepositoryImpl.prototype.saveItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/fees/{id}/', 'PUT', modelItem);
+    apiFeeDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/fees/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
     return apiFeeDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));

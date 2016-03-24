@@ -39,9 +39,9 @@ _.each(om, currentModel => {
     //1. CRUD
       currentModel.operations = {
         crud : {
-          "create": url.uri + "/{id}/",
-          "read": url.uri + "/{id}/",
-          "readAll": url.uri,
+          "create": url.uri,
+          "find": url.uri + "/{id}/",
+          "findAll": url.uri,
           "update": url.uri + "/{id}/",
           "delete": url.uri + "/{id}/"
         },
@@ -68,7 +68,7 @@ _.each(om, currentModel => {
                   }
 
                   currentModel.operations.custom[funcName] = {
-                    /* url : urlData.uri, */
+                    url : urlData.uri, 
                     model : urlData.className,
                     accessorProperty : p.name,
                     isList : urlData.isList

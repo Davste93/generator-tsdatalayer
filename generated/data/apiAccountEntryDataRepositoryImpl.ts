@@ -3,13 +3,13 @@ import {Promise} from "es6-promise";
 
 //Current Import
 import {apiAccountEntry} from "../models/apiAccountEntry";
-/*import apiAccountEntryDataRepository from "./apiAccountEntryDataRepository";*/
+import {apiAccountEntryDataRepository} from "./apiAccountEntryDataRepository";
 
 //Linked Resources
 import {apiAccount} from "../models/apiAccount";
 
 
-export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountEntry> /*implements apiAccountEntryDataRepository*/
+export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountEntry> implements apiAccountEntryDataRepository
 {
 
   getModelType() : {new (): apiAccountEntry} {
@@ -40,7 +40,7 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
     );
   }
 
-  //Finds all entities 
+  //Finds all entities
   findAllWith(query : string) : Promise<List<apiAccountEntry>> {
       return this.buildRequestAndParseAsModelList(
         'http://api.fundsrouter.com/profile/accountentries/' + query,
@@ -51,7 +51,7 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
 
   addItem(modelItem : apiAccountEntry) : Promise<apiAccountEntry> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountentries/{id}/',
+      'http://api.fundsrouter.com/profile/accountentries',
       'POST',
       modelItem
     );
@@ -66,9 +66,9 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
   }
 
 
-  saveItem(modelItem : apiAccountEntry) : Promise<apiAccountEntry> {
+  saveItem(modelItem : apiAccountEntry, modelId : string) : Promise<apiAccountEntry> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountentries/{id}/',
+      'http://api.fundsrouter.com/profile/accountentries/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );
@@ -82,6 +82,5 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
       null
       );
   }
-
   
 }

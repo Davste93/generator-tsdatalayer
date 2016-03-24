@@ -28,18 +28,18 @@ var apiAccountRuleDataRepositoryImpl = (function (_super) {
     apiAccountRuleDataRepositoryImpl.prototype.findAll = function () {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountrules', 'GET', null);
     };
-    //Finds all entities 
+    //Finds all entities
     apiAccountRuleDataRepositoryImpl.prototype.findAllWith = function (query) {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountrules/' + query, 'GET', null);
     };
     apiAccountRuleDataRepositoryImpl.prototype.addItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules/{id}/', 'POST', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules', 'POST', modelItem);
     };
     apiAccountRuleDataRepositoryImpl.prototype.removeItem = function (modelID) {
         return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID), 'DELETE', null);
     };
-    apiAccountRuleDataRepositoryImpl.prototype.saveItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules/{id}/', 'PUT', modelItem);
+    apiAccountRuleDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountRuleDataRepositoryImpl.prototype.getAccountPermissions = function (modelItem) {

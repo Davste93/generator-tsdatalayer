@@ -28,18 +28,18 @@ var apiAccountEntryDataRepositoryImpl = (function (_super) {
     apiAccountEntryDataRepositoryImpl.prototype.findAll = function () {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountentries', 'GET', null);
     };
-    //Finds all entities 
+    //Finds all entities
     apiAccountEntryDataRepositoryImpl.prototype.findAllWith = function (query) {
         return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountentries/' + query, 'GET', null);
     };
     apiAccountEntryDataRepositoryImpl.prototype.addItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries/{id}/', 'POST', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries', 'POST', modelItem);
     };
     apiAccountEntryDataRepositoryImpl.prototype.removeItem = function (modelID) {
         return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries/{id}/'.replace('{id}', modelID), 'DELETE', null);
     };
-    apiAccountEntryDataRepositoryImpl.prototype.saveItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries/{id}/', 'PUT', modelItem);
+    apiAccountEntryDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountEntryDataRepositoryImpl.prototype.getAccount = function (modelItem) {

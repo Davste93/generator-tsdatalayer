@@ -4,14 +4,20 @@
         "target": "es5",
         "noImplicitAny": false,
         "sourceMap": false,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "outDir": "build"
     },
     "filesGlob": [
         "app.ts",
         "models/**.ts",
         "data/**.ts",
-        "typings/main.d.ts"
+        "services/**.ts",
+        "typings/main.d.ts",
+        "customTypings/**.d.ts"
     ],
+    "atom": {
+        "rewriteTsconfig": true
+    },
     "files": [
         "app.ts",
         "models/apiAccount.ts",
@@ -19,14 +25,18 @@
         "models/apiAccountPermission.ts",
         "models/apiAccountRule.ts",
         "models/apiFee.ts",
+        "data/apiAccountDataRepository.ts",
         "data/apiAccountDataRepositoryImpl.ts",
+        "data/apiAccountEntryDataRepository.ts",
         "data/apiAccountEntryDataRepositoryImpl.ts",
+        "data/apiAccountPermissionDataRepository.ts",
         "data/apiAccountPermissionDataRepositoryImpl.ts",
+        "data/apiAccountRuleDataRepository.ts",
         "data/apiAccountRuleDataRepositoryImpl.ts",
+        "data/apiFeeDataRepository.ts",
         "data/apiFeeDataRepositoryImpl.ts",
-        "typings/main.d.ts"
-    ],
-    "atom": {
-        "rewriteTsconfig": true
-    }
+        "services/injector.conf.ts",
+        "typings/main.d.ts",
+        "customTypings/typings.d.ts"
+    ]
 }

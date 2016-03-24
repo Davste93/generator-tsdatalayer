@@ -3,14 +3,14 @@ import {Promise} from "es6-promise";
 
 //Current Import
 import {apiAccount} from "../models/apiAccount";
-/*import apiAccountDataRepository from "./apiAccountDataRepository";*/
+import {apiAccountDataRepository} from "./apiAccountDataRepository";
 
 //Linked Resources
 import {apiAccountEntry} from "../models/apiAccountEntry";
 import {apiAccountPermission} from "../models/apiAccountPermission";
 
 
-export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*implements apiAccountDataRepository*/
+export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> implements apiAccountDataRepository
 {
 
   getModelType() : {new (): apiAccount} {
@@ -41,7 +41,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*im
     );
   }
 
-  //Finds all entities 
+  //Finds all entities
   findAllWith(query : string) : Promise<List<apiAccount>> {
       return this.buildRequestAndParseAsModelList(
         'http://api.fundsrouter.com/profile/accounts/' + query,
@@ -52,7 +52,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*im
 
   addItem(modelItem : apiAccount) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accounts/{id}/',
+      'http://api.fundsrouter.com/profile/accounts',
       'POST',
       modelItem
     );
@@ -67,9 +67,9 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*im
   }
 
 
-  saveItem(modelItem : apiAccount) : Promise<apiAccount> {
+  saveItem(modelItem : apiAccount, modelId : string) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accounts/{id}/',
+      'http://api.fundsrouter.com/profile/accounts/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );
@@ -83,7 +83,6 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*im
       null
       );
   }
-
     getAccountPermissions(modelItem : apiAccount) : Promise<List<apiAccountPermission>> {
     return this.buildRequestAndParseAsTList<apiAccountPermission>(
       modelItem.accountPermissions,
@@ -91,6 +90,5 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> /*im
       null
       );
   }
-
   
 }

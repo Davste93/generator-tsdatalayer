@@ -1,5 +1,7 @@
 'use strict';
 var rootUrl = 'http://api.fundsrouter.com/profile';
+var baseUrl = 'http://baseUrl';
+
 
 var util = require('util');
 var path = require('path');
@@ -29,6 +31,7 @@ generateBasic: function() {
 
   alpsCrawler.profileCrawler(rootUrl).then( om => {
     _.each(om, function(m){
+      modelutils.addBaseUrls(m, baseUrl);
       self.model = m;
       self.strImports = "";
 
@@ -54,7 +57,8 @@ generateBasic: function() {
             self.strImports += `import {${mName}} from "../models/${mName}";\n`;
         });
 
-        self.template('_modelDataRepository.ts', dataDir + m.name + 'DataRepositoryImpl.ts');
+        self.template('_modelDataRepositoryImpl.ts', dataDir + m.name + 'DataRepositoryImpl.ts');
+        self.template('_modelDataRepository.ts', dataDir + m.name + 'DataRepository.ts');
       }
     });
   });

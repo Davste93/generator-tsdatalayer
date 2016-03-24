@@ -1,88 +1,15 @@
-import {ApiRepository, List, Model} from  "tsmvc";
 import {Promise} from "es6-promise";
+import {DataRepository, List} from "tsmvc";
 
 //Current Import
 import {<%= model.name %>} from "../models/<%= model.name %>";
-/*import <%= model.name %>DataRepository from "./<%= model.name %>DataRepository";*/
 
 //Linked Resources
 <%- strImports %>
 
-export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model.name %>> /*implements <%= model.name %>DataRepository*/
-{
-
-  getModelType() : {new (): <%= model.name %>} {
-    return <%= model.name %>;
-  }
-
-  //TODO: This method probably must be removed/optional.
-  getUrl() : string{
-    return '<%= model.operations.crud.readAll %>;'
-  }
-
-  //CRUD Operations - Only here for the sake of verbosity and flexibility.
-  //Any operations that have standard http://url/up/to/entity/{id} are
-  //handled out of the box by APIRepository (this is the overriden method).
-  find(modelID : string) : Promise<<%= model.name %>> {
-    return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.read %>'.replace('{id}', modelID),
-      'GET',
-      null
-    );
-  }
-
-  findAll() : Promise<List<<%= model.name %>>> {
-    return this.buildRequestAndParseAsModelList(
-      '<%= model.operations.crud.readAll %>',
-      'GET',
-      null
-    );
-  }
-
-  //Finds all entities 
-  findAllWith(query : string) : Promise<List<<%= model.name %>>> {
-      return this.buildRequestAndParseAsModelList(
-        '<%= model.operations.crud.readAll %>/' + query,
-        'GET',
-        null
-      );
-    }
-
-  addItem(modelItem : <%= model.name %>) : Promise<<%= model.name %>> {
-    return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.create %>',
-      'POST',
-      modelItem
-    );
-  }
-
-  removeItem(modelID : string) : Promise<<%= model.name %>> {
-    return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.delete %>'.replace('{id}', modelID),
-      'DELETE',
-      null
-    );
-  }
-
-
-  saveItem(modelItem : <%= model.name %>) : Promise<<%= model.name %>> {
-    return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.update %>',
-      'PUT',
-      modelItem
-    );
-  }
-
-  //Dynamically generated operations from linked resources (the exciting part)
+export interface <%= model.name %>DataRepository extends DataRepository<<%= model.name %>> {
+  //Dynamically generated operations from linked resources
   <% Object.keys(model.operations.custom).forEach(function(k){  ops = model.operations.custom[k]; -%>
-  <%= k %>(modelItem : <%= model.name %>) : Promise<<%- ops.isList? `List<${ops.model}>` : ops.model %>> {
-    return this.buildRequestAndParseAsT<%- ops.isList? `List` : "" %><<%-ops.model%>>(
-      modelItem.<%= ops.accessorProperty || ops.url %>,
-      'GET',
-      null
-      );
-  }
-
+  <%= k %>(modelItem : <%= model.name %>) : Promise<<%- ops.isList? `List<${ops.model}>` : ops.model %>>;
   <% }) -%>
-
 }

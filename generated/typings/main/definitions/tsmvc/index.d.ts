@@ -122,11 +122,11 @@ export abstract class ApiRepository<T extends Model> implements DataRepository<T
     encapsulated in a promise. Uses default item parser. */
     buildRequestAndParseAsModel(url: string, requestType: string, model: any): Promise<T>;
     buildRequestAndParseAsModelList(url: string, requestType: string, model: any): Promise<List<T>>;
-    getItem(modelID: string): Promise<T>;
-    getAllItems(): Promise<List<T>>;
+    find(modelID: string): Promise<T>;
+    findAll(): Promise<List<T>>;
     addItem(modelItem: T): Promise<T>;
     removeItem(modelID: string): Promise<T>;
-    saveItem(modelItem: T): Promise<T>;
+    saveItem(modelItem: T, modelID: string): Promise<T>;
 }
 }
 declare module 'tsmvc/lib/classes/helper/ApiRepository' {
@@ -161,14 +161,14 @@ export interface DataRepository<T extends Model> {
     getModelType(): {
         new (): any;
     };
-    getItem(modelID: string): Promise<T>;
+    find(modelID: string): Promise<T>;
     exists(modelID: string): Promise<boolean>;
-    getAllItems(): Promise<List<T>>;
+    findAll(): Promise<List<T>>;
     getRange(modelIDList: List<string>): Promise<List<T>>;
     count(): number;
     addItem(modelItem: T): Promise<T>;
     removeItem(modelID: string): Promise<T>;
-    saveItem(modelItem: T): Promise<T>;
+    saveItem(modelItem: T, modelID: string): Promise<T>;
 }
 }
 declare module 'tsmvc/lib/interfaces/data/DataRepository' {

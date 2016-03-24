@@ -3,12 +3,12 @@ import {Promise} from "es6-promise";
 
 //Current Import
 import {apiFee} from "../models/apiFee";
-/*import apiFeeDataRepository from "./apiFeeDataRepository";*/
+import {apiFeeDataRepository} from "./apiFeeDataRepository";
 
 //Linked Resources
 
 
-export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> /*implements apiFeeDataRepository*/
+export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements apiFeeDataRepository
 {
 
   getModelType() : {new (): apiFee} {
@@ -39,7 +39,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> /*implements
     );
   }
 
-  //Finds all entities 
+  //Finds all entities
   findAllWith(query : string) : Promise<List<apiFee>> {
       return this.buildRequestAndParseAsModelList(
         'http://api.fundsrouter.com/profile/fees/' + query,
@@ -50,7 +50,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> /*implements
 
   addItem(modelItem : apiFee) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/fees/{id}/',
+      'http://api.fundsrouter.com/profile/fees',
       'POST',
       modelItem
     );
@@ -65,9 +65,9 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> /*implements
   }
 
 
-  saveItem(modelItem : apiFee) : Promise<apiFee> {
+  saveItem(modelItem : apiFee, modelId : string) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/fees/{id}/',
+      'http://api.fundsrouter.com/profile/fees/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );
