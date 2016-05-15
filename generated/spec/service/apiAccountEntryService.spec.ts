@@ -6,6 +6,7 @@ describe("ApiAccountEntryService", () =>{
   let service : apiAccountEntryService;
   beforeEach(() => {
       ServiceManager.initialize();
+      //spyOn(ServiceManager.apiAccountEntryService);
   })
 
 
