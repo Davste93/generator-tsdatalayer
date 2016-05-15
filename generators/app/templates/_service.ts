@@ -9,7 +9,7 @@ import {<%= d %>DataRepository} from "../data/<%= d %>DataRepository";
 <% }) -%>
 
 
-@inject(<%- svcDeps.map(d => {return "'" + d + "'"}).join(', '); %>)
+@inject(<%- svcDeps.map(d => {return "'" + d + "DataLayer'"}).join(', '); %>)
 export class <%= model.name %>Service implements Service {
 
 constructor(

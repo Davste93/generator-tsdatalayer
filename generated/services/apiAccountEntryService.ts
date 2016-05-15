@@ -1,6 +1,6 @@
 import {List, Service} from "tsmvc";
 
-import {inject} from "inversify";
+import {injectable, inject} from "inversify";
 import {Promise} from "es6-promise";
 
 //Current Import + Linked
@@ -10,12 +10,19 @@ import {apiAccountEntry} from "../models/apiAccountEntry";
 import {apiAccountEntryDataRepository} from "../data/apiAccountEntryDataRepository";
 
 
-@inject('apiAccount', 'apiAccountEntry')
+@injectable()
 export class apiAccountEntryService implements Service {
 
+
+public apiAccountDataLayer : apiAccountDataRepository;
+public apiAccountEntryDataLayer : apiAccountEntryDataRepository;
+
 constructor(
-	public apiAccountDataLayer : apiAccountDataRepository,
-	public apiAccountEntryDataLayer : apiAccountEntryDataRepository){}
+	@inject('apiAccountDataRepository') apiAccountDataLayer : apiAccountDataRepository,
+	@inject('apiAccountEntryDataRepository') apiAccountEntryDataLayer : apiAccountEntryDataRepository){
+		this.apiAccountDataLayer = apiAccountDataLayer;
+		this.apiAccountEntryDataLayer = apiAccountEntryDataLayer;
+	}
 
 
 find(modelID : string) : Promise<apiAccountEntry> {

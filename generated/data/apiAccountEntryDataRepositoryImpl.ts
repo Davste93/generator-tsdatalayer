@@ -8,7 +8,9 @@ import {apiAccountEntryDataRepository} from "./apiAccountEntryDataRepository";
 //Linked Resources
 import {apiAccount} from "../models/apiAccount";
 
+import {injectable} from "inversify";
 
+@injectable()
 export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountEntry> implements apiAccountEntryDataRepository
 {
 
@@ -82,5 +84,5 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
       null
       );
   }
-  
+
 }

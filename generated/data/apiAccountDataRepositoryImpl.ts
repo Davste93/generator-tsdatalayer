@@ -9,7 +9,9 @@ import {apiAccountDataRepository} from "./apiAccountDataRepository";
 import {apiAccountEntry} from "../models/apiAccountEntry";
 import {apiAccountPermission} from "../models/apiAccountPermission";
 
+import {injectable} from "inversify";
 
+@injectable()
 export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> implements apiAccountDataRepository
 {
 
@@ -90,5 +92,5 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
       null
       );
   }
-  
+
 }

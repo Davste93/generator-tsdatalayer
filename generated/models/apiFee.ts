@@ -1,7 +1,7 @@
 import {Model, indexKey, List} from  "tsmvc";
 
-import {money} from "./dep/money";
+import {apiMoney} from "./dep/apiMoney";
 
 export class apiFee  extends Model {
-    fixed : money;
+    fixed : apiMoney;
 }
