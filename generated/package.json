@@ -6,6 +6,7 @@
   "scripts": {
     "initTest": "jasmine init",
     "test": "tsc && jasmine",
+    "debugTest" : "tsc && jasmine-debug",
     "start": "ts-node app.ts"
   },
   "author": "",

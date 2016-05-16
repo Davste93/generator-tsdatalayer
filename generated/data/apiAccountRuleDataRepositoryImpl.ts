@@ -1,5 +1,6 @@
 import {ApiRepository, List, Model} from  "tsmvc";
 import {Promise} from "es6-promise";
+import {injectable} from "inversify";
 
 //Current Import
 import {apiAccountRule} from "../models/apiAccountRule";
@@ -9,6 +10,8 @@ import {apiAccountRuleDataRepository} from "./apiAccountRuleDataRepository";
 import {apiAccountPermission} from "../models/apiAccountPermission";
 
 
+
+@injectable()
 export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRule> implements apiAccountRuleDataRepository
 {
 
@@ -18,7 +21,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
 
   //TODO: This method probably must be removed/optional.
   getUrl() : string{
-    return 'http://api.fundsrouter.com/profile/accountrules;'
+    return 'http://api.fundsrouter.com/accountrules;'
   }
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
@@ -26,7 +29,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID),
+      'http://api.fundsrouter.com/accountrules/{id}/'.replace('{id}', modelID),
       'GET',
       null
     );
@@ -34,7 +37,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
 
   findAll() : Promise<List<apiAccountRule>> {
     return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/profile/accountrules',
+      'http://api.fundsrouter.com/accountrules',
       'GET',
       null
     );
@@ -43,7 +46,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
   //Finds all entities
   findAllWith(query : string) : Promise<List<apiAccountRule>> {
       return this.buildRequestAndParseAsModelList(
-        'http://api.fundsrouter.com/profile/accountrules/' + query,
+        'http://api.fundsrouter.com/accountrules/' + query,
         'GET',
         null
       );
@@ -51,7 +54,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
 
   addItem(modelItem : apiAccountRule) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountrules',
+      'http://api.fundsrouter.com/accountrules',
       'POST',
       modelItem
     );
@@ -59,7 +62,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
 
   removeItem(modelID : string) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID),
+      'http://api.fundsrouter.com/accountrules/{id}/'.replace('{id}', modelID),
       'DELETE',
       null
     );
@@ -68,7 +71,7 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
 
   saveItem(modelItem : apiAccountRule, modelId : string) : Promise<apiAccountRule> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelId),
+      'http://api.fundsrouter.com/accountrules/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );

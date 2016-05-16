@@ -4,7 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var tsmvc_1 = require("tsmvc");
+var inversify_1 = require("inversify");
 //Current Import
 var apiAccountRule_1 = require("../models/apiAccountRule");
 var apiAccountRuleDataRepositoryImpl = (function (_super) {
@@ -17,34 +24,37 @@ var apiAccountRuleDataRepositoryImpl = (function (_super) {
     };
     //TODO: This method probably must be removed/optional.
     apiAccountRuleDataRepositoryImpl.prototype.getUrl = function () {
-        return 'http://api.fundsrouter.com/profile/accountrules;';
+        return 'http://api.fundsrouter.com/accountrules;';
     };
     //CRUD Operations - Only here for the sake of verbosity and flexibility.
     //Any operations that have standard http://url/up/to/entity/{id} are
     //handled out of the box by APIRepository (this is the overriden method).
     apiAccountRuleDataRepositoryImpl.prototype.find = function (modelID) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID), 'GET', null);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountrules/{id}/'.replace('{id}', modelID), 'GET', null);
     };
     apiAccountRuleDataRepositoryImpl.prototype.findAll = function () {
-        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountrules', 'GET', null);
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/accountrules', 'GET', null);
     };
     //Finds all entities
     apiAccountRuleDataRepositoryImpl.prototype.findAllWith = function (query) {
-        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountrules/' + query, 'GET', null);
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/accountrules/' + query, 'GET', null);
     };
     apiAccountRuleDataRepositoryImpl.prototype.addItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules', 'POST', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountrules', 'POST', modelItem);
     };
     apiAccountRuleDataRepositoryImpl.prototype.removeItem = function (modelID) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelID), 'DELETE', null);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountrules/{id}/'.replace('{id}', modelID), 'DELETE', null);
     };
     apiAccountRuleDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountrules/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountrules/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountRuleDataRepositoryImpl.prototype.getAccountPermissions = function (modelItem) {
         return this.buildRequestAndParseAsTList(modelItem.accountPermissions, 'GET', null);
     };
+    apiAccountRuleDataRepositoryImpl = __decorate([
+        inversify_1.injectable()
+    ], apiAccountRuleDataRepositoryImpl);
     return apiAccountRuleDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));
 exports.apiAccountRuleDataRepositoryImpl = apiAccountRuleDataRepositoryImpl;

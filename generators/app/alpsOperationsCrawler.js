@@ -36,6 +36,8 @@ _.each(om, currentModel => {
 
 
     if (!_.isUndefined(url) && !_.isUndefined(url.uri)) {
+
+      url.uri = url.uri.replace('/profile/', '/'); //Requests are made to same url minus /profile/
     //1. CRUD
       currentModel.operations = {
         crud : {
@@ -68,7 +70,7 @@ _.each(om, currentModel => {
                   }
 
                   currentModel.operations.custom[funcName] = {
-                    url : urlData.uri, 
+                    url : urlData.uri || ''.replace('/profile/', '/'),
                     model : urlData.className,
                     accessorProperty : p.name,
                     isList : urlData.isList

@@ -11,9 +11,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var tsmvc_1 = require("tsmvc");
+var inversify_1 = require("inversify");
 //Current Import
 var apiAccountEntry_1 = require("../models/apiAccountEntry");
-var inversify_1 = require("inversify");
 var apiAccountEntryDataRepositoryImpl = (function (_super) {
     __extends(apiAccountEntryDataRepositoryImpl, _super);
     function apiAccountEntryDataRepositoryImpl() {
@@ -24,29 +24,29 @@ var apiAccountEntryDataRepositoryImpl = (function (_super) {
     };
     //TODO: This method probably must be removed/optional.
     apiAccountEntryDataRepositoryImpl.prototype.getUrl = function () {
-        return 'http://api.fundsrouter.com/profile/accountentries;';
+        return 'http://api.fundsrouter.com/accountentries;';
     };
     //CRUD Operations - Only here for the sake of verbosity and flexibility.
     //Any operations that have standard http://url/up/to/entity/{id} are
     //handled out of the box by APIRepository (this is the overriden method).
     apiAccountEntryDataRepositoryImpl.prototype.find = function (modelID) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries/{id}/'.replace('{id}', modelID), 'GET', null);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountentries/{id}/'.replace('{id}', modelID), 'GET', null);
     };
     apiAccountEntryDataRepositoryImpl.prototype.findAll = function () {
-        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountentries', 'GET', null);
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/accountentries', 'GET', null);
     };
     //Finds all entities
     apiAccountEntryDataRepositoryImpl.prototype.findAllWith = function (query) {
-        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountentries/' + query, 'GET', null);
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/accountentries/' + query, 'GET', null);
     };
     apiAccountEntryDataRepositoryImpl.prototype.addItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries', 'POST', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountentries', 'POST', modelItem);
     };
     apiAccountEntryDataRepositoryImpl.prototype.removeItem = function (modelID) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries/{id}/'.replace('{id}', modelID), 'DELETE', null);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountentries/{id}/'.replace('{id}', modelID), 'DELETE', null);
     };
     apiAccountEntryDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountentries/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountentries/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountEntryDataRepositoryImpl.prototype.getAccount = function (modelItem) {

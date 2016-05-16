@@ -1,6 +1,6 @@
 import {Model, indexKey, List} from  "tsmvc";
-import {apiMoney} from "./dep/apiMoney";
 
+import {apiMoney} from "./dep/apiMoney";
 
 export class apiAccount  extends Model {
     balance : apiMoney;

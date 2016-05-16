@@ -1,6 +1,6 @@
 import {List, Service} from "tsmvc";
 
-import {inject} from "inversify";
+import {injectable, inject} from "inversify";
 import {Promise} from "es6-promise";
 
 //Current Import + Linked
@@ -9,12 +9,16 @@ import {<%= d %>DataRepository} from "../data/<%= d %>DataRepository";
 <% }) -%>
 
 
-@inject(<%- svcDeps.map(d => {return "'" + d + "DataLayer'"}).join(', '); %>)
+@injectable()
 export class <%= model.name %>Service implements Service {
 
-constructor(
-<%= svcDeps.map(d => {return `\tpublic ${d}DataLayer : ${d}DataRepository`}).join(',\n');%>){}
+<%- svcDeps.map(d => {return "public " + d + "DataLayer : " + d + "DataRepository;"}).join('\n') %>
 
+constructor(
+  <%- svcDeps.map(d => {return "@inject('" + d + "DataRepository') " + d + "DataLayer : " + d + 'DataRepository'}).join(',\n\t') %>)
+  {
+<%= svcDeps.map(d => {return `\t\tthis.${d}DataLayer = ${d}DataLayer;`}).join('\n');%>
+  }
 
 find(modelID : string) : Promise<<%= model.name %>> {
   return this.<%= model.name %>DataLayer.find(modelID);

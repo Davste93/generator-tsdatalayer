@@ -13,17 +13,16 @@ import {apiAccountEntryDataRepository} from "../data/apiAccountEntryDataReposito
 @injectable()
 export class apiAccountEntryService implements Service {
 
-
 public apiAccountDataLayer : apiAccountDataRepository;
 public apiAccountEntryDataLayer : apiAccountEntryDataRepository;
 
 constructor(
-	@inject('apiAccountDataRepository') apiAccountDataLayer : apiAccountDataRepository,
-	@inject('apiAccountEntryDataRepository') apiAccountEntryDataLayer : apiAccountEntryDataRepository){
+  @inject('apiAccountDataRepository') apiAccountDataLayer : apiAccountDataRepository,
+	@inject('apiAccountEntryDataRepository') apiAccountEntryDataLayer : apiAccountEntryDataRepository)
+  {
 		this.apiAccountDataLayer = apiAccountDataLayer;
 		this.apiAccountEntryDataLayer = apiAccountEntryDataLayer;
-	}
-
+  }
 
 find(modelID : string) : Promise<apiAccountEntry> {
   return this.apiAccountEntryDataLayer.find(modelID);

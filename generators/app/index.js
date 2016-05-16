@@ -32,7 +32,7 @@ generateBasic: function() {
 
   alpsCrawler.profileCrawler(rootUrl).then( om => {
     self.models = om;
-    self.template('_injector.conf.ts', serviceDir + 'injector.conf.ts');
+    self.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
 
     _.each(om, function(m){
       modelutils.addBaseUrls(m, baseUrl);

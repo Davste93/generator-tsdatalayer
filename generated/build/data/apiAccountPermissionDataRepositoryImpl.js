@@ -4,7 +4,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
 var tsmvc_1 = require("tsmvc");
+var inversify_1 = require("inversify");
 //Current Import
 var apiAccountPermission_1 = require("../models/apiAccountPermission");
 var apiAccountPermissionDataRepositoryImpl = (function (_super) {
@@ -17,29 +24,29 @@ var apiAccountPermissionDataRepositoryImpl = (function (_super) {
     };
     //TODO: This method probably must be removed/optional.
     apiAccountPermissionDataRepositoryImpl.prototype.getUrl = function () {
-        return 'http://api.fundsrouter.com/profile/accountpermissions;';
+        return 'http://api.fundsrouter.com/accountpermissions;';
     };
     //CRUD Operations - Only here for the sake of verbosity and flexibility.
     //Any operations that have standard http://url/up/to/entity/{id} are
     //handled out of the box by APIRepository (this is the overriden method).
     apiAccountPermissionDataRepositoryImpl.prototype.find = function (modelID) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelID), 'GET', null);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountpermissions/{id}/'.replace('{id}', modelID), 'GET', null);
     };
     apiAccountPermissionDataRepositoryImpl.prototype.findAll = function () {
-        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountpermissions', 'GET', null);
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/accountpermissions', 'GET', null);
     };
     //Finds all entities
     apiAccountPermissionDataRepositoryImpl.prototype.findAllWith = function (query) {
-        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/profile/accountpermissions/' + query, 'GET', null);
+        return this.buildRequestAndParseAsModelList('http://api.fundsrouter.com/accountpermissions/' + query, 'GET', null);
     };
     apiAccountPermissionDataRepositoryImpl.prototype.addItem = function (modelItem) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountpermissions', 'POST', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountpermissions', 'POST', modelItem);
     };
     apiAccountPermissionDataRepositoryImpl.prototype.removeItem = function (modelID) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelID), 'DELETE', null);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountpermissions/{id}/'.replace('{id}', modelID), 'DELETE', null);
     };
     apiAccountPermissionDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
-        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
+        return this.buildRequestAndParseAsModel('http://api.fundsrouter.com/accountpermissions/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountPermissionDataRepositoryImpl.prototype.getAccountRule = function (modelItem) {
@@ -48,6 +55,9 @@ var apiAccountPermissionDataRepositoryImpl = (function (_super) {
     apiAccountPermissionDataRepositoryImpl.prototype.getAccount = function (modelItem) {
         return this.buildRequestAndParseAsT(modelItem.account, 'GET', null);
     };
+    apiAccountPermissionDataRepositoryImpl = __decorate([
+        inversify_1.injectable()
+    ], apiAccountPermissionDataRepositoryImpl);
     return apiAccountPermissionDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));
 exports.apiAccountPermissionDataRepositoryImpl = apiAccountPermissionDataRepositoryImpl;

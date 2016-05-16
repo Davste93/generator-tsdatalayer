@@ -1,5 +1,6 @@
 import {ApiRepository, List, Model} from  "tsmvc";
 import {Promise} from "es6-promise";
+import {injectable} from "inversify";
 
 //Current Import
 import {apiAccountPermission} from "../models/apiAccountPermission";
@@ -10,6 +11,8 @@ import {apiAccountRule} from "../models/apiAccountRule";
 import {apiAccount} from "../models/apiAccount";
 
 
+
+@injectable()
 export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAccountPermission> implements apiAccountPermissionDataRepository
 {
 
@@ -19,7 +22,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
 
   //TODO: This method probably must be removed/optional.
   getUrl() : string{
-    return 'http://api.fundsrouter.com/profile/accountpermissions;'
+    return 'http://api.fundsrouter.com/accountpermissions;'
   }
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
@@ -27,7 +30,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelID),
+      'http://api.fundsrouter.com/accountpermissions/{id}/'.replace('{id}', modelID),
       'GET',
       null
     );
@@ -35,7 +38,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
 
   findAll() : Promise<List<apiAccountPermission>> {
     return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/profile/accountpermissions',
+      'http://api.fundsrouter.com/accountpermissions',
       'GET',
       null
     );
@@ -44,7 +47,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
   //Finds all entities
   findAllWith(query : string) : Promise<List<apiAccountPermission>> {
       return this.buildRequestAndParseAsModelList(
-        'http://api.fundsrouter.com/profile/accountpermissions/' + query,
+        'http://api.fundsrouter.com/accountpermissions/' + query,
         'GET',
         null
       );
@@ -52,7 +55,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
 
   addItem(modelItem : apiAccountPermission) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountpermissions',
+      'http://api.fundsrouter.com/accountpermissions',
       'POST',
       modelItem
     );
@@ -60,7 +63,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
 
   removeItem(modelID : string) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelID),
+      'http://api.fundsrouter.com/accountpermissions/{id}/'.replace('{id}', modelID),
       'DELETE',
       null
     );
@@ -69,7 +72,7 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
 
   saveItem(modelItem : apiAccountPermission, modelId : string) : Promise<apiAccountPermission> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/profile/accountpermissions/{id}/'.replace('{id}', modelId),
+      'http://api.fundsrouter.com/accountpermissions/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );

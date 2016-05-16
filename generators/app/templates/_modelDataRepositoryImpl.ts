@@ -1,5 +1,6 @@
 import {ApiRepository, List, Model} from  "tsmvc";
 import {Promise} from "es6-promise";
+import {injectable} from "inversify";
 
 //Current Import
 import {<%= model.name %>} from "../models/<%= model.name %>";
@@ -8,6 +9,8 @@ import {<%= model.name %>DataRepository} from "./<%= model.name %>DataRepository
 //Linked Resources
 <%- strImports %>
 
+
+@injectable()
 export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model.name %>> implements <%= model.name %>DataRepository
 {
 
