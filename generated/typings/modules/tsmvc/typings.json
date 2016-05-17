@@ -1,0 +1,142 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/home/david/Documents/Code/generator-tsdatalayer/generated/node_modules/tsmvc/package.json",
+    "raw": "npm:tsmvc",
+    "main": "lib/index.js",
+    "version": "1.0.50",
+    "global": false,
+    "dependencies": {
+      "es6-promise": {
+        "src": "https://raw.githubusercontent.com/typed-typings/npm-es6-promise/fb04188767acfec1defd054fc8024fafa5cd4de7/typings.json",
+        "raw": "registry:npm/es6-promise#3.0.0+20160211003958",
+        "main": "dist/es6-promise.d.ts",
+        "global": false,
+        "name": "es6-promise",
+        "type": "typings"
+      },
+      "make-error": {
+        "src": "https://raw.githubusercontent.com/typed-typings/npm-make-error/310953e35a2c6927b5743dc2d2215384d056fa7a/typings.json",
+        "raw": "registry:npm/make-error#1.0.0+20160211003958",
+        "main": "index.d.ts",
+        "global": false,
+        "name": "make-error",
+        "type": "typings"
+      },
+      "node": {
+        "src": "/home/david/Documents/Code/generator-tsdatalayer/generated/node_modules/node/package.json",
+        "raw": "npm:node",
+        "version": "0.0.0",
+        "global": false,
+        "name": "node"
+      },
+      "popsicle": {
+        "src": "/home/david/Documents/Code/generator-tsdatalayer/generated/node_modules/popsicle/package.json",
+        "raw": "npm:popsicle",
+        "main": "dist/common.js",
+        "browser": {
+          "./dist/index.js": "./dist/browser.js",
+          "./dist/plugins/index.js": "./dist/plugins/browser.js",
+          "buffer": false,
+          "form-data": "./dist/browser/form-data.js",
+          "tough-cookie": "./dist/browser/tough-cookie.js"
+        },
+        "version": "5.0.1",
+        "global": false,
+        "dependencies": {
+          "any-promise": {
+            "src": "https://raw.githubusercontent.com/typings/typed-any-promise/74ba6cf22149ff4de39c2338a9cb84f9ded6f042/typings.json",
+            "raw": "github:typings/typed-any-promise#74ba6cf22149ff4de39c2338a9cb84f9ded6f042",
+            "main": "index.d.ts",
+            "files": [
+              "register.d.ts",
+              "implementation.d.ts"
+            ],
+            "global": false,
+            "dependencies": {
+              "es6-promise": {
+                "src": "https://raw.githubusercontent.com/typings/typed-es6-promise/94aac67ef7a14a8de8e9e1d3c1f9a26caa0d9fb1/typings.json",
+                "raw": "github:typings/typed-es6-promise#94aac67ef7a14a8de8e9e1d3c1f9a26caa0d9fb1",
+                "main": "dist/es6-promise.d.ts",
+                "global": false,
+                "name": "es6-promise",
+                "type": "typings"
+              }
+            },
+            "name": "any-promise",
+            "type": "typings"
+          },
+          "arrify": {
+            "src": "https://raw.githubusercontent.com/typings/typed-arrify/32383d5fd3e6a8614abb6dba254a3aab07cd7424/typings.json",
+            "raw": "github:typings/typed-arrify#32383d5fd3e6a8614abb6dba254a3aab07cd7424",
+            "main": "index.d.ts",
+            "global": false,
+            "name": "arrify",
+            "type": "typings"
+          },
+          "concat-stream": {
+            "src": "https://raw.githubusercontent.com/typings/typed-concat-stream/099a88b57dcc9968246e8b1b3651e914a1a2c324/typings.json",
+            "raw": "github:typings/typed-concat-stream#099a88b57dcc9968246e8b1b3651e914a1a2c324",
+            "main": "index.d.ts",
+            "global": false,
+            "name": "concat-stream",
+            "type": "typings"
+          },
+          "form-data": {
+            "src": "https://raw.githubusercontent.com/typings/typed-form-data/edc32200ec6065d98bfaa7ff9cfd104e17c5d3e4/typings.json",
+            "raw": "github:typings/typed-form-data#edc32200ec6065d98bfaa7ff9cfd104e17c5d3e4",
+            "main": "lib/form_data.d.ts",
+            "browser": "lib/browser.d.ts",
+            "global": false,
+            "name": "form-data",
+            "type": "typings"
+          },
+          "make-error-cause": {
+            "src": "/home/david/Documents/Code/generator-tsdatalayer/generated/node_modules/make-error-cause/package.json",
+            "raw": "npm:make-error-cause",
+            "main": "dist/index.js",
+            "version": "1.1.0",
+            "global": false,
+            "dependencies": {
+              "make-error": {
+                "src": "https://raw.githubusercontent.com/typings/typed-make-error/310953e35a2c6927b5743dc2d2215384d056fa7a/typings.json",
+                "raw": "github:typings/typed-make-error#310953e35a2c6927b5743dc2d2215384d056fa7a",
+                "main": "index.d.ts",
+                "global": false,
+                "name": "make-error",
+                "type": "typings"
+              }
+            },
+            "name": "make-error-cause"
+          },
+          "methods": {
+            "src": "https://raw.githubusercontent.com/typings/typed-methods/b902fa13683e95d54b2bb69188f68ea3525ec430/typings.json",
+            "raw": "github:typings/typed-methods#b902fa13683e95d54b2bb69188f68ea3525ec430",
+            "main": "index.d.ts",
+            "global": false,
+            "name": "methods",
+            "type": "typings"
+          },
+          "tough-cookie": {
+            "src": "https://raw.githubusercontent.com/typings/typed-tough-cookie/3e37dc2e6d448130d2fa4be1026e195ffda2b398/typings.json",
+            "raw": "github:typings/typed-tough-cookie#3e37dc2e6d448130d2fa4be1026e195ffda2b398",
+            "main": "lib/cookie.d.ts",
+            "global": false,
+            "name": "tough-cookie",
+            "type": "typings"
+          },
+          "xtend": {
+            "src": "https://raw.githubusercontent.com/typings/typed-xtend/63cccadf3295b3c15561ee45617ac006edcca9e0/typings.json",
+            "raw": "github:typings/typed-xtend#63cccadf3295b3c15561ee45617ac006edcca9e0",
+            "main": "immutable.d.ts",
+            "global": false,
+            "name": "xtend",
+            "type": "typings"
+          }
+        },
+        "name": "popsicle"
+      }
+    },
+    "name": "tsmvc"
+  }
+}

@@ -3,29 +3,11 @@ var request = require('request');
 var es6_promise_1 = require('es6-promise');
 var _ = require('underscore');
 var Requester = (function () {
-    function Requester(baseUrl, username, password) {
+    function Requester(baseUrl) {
         this.baseUrl = baseUrl;
-        this.setAuthHeader(username, password);
     }
-    Requester.prototype.setAuthHeader = function (username, password) {
-        this._authHeader = "Basic " + new Buffer(username + ":" + password).toString("base64");
-    };
-    Requester.prototype.getAuthorization = function () {
-        return this._authHeader;
-    };
     Requester.prototype.makeRequest = function (partialUrl, requestOpts) {
         //Add auth header:
-        var headers = {
-            'Accept': 'application/json',
-            'Content-type': 'application/json',
-            Authorization: this.getAuthorization()
-        };
-        if (_.isUndefined(requestOpts.header)) {
-            requestOpts.headers = headers;
-        }
-        else {
-            _.extend(requestOpts.headers, headers);
-        }
         _.extend(requestOpts, { url: this.baseUrl + '/' + partialUrl });
         return new es6_promise_1.Promise(function (resolve, reject) {
             request(requestOpts, function (error, response, body) {
@@ -41,8 +23,18 @@ var Requester = (function () {
     return Requester;
 }());
 //curl -u 35679111111:123456 -H 'Accept: application/json'  -H 'Content-type: application/json' -X GET accounts
-var r = new Requester('', '35679111111', '123456');
-r.makeRequest('accounts', { method: 'GET' }).then(function (response) {
-    var jsonObj = JSON.parse(response.body);
-    console.log(jsonObj._embedded[Object.keys(jsonObj._embedded)[0]][0]);
-});
+var KeycloakApiDecorator_1 = require("./Auth/KeycloakApiDecorator");
+debugger;
+var keycloakApiDecorator = new KeycloakApiDecorator_1.KeycloakApiDecorator('test', 'test');
+keycloakApiDecorator.ensureGrant();
+//
+// var r : Requester = new Requester('');
+//
+// var requestOpts = {method : 'GET'};
+// keycloakApiDecorator.decorateRequest(requestOpts);
+//
+// r.makeRequest<any>('accounts', requestOpts).then(response => {
+//   var jsonObj = JSON.parse(response.body);
+//
+//   console.log(<apiAccount> jsonObj._embedded[Object.keys(jsonObj._embedded)[0]][0]);
+// });

@@ -11,10 +11,11 @@
     "filesGlob": [
         "app.ts",
         "models/**.ts",
+        "Auth/**.ts",
         "data/**.ts",
         "services/**.ts",
         "spec/**/*.ts",
-        "typings/main.d.ts",
+        "typings/index.d.ts",
         "customTypings/**.d.ts"
     ],
     "atom": {
@@ -27,6 +28,8 @@
         "models/apiAccountPermission.ts",
         "models/apiAccountRule.ts",
         "models/apiFee.ts",
+        "Auth/BasicAuth.ts",
+        "Auth/KeycloakApiDecorator.ts",
         "data/apiAccountDataRepository.ts",
         "data/apiAccountDataRepositoryImpl.ts",
         "data/apiAccountEntryDataRepository.ts",
@@ -46,7 +49,7 @@
         "spec/mocks/MockDataRepository.ts",
         "spec/service/apiAccountEntryService.e2e.spec.ts",
         "spec/service/apiAccountEntryService.spec.ts",
-        "typings/main.d.ts",
+        "typings/index.d.ts",
         "customTypings/typings.d.ts"
     ]
 }

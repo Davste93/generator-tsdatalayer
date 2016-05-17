@@ -1,4 +1,4 @@
-import {ApiRepository, List, Model} from  "tsmvc";
+import {ApiRepository, List, Model, ApiRequestDecorator} from  "tsmvc";
 import {Promise} from "es6-promise";
 import {injectable} from "inversify";
 
@@ -13,6 +13,12 @@ import {<%= model.name %>DataRepository} from "./<%= model.name %>DataRepository
 @injectable()
 export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model.name %>> implements <%= model.name %>DataRepository
 {
+    constructor(
+      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator
+    ) {
+      super();
+      this.requestDecorator = requestDecorator;
+    }
 
   getModelType() : {new (): <%= model.name %>} {
     return <%= model.name %>;

@@ -1,6 +1,6 @@
-import {ApiRepository, List, Model} from  "tsmvc";
+import {ApiRepository, List, Model, ApiRequestDecorator} from  "tsmvc";
 import {Promise} from "es6-promise";
-import {injectable} from "inversify";
+import {injectable, inject} from "inversify";
 
 //Current Import
 import {apiAccount} from "../models/apiAccount";
@@ -15,6 +15,13 @@ import {apiAccountPermission} from "../models/apiAccountPermission";
 @injectable()
 export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> implements apiAccountDataRepository
 {
+  constructor(
+    @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator
+  ) {
+    super();
+    this.requestDecorator = requestDecorator;
+  }
+
 
   getModelType() : {new (): apiAccount} {
     return apiAccount;
@@ -93,5 +100,5 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
       null
       );
   }
-  
+
 }

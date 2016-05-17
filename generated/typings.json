@@ -4,11 +4,18 @@
     "underscore": "github:DefinitelyTyped/DefinitelyTyped/underscore/underscore.d.ts#a34efe0fd8f834459daa96dc5ac261283a0be682"
   },
   "dependencies": {
+    "es6-promise": "registry:npm/es6-promise#3.0.0+20160211003958",
     "reflect-metadata": "npm:reflect-metadata",
     "request": "registry:npm/request#2.69.0+20160428223725",
     "tsmvc": "npm:tsmvc"
   },
   "ambientDevDependencies": {
     "jasmine": "registry:dt/jasmine#2.2.0+20160505161446"
+  },
+  "globalDependencies": {
+    "jasmine": "registry:dt/jasmine#2.2.0+20160505161446",
+    "node": "registry:dt/node#6.0.0+20160514165920",
+    "underscore": "registry:dt/underscore#1.7.0+20160505190121",
+    "urlsafe-base64": "registry:dt/urlsafe-base64#1.0.0+20160316155526"
   }
 }

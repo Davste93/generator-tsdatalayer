@@ -4,37 +4,18 @@ import * as _ from 'underscore';
 import {Model} from "tsmvc";
 import {apiAccount} from "./models/apiAccount";
 
+
+
 class Requester {
   private _authHeader : string;
   private baseUrl : string;
 
-  constructor(baseUrl, username, password){
+  constructor(baseUrl){
     this.baseUrl = baseUrl;
-    this.setAuthHeader(username, password);
   }
-
-  setAuthHeader(username, password) : void {
-    this._authHeader = "Basic " + new Buffer(username + ":" + password).toString("base64")
-  }
-
-  getAuthorization() : Object {
-    return this._authHeader;
-  }
-
 
   makeRequest<T>(partialUrl : string, requestOpts : any) : Promise<T> {
     //Add auth header:
-    var headers = {
-      'Accept' : 'application/json',
-      'Content-type' : 'application/json',
-      Authorization : this.getAuthorization()
-    };
-
-    if (_.isUndefined(requestOpts.header)) {
-      requestOpts.headers = headers;
-    } else {
-      _.extend(requestOpts.headers, headers);
-    }
     _.extend(requestOpts, {url : this.baseUrl + '/' + partialUrl});
 
 
@@ -52,9 +33,20 @@ class Requester {
 }
 
 //curl -u 35679111111:123456 -H 'Accept: application/json'  -H 'Content-type: application/json' -X GET accounts
-var r : Requester = new Requester('', '35679111111', '123456');
-r.makeRequest<any>('accounts', {method : 'GET'}).then(response => {
-  var jsonObj = JSON.parse(response.body);
 
-  console.log(<apiAccount> jsonObj._embedded[Object.keys(jsonObj._embedded)[0]][0]);
-});
+
+import {KeycloakApiDecorator} from "./Auth/KeycloakApiDecorator";
+debugger;
+var keycloakApiDecorator = new KeycloakApiDecorator('test', 'test');
+keycloakApiDecorator.ensureGrant();
+//
+// var r : Requester = new Requester('');
+//
+// var requestOpts = {method : 'GET'};
+// keycloakApiDecorator.decorateRequest(requestOpts);
+//
+// r.makeRequest<any>('accounts', requestOpts).then(response => {
+//   var jsonObj = JSON.parse(response.body);
+//
+//   console.log(<apiAccount> jsonObj._embedded[Object.keys(jsonObj._embedded)[0]][0]);
+// });

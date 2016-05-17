@@ -10,14 +10,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 var tsmvc_1 = require("tsmvc");
 var inversify_1 = require("inversify");
 //Current Import
 var apiAccount_1 = require("../models/apiAccount");
 var apiAccountDataRepositoryImpl = (function (_super) {
     __extends(apiAccountDataRepositoryImpl, _super);
-    function apiAccountDataRepositoryImpl() {
-        _super.apply(this, arguments);
+    function apiAccountDataRepositoryImpl(requestDecorator) {
+        _super.call(this);
+        this.requestDecorator = requestDecorator;
     }
     apiAccountDataRepositoryImpl.prototype.getModelType = function () {
         return apiAccount_1.apiAccount;
@@ -56,7 +60,8 @@ var apiAccountDataRepositoryImpl = (function (_super) {
         return this.buildRequestAndParseAsTList(modelItem.accountPermissions, 'GET', null);
     };
     apiAccountDataRepositoryImpl = __decorate([
-        inversify_1.injectable()
+        inversify_1.injectable(),
+        __param(0, inversify_1.inject('ApiRequestDecorator'))
     ], apiAccountDataRepositoryImpl);
     return apiAccountDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));

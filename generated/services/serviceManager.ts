@@ -19,7 +19,7 @@ import {apiAccountDataRepositoryImpl} from '../data/apiAccountDataRepositoryImpl
 import {apiAccountService} from './apiAccountService';
 
 
-
+import {BasicAuthDecorator} from "../Auth/BasicAuth";
 
 var kernel : IKernel = null;
 
@@ -32,6 +32,8 @@ export class ServiceManager {
 
 
   static bindDependentDataLayers() {
+		kernel.bind<apiAccountRuleDataRepository>("apiAccountRuleDataRepository").to(apiAccountRuleDataRepositoryImpl);
+
   //Data Layer bindings
 		kernel.bind<apiAccountRuleDataRepository>("apiAccountRuleDataRepository").to(apiAccountRuleDataRepositoryImpl);
 		kernel.bind<apiFeeDataRepository>("apiFeeDataRepository").to(apiFeeDataRepositoryImpl);
@@ -51,6 +53,10 @@ export class ServiceManager {
 		kernel.bind<apiAccountService>("apiAccountService").to(apiAccountService);
 
   }
+
+	static bindDecorators() {
+		kernel.bind<ApiRequestDecorator>("BasicAuthDecorator").to(ApiRequestDecoratorInstance);
+	}
 
   static resolveServices() {
   //Service resolve

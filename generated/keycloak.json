@@ -1,0 +1,8 @@
+{
+ "realm": "BVL-Pay",
+ "realm-public-key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsfAsi5nX0VVSIfl2gi64AOq5JzdHuSMkLfBXeXjSxjJ8mXDqImK6YEDbmNd0sovUxVwxcW7ECY+TbWITZJRmJ9J9gdpF6+8gx+Bm8vemBcjdjrWL4ReKFHyB6NSOnfatP0F4RvUx96SEzUV59igVUueOlTatN/zoegB4Ddxk0EbcB1vrxrRhvHa/iWgoNMun4iN2LhZ9oTXJFHQMIdsdTpYMMSIcwRg305f7n1hK2futr1aTe99bAJK0h8Kejn00OwLy+WDxRnp/SwWFj1iAosuWDn/yzae7KY0pfohG8LXGdYSux9jdbdaGjOIiBqhh+gFtMyleINN2P6sCdV3B6wIDAQAB",
+ "auth-server-url": "https://api.fundsrouter.com/auth",
+ "ssl-required": "external",
+ "resource": "ci",
+ "public-client": true
+}
