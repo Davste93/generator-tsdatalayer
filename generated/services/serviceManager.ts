@@ -69,6 +69,10 @@ export class ServiceManager {
     kernel.bind<string>("string").toConstantValue("test").whenTargetNamed("password");
   }
 
+	static bindParsers() {
+		kernel.bind
+	}
+
 
   //Equivalent of static constructor, called when this class is imported.
   static initialize(){

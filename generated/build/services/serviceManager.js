@@ -17,7 +17,6 @@ var ServiceManager = (function () {
     function ServiceManager() {
     }
     ServiceManager.bindDependentDataLayers = function () {
-        //Data Layer bindings
         kernel.bind("apiAccountDataRepository").to(apiAccountDataRepositoryImpl_1.apiAccountDataRepositoryImpl);
         kernel.bind("apiAccountRuleDataRepository").to(apiAccountRuleDataRepositoryImpl_1.apiAccountRuleDataRepositoryImpl);
         kernel.bind("apiAccountPermissionDataRepository").to(apiAccountPermissionDataRepositoryImpl_1.apiAccountPermissionDataRepositoryImpl);
@@ -25,7 +24,6 @@ var ServiceManager = (function () {
         kernel.bind("apiAccountEntryDataRepository").to(apiAccountEntryDataRepositoryImpl_1.apiAccountEntryDataRepositoryImpl);
     };
     ServiceManager.bindServices = function () {
-        //Service bindings
         kernel.bind("apiAccountService").to(apiAccountService_1.apiAccountService);
         kernel.bind("apiAccountRuleService").to(apiAccountRuleService_1.apiAccountRuleService);
         kernel.bind("apiAccountPermissionService").to(apiAccountPermissionService_1.apiAccountPermissionService);
@@ -33,7 +31,6 @@ var ServiceManager = (function () {
         kernel.bind("apiAccountEntryService").to(apiAccountEntryService_1.apiAccountEntryService);
     };
     ServiceManager.resolveServices = function () {
-        //Service resolve
         ServiceManager.apiAccountService = kernel.get("apiAccountService");
         ServiceManager.apiAccountRuleService = kernel.get("apiAccountRuleService");
         ServiceManager.apiAccountPermissionService = kernel.get("apiAccountPermissionService");
@@ -45,7 +42,9 @@ var ServiceManager = (function () {
         kernel.bind("string").toConstantValue("test").whenTargetNamed("username");
         kernel.bind("string").toConstantValue("test").whenTargetNamed("password");
     };
-    //Equivalent of static constructor, called when this class is imported.
+    ServiceManager.bindParsers = function () {
+        kernel.bind;
+    };
     ServiceManager.initialize = function () {
         if (kernel != null) {
             return;
