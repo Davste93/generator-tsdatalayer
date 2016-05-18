@@ -11,6 +11,7 @@
     "filesGlob": [
         "app.ts",
         "models/**.ts",
+        "ApiResponseParsers/**.ts",
         "Auth/**.ts",
         "data/**.ts",
         "services/**.ts",
@@ -28,6 +29,7 @@
         "models/apiAccountPermission.ts",
         "models/apiAccountRule.ts",
         "models/apiFee.ts",
+        "ApiResponseParsers/HateoasResponseParser.ts",
         "Auth/BasicAuth.ts",
         "Auth/KeycloakApiDecorator.ts",
         "data/apiAccountDataRepository.ts",

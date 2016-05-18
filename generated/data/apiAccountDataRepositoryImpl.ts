@@ -1,4 +1,4 @@
-import {ApiRepository, List, Model, ApiRequestDecorator} from  "tsmvc";
+import {ApiRepository, List, Model, ApiRequestDecorator, Parser} from  "tsmvc";
 import {Promise} from "es6-promise";
 import {injectable, inject} from "inversify";
 
@@ -15,13 +15,14 @@ import {apiAccountPermission} from "../models/apiAccountPermission";
 @injectable()
 export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> implements apiAccountDataRepository
 {
-  constructor(
-    @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator
-  ) {
-    super();
-    this.requestDecorator = requestDecorator;
-  }
-
+    constructor(
+      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator,
+      @inject('Parser') requestParser : Parser<any>
+    ) {
+      super();
+      this.parser = requestParser;
+      this.requestDecorator = requestDecorator;
+    }
 
   getModelType() : {new (): apiAccount} {
     return apiAccount;
@@ -29,7 +30,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
 
   //TODO: This method probably must be removed/optional.
   getUrl() : string{
-    return 'http://api.fundsrouter.com/accounts;'
+    return 'https://api.fundsrouter.com/accounts;'
   }
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
@@ -37,7 +38,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/accounts/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/accounts/{id}/'.replace('{id}', modelID),
       'GET',
       null
     );
@@ -45,7 +46,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
 
   findAll() : Promise<List<apiAccount>> {
     return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/accounts',
+      'https://api.fundsrouter.com/accounts',
       'GET',
       null
     );
@@ -54,7 +55,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
   //Finds all entities
   findAllWith(query : string) : Promise<List<apiAccount>> {
       return this.buildRequestAndParseAsModelList(
-        'http://api.fundsrouter.com/accounts/' + query,
+        'https://api.fundsrouter.com/accounts/' + query,
         'GET',
         null
       );
@@ -62,7 +63,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
 
   addItem(modelItem : apiAccount) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/accounts',
+      'https://api.fundsrouter.com/accounts',
       'POST',
       modelItem
     );
@@ -70,7 +71,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
 
   removeItem(modelID : string) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/accounts/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/accounts/{id}/'.replace('{id}', modelID),
       'DELETE',
       null
     );
@@ -79,7 +80,7 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
 
   saveItem(modelItem : apiAccount, modelId : string) : Promise<apiAccount> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/accounts/{id}/'.replace('{id}', modelId),
+      'https://api.fundsrouter.com/accounts/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );
@@ -90,7 +91,8 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
     return this.buildRequestAndParseAsTList<apiAccountEntry>(
       modelItem.accountEntries,
       'GET',
-      null
+      null,
+      this.parser
       );
   }
     getAccountPermissions(modelItem : apiAccount) : Promise<List<apiAccountPermission>> {

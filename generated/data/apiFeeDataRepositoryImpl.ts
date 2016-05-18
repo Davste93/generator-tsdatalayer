@@ -1,6 +1,6 @@
-import {ApiRepository, List, Model} from  "tsmvc";
+import {ApiRepository, List, Model, ApiRequestDecorator} from  "tsmvc";
 import {Promise} from "es6-promise";
-import {injectable} from "inversify";
+import {injectable, inject} from "inversify";
 
 //Current Import
 import {apiFee} from "../models/apiFee";
@@ -13,6 +13,12 @@ import {apiFeeDataRepository} from "./apiFeeDataRepository";
 @injectable()
 export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements apiFeeDataRepository
 {
+    constructor(
+      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator
+    ) {
+      super();
+      this.requestDecorator = requestDecorator;
+    }
 
   getModelType() : {new (): apiFee} {
     return apiFee;
@@ -20,7 +26,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
   //TODO: This method probably must be removed/optional.
   getUrl() : string{
-    return 'http://api.fundsrouter.com/fees;'
+    return 'https://api.fundsrouter.com/fees;'
   }
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
@@ -28,7 +34,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelID),
       'GET',
       null
     );
@@ -36,7 +42,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
   findAll() : Promise<List<apiFee>> {
     return this.buildRequestAndParseAsModelList(
-      'http://api.fundsrouter.com/fees',
+      'https://api.fundsrouter.com/fees',
       'GET',
       null
     );
@@ -45,7 +51,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
   //Finds all entities
   findAllWith(query : string) : Promise<List<apiFee>> {
       return this.buildRequestAndParseAsModelList(
-        'http://api.fundsrouter.com/fees/' + query,
+        'https://api.fundsrouter.com/fees/' + query,
         'GET',
         null
       );
@@ -53,7 +59,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
   addItem(modelItem : apiFee) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/fees',
+      'https://api.fundsrouter.com/fees',
       'POST',
       modelItem
     );
@@ -61,7 +67,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
   removeItem(modelID : string) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelID),
       'DELETE',
       null
     );
@@ -70,7 +76,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
   saveItem(modelItem : apiFee, modelId : string) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'http://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelId),
+      'https://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelId),
       'PUT',
       modelItem
     );

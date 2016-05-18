@@ -1,6 +1,6 @@
 'use strict';
-var rootUrl = 'http://api.fundsrouter.com/profile';
-var baseUrl = 'http://baseUrl';
+var rootUrl = 'https://api.fundsrouter.com/profile';
+var baseUrl = 'https://api.fundsrouter.com/';
 
 
 var util = require('util');
@@ -35,7 +35,7 @@ generateBasic: function() {
     self.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
 
     _.each(om, function(m){
-      modelutils.addBaseUrls(m, baseUrl);
+      //modelutils.addBaseUrls(m, baseUrl);
       self.model = m;
       self.strImports = "";
 

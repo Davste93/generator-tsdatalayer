@@ -6,7 +6,7 @@ export class apiAccount  extends Model {
     balance : apiMoney;
     currency : string;
     accountNumber : string;
-    createdOn : Date;
+    createdOn : string;
     friendlyName : string;
     accountEntries : string;
     accountPermissions : string;

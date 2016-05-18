@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import {Kernel, IKernel} from "inversify";
-
+import {BasicAuthDecorator} from "../Auth/BasicAuth";
+import {ApiRequestDecorator} from "tsmvc";
 
 <%- models.map(d => { if (!d.isDepEntity) return `import {${d.name}DataRepository} from '../data/${d.name}DataRepository';
 import {${d.name}DataRepositoryImpl} from '../data/${d.name}DataRepositoryImpl';
@@ -32,6 +33,13 @@ export class ServiceManager {
 <%- models.map(d => { if (!d.isDepEntity)return `\t\tServiceManager.${d.name}Service = kernel.get<${d.name}Service>("${d.name}Service");\n`} ).join(''); %>
   }
 
+  static bindDecorators() {
+    kernel.bind<ApiRequestDecorator>("ApiRequestDecorator").to(BasicAuthDecorator);
+    kernel.bind<string>("string").toConstantValue("test").whenTargetNamed("username");
+    kernel.bind<string>("string").toConstantValue("test").whenTargetNamed("password");
+  }
+
+
   //Equivalent of static constructor, called when this class is imported.
   static initialize(){
     if (kernel != null) {
@@ -41,6 +49,7 @@ export class ServiceManager {
     kernel =  new Kernel();
     ServiceManager.bindDependentDataLayers();
     ServiceManager.bindServices();
+    ServiceManager.bindDecorators();
     ServiceManager.resolveServices();
   }
 }

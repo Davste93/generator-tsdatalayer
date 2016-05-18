@@ -4,7 +4,7 @@
     "src": "/home/david/Documents/Code/generator-tsdatalayer/generated/node_modules/tsmvc/package.json",
     "raw": "npm:tsmvc",
     "main": "lib/index.js",
-    "version": "1.0.50",
+    "version": "1.0.53",
     "global": false,
     "dependencies": {
       "es6-promise": {

@@ -42,7 +42,13 @@ app.generatedModelsToArray = function() {
 
 app.profileCrawler = function(url){
     return new Promise( (resolve, reject) => {
-      request(url, function(error, response, body) {
+      request({
+        url : url,
+        headers: {
+          "Authorization" : "Basic dGVzdDp0ZXN0"
+        }
+      },
+      function(error, response, body) {
         var profile = JSON.parse(body);
 
         var entityCrawlerPromises = [];
@@ -69,7 +75,8 @@ app.entityCrawler = function(url){
     request({
         url: url,
         headers: {
-          Accept: 'application/schema+json'
+          Accept: 'application/schema+json',
+          Authorization : "Basic dGVzdDp0ZXN0"
         }
     },
     function(error, response, body) {

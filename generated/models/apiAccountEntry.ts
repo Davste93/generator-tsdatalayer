@@ -7,5 +7,5 @@ export class apiAccountEntry  extends Model {
     description : string;
     runningBalance : number;
     account : string;
-    timestamp : Date;
+    timestamp : string;
 }
