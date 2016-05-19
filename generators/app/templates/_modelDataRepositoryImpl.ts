@@ -24,10 +24,6 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     return <%= model.name %>;
   }
 
-  //TODO: This method probably must be removed/optional.
-  getUrl() : string{
-    return '<%= model.operations.crud.findAll %>;'
-  }
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
   //Any operations that have standard http://url/up/to/entity/{id} are
@@ -82,15 +78,6 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     );
   }
 
-  //Dynamically generated operations from linked resources (the exciting part)
-  <% Object.keys(model.operations.custom).forEach(function(k){  ops = model.operations.custom[k]; -%>
-  <%= k %>(modelItem : <%= model.name %>) : Promise<<%- ops.isList? `List<${ops.model}>` : ops.model %>> {
-    return this.buildRequestAndParseAsT<%- ops.isList? `List` : "" %><<%-ops.model%>>(
-      modelItem.<%= ops.accessorProperty || ops.url %>,
-      'GET',
-      null
-      );
-  }
   <% }) -%>
 
 }

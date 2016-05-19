@@ -85,11 +85,11 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
 
   //Dynamically generated operations from linked resources (the exciting part)
     getAccount(modelItem : apiAccountEntry) : Promise<apiAccount> {
-    return this.buildRequestAndParseAsT<apiAccount>(
+    return null; /* this.buildRequestAndParseAsT<apiAccount>(
       modelItem.account,
       'GET',
       null
-      );
+    );*/
   }
   
 }

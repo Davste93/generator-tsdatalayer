@@ -54,10 +54,18 @@ var apiAccountPermissionDataRepositoryImpl = (function (_super) {
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountPermissionDataRepositoryImpl.prototype.getAccountRule = function (modelItem) {
-        return this.buildRequestAndParseAsT(modelItem.accountRule, 'GET', null);
+        return null; /* this.buildRequestAndParseAsT<apiAccountRule>(
+          modelItem.accountRule,
+          'GET',
+          null
+        );*/
     };
     apiAccountPermissionDataRepositoryImpl.prototype.getAccount = function (modelItem) {
-        return this.buildRequestAndParseAsT(modelItem.account, 'GET', null);
+        return null; /* this.buildRequestAndParseAsT<apiAccount>(
+          modelItem.account,
+          'GET',
+          null
+        );*/
     };
     apiAccountPermissionDataRepositoryImpl = __decorate([
         inversify_1.injectable(),

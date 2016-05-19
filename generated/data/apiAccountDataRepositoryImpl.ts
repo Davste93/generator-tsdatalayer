@@ -1,4 +1,4 @@
-import {ApiRepository, List, Model, ApiRequestDecorator, Parser} from  "tsmvc";
+import {ApiRepository, List, Model, ApiRequestDecorator} from  "tsmvc";
 import {Promise} from "es6-promise";
 import {injectable, inject} from "inversify";
 
@@ -16,11 +16,9 @@ import {apiAccountPermission} from "../models/apiAccountPermission";
 export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> implements apiAccountDataRepository
 {
     constructor(
-      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator,
-      @inject('Parser') requestParser : Parser<any>
+      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator
     ) {
       super();
-      this.parser = requestParser;
       this.requestDecorator = requestDecorator;
     }
 
@@ -88,19 +86,18 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
 
   //Dynamically generated operations from linked resources (the exciting part)
     getAccountEntries(modelItem : apiAccount) : Promise<List<apiAccountEntry>> {
-    return this.buildRequestAndParseAsTList<apiAccountEntry>(
+    return null; /* this.buildRequestAndParseAsTList<apiAccountEntry>(
       modelItem.accountEntries,
       'GET',
-      null,
-      this.parser
-      );
+      null
+    );*/
   }
     getAccountPermissions(modelItem : apiAccount) : Promise<List<apiAccountPermission>> {
-    return this.buildRequestAndParseAsTList<apiAccountPermission>(
+    return null; /* this.buildRequestAndParseAsTList<apiAccountPermission>(
       modelItem.accountPermissions,
       'GET',
       null
-      );
+    );*/
   }
-
+  
 }

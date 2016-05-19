@@ -86,18 +86,18 @@ export class apiAccountPermissionDataRepositoryImpl extends ApiRepository<apiAcc
 
   //Dynamically generated operations from linked resources (the exciting part)
     getAccountRule(modelItem : apiAccountPermission) : Promise<apiAccountRule> {
-    return this.buildRequestAndParseAsT<apiAccountRule>(
+    return null; /* this.buildRequestAndParseAsT<apiAccountRule>(
       modelItem.accountRule,
       'GET',
       null
-      );
+    );*/
   }
     getAccount(modelItem : apiAccountPermission) : Promise<apiAccount> {
-    return this.buildRequestAndParseAsT<apiAccount>(
+    return null; /* this.buildRequestAndParseAsT<apiAccount>(
       modelItem.account,
       'GET',
       null
-      );
+    );*/
   }
   
 }

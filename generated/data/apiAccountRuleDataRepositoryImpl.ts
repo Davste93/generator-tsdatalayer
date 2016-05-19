@@ -85,11 +85,11 @@ export class apiAccountRuleDataRepositoryImpl extends ApiRepository<apiAccountRu
 
   //Dynamically generated operations from linked resources (the exciting part)
     getAccountPermissions(modelItem : apiAccountRule) : Promise<List<apiAccountPermission>> {
-    return this.buildRequestAndParseAsTList<apiAccountPermission>(
+    return null; /* this.buildRequestAndParseAsTList<apiAccountPermission>(
       modelItem.accountPermissions,
       'GET',
       null
-      );
+    );*/
   }
   
 }

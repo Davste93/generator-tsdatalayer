@@ -3,9 +3,9 @@ import {Kernel, IKernel} from "inversify";
 import {BasicAuthDecorator} from "../Auth/BasicAuth";
 import {ApiRequestDecorator} from "tsmvc";
 
-import {apiAccountDataRepository} from '../data/apiAccountDataRepository';
-import {apiAccountDataRepositoryImpl} from '../data/apiAccountDataRepositoryImpl';
-import {apiAccountService} from './apiAccountService';
+import {apiAccountEntryDataRepository} from '../data/apiAccountEntryDataRepository';
+import {apiAccountEntryDataRepositoryImpl} from '../data/apiAccountEntryDataRepositoryImpl';
+import {apiAccountEntryService} from './apiAccountEntryService';
 import {apiAccountRuleDataRepository} from '../data/apiAccountRuleDataRepository';
 import {apiAccountRuleDataRepositoryImpl} from '../data/apiAccountRuleDataRepositoryImpl';
 import {apiAccountRuleService} from './apiAccountRuleService';
@@ -15,9 +15,9 @@ import {apiAccountPermissionService} from './apiAccountPermissionService';
 import {apiFeeDataRepository} from '../data/apiFeeDataRepository';
 import {apiFeeDataRepositoryImpl} from '../data/apiFeeDataRepositoryImpl';
 import {apiFeeService} from './apiFeeService';
-import {apiAccountEntryDataRepository} from '../data/apiAccountEntryDataRepository';
-import {apiAccountEntryDataRepositoryImpl} from '../data/apiAccountEntryDataRepositoryImpl';
-import {apiAccountEntryService} from './apiAccountEntryService';
+import {apiAccountDataRepository} from '../data/apiAccountDataRepository';
+import {apiAccountDataRepositoryImpl} from '../data/apiAccountDataRepositoryImpl';
+import {apiAccountService} from './apiAccountService';
 
 
 
@@ -25,41 +25,41 @@ import {apiAccountEntryService} from './apiAccountEntryService';
 var kernel : IKernel = null;
 
 export class ServiceManager {
-	public static apiAccountService : apiAccountService;
+	public static apiAccountEntryService : apiAccountEntryService;
 	public static apiAccountRuleService : apiAccountRuleService;
 	public static apiAccountPermissionService : apiAccountPermissionService;
 	public static apiFeeService : apiFeeService;
-	public static apiAccountEntryService : apiAccountEntryService;
+	public static apiAccountService : apiAccountService;
 
 
   static bindDependentDataLayers() {
   //Data Layer bindings
-		kernel.bind<apiAccountDataRepository>("apiAccountDataRepository").to(apiAccountDataRepositoryImpl);
+		kernel.bind<apiAccountEntryDataRepository>("apiAccountEntryDataRepository").to(apiAccountEntryDataRepositoryImpl);
 		kernel.bind<apiAccountRuleDataRepository>("apiAccountRuleDataRepository").to(apiAccountRuleDataRepositoryImpl);
 		kernel.bind<apiAccountPermissionDataRepository>("apiAccountPermissionDataRepository").to(apiAccountPermissionDataRepositoryImpl);
 		kernel.bind<apiFeeDataRepository>("apiFeeDataRepository").to(apiFeeDataRepositoryImpl);
-		kernel.bind<apiAccountEntryDataRepository>("apiAccountEntryDataRepository").to(apiAccountEntryDataRepositoryImpl);
+		kernel.bind<apiAccountDataRepository>("apiAccountDataRepository").to(apiAccountDataRepositoryImpl);
 
   }
 
 
   static bindServices() {
   //Service bindings
-		kernel.bind<apiAccountService>("apiAccountService").to(apiAccountService);
+		kernel.bind<apiAccountEntryService>("apiAccountEntryService").to(apiAccountEntryService);
 		kernel.bind<apiAccountRuleService>("apiAccountRuleService").to(apiAccountRuleService);
 		kernel.bind<apiAccountPermissionService>("apiAccountPermissionService").to(apiAccountPermissionService);
 		kernel.bind<apiFeeService>("apiFeeService").to(apiFeeService);
-		kernel.bind<apiAccountEntryService>("apiAccountEntryService").to(apiAccountEntryService);
+		kernel.bind<apiAccountService>("apiAccountService").to(apiAccountService);
 
   }
 
   static resolveServices() {
   //Service resolve
-		ServiceManager.apiAccountService = kernel.get<apiAccountService>("apiAccountService");
+		ServiceManager.apiAccountEntryService = kernel.get<apiAccountEntryService>("apiAccountEntryService");
 		ServiceManager.apiAccountRuleService = kernel.get<apiAccountRuleService>("apiAccountRuleService");
 		ServiceManager.apiAccountPermissionService = kernel.get<apiAccountPermissionService>("apiAccountPermissionService");
 		ServiceManager.apiFeeService = kernel.get<apiFeeService>("apiFeeService");
-		ServiceManager.apiAccountEntryService = kernel.get<apiAccountEntryService>("apiAccountEntryService");
+		ServiceManager.apiAccountService = kernel.get<apiAccountService>("apiAccountService");
 
   }
 
@@ -69,10 +69,10 @@ export class ServiceManager {
     kernel.bind<string>("string").toConstantValue("test").whenTargetNamed("password");
   }
 
-	static bindParsers() {
-		kernel.bind
-	}
 
+	static bindParsers() {
+		kernel.bind<ApiRequestDecorator>("ApiRequestDecorator").to(BasicAuthDecorator);
+	}
 
   //Equivalent of static constructor, called when this class is imported.
   static initialize(){

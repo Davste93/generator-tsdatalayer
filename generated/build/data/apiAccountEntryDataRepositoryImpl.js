@@ -54,7 +54,11 @@ var apiAccountEntryDataRepositoryImpl = (function (_super) {
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountEntryDataRepositoryImpl.prototype.getAccount = function (modelItem) {
-        return this.buildRequestAndParseAsT(modelItem.account, 'GET', null);
+        return null; /* this.buildRequestAndParseAsT<apiAccount>(
+          modelItem.account,
+          'GET',
+          null
+        );*/
     };
     apiAccountEntryDataRepositoryImpl = __decorate([
         inversify_1.injectable(),

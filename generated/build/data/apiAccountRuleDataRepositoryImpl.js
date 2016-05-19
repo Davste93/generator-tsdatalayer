@@ -54,7 +54,11 @@ var apiAccountRuleDataRepositoryImpl = (function (_super) {
     };
     //Dynamically generated operations from linked resources (the exciting part)
     apiAccountRuleDataRepositoryImpl.prototype.getAccountPermissions = function (modelItem) {
-        return this.buildRequestAndParseAsTList(modelItem.accountPermissions, 'GET', null);
+        return null; /* this.buildRequestAndParseAsTList<apiAccountPermission>(
+          modelItem.accountPermissions,
+          'GET',
+          null
+        );*/
     };
     apiAccountRuleDataRepositoryImpl = __decorate([
         inversify_1.injectable(),
