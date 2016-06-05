@@ -32,9 +32,6 @@ var apiAccountEntryService = (function () {
     apiAccountEntryService.prototype.saveItem = function (modelItem, modelId) {
         return this.apiAccountEntryDataLayer.saveItem(modelItem, modelId);
     };
-    apiAccountEntryService.prototype.getAccount = function (modelItem) {
-        return this.apiAccountEntryDataLayer.getAccount(modelItem);
-    };
     apiAccountEntryService = __decorate([
         inversify_1.injectable(),
         __param(0, inversify_1.inject('apiAccountDataRepository')),

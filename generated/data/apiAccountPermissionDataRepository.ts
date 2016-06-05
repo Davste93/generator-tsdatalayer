@@ -10,7 +10,5 @@ import {apiAccount} from "../models/apiAccount";
 
 
 export interface apiAccountPermissionDataRepository extends DataRepository<apiAccountPermission> {
-  //Dynamically generated operations from linked resources
-    getAccountRule(modelItem : apiAccountPermission) : Promise<apiAccountRule>;
-    getAccount(modelItem : apiAccountPermission) : Promise<apiAccount>;
-  }
+
+}

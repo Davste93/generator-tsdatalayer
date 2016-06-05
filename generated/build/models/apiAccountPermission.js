@@ -10,6 +10,46 @@ var apiAccountPermission = (function (_super) {
     function apiAccountPermission() {
         _super.apply(this, arguments);
     }
+    Object.defineProperty(apiAccountPermission.prototype, "allow", {
+        get: function () {
+            return this._allow;
+        },
+        set: function (value) {
+            this._allow = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(apiAccountPermission.prototype, "accountRule", {
+        get: function () {
+            return this._accountRule;
+        },
+        set: function (value) {
+            this._accountRule = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(apiAccountPermission.prototype, "onBehalfOf", {
+        get: function () {
+            return this._onBehalfOf;
+        },
+        set: function (value) {
+            this._onBehalfOf = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(apiAccountPermission.prototype, "account", {
+        get: function () {
+            return this._account;
+        },
+        set: function (value) {
+            this._account = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return apiAccountPermission;
 }(tsmvc_1.Model));
 exports.apiAccountPermission = apiAccountPermission;

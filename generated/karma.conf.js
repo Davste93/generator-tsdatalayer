@@ -7,26 +7,32 @@ module.exports = function(config) {
     frameworks: ['jasmine', 'browserify'],
     files: [
       'app.ts',
-      {pattern: '**/*.spec.ts', included: false}
+      {pattern: 'spec/**/*.spec.ts'}
     ],
     exclude: [
     ],
     preprocessors: {
       'app.ts' :  ['browserify'],
-      '**/*.spec.ts' :  ['browserify']
+      'spec/**/*.spec.ts' :  ['browserify']
     },
     reporters: ['progress'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome'],
+    browsers: ['Chrome_without_security'],
     singleRun: false,
     browserify: {
       debug: true,
       transform: ['brfs'],
 	      plugin: ['tsify'],
 	      extensions: ['.ts']
+    },
+    customLaunchers: {
+      Chrome_without_security: {
+        base: 'Chrome',
+        flags: ['--disable-web-security']
+      }
     },
     concurrency: Infinity,
     plugins: [

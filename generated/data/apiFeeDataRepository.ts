@@ -8,5 +8,5 @@ import {apiFee} from "../models/apiFee";
 
 
 export interface apiFeeDataRepository extends DataRepository<apiFee> {
-  //Dynamically generated operations from linked resources
-  }
+
+}

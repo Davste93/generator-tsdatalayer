@@ -19,16 +19,13 @@ var inversify_1 = require("inversify");
 var apiAccount_1 = require("../models/apiAccount");
 var apiAccountDataRepositoryImpl = (function (_super) {
     __extends(apiAccountDataRepositoryImpl, _super);
-    function apiAccountDataRepositoryImpl(requestDecorator) {
+    function apiAccountDataRepositoryImpl(requestDecorator, requestParser) {
         _super.call(this);
         this.requestDecorator = requestDecorator;
+        this.parser = requestParser;
     }
     apiAccountDataRepositoryImpl.prototype.getModelType = function () {
         return apiAccount_1.apiAccount;
-    };
-    //TODO: This method probably must be removed/optional.
-    apiAccountDataRepositoryImpl.prototype.getUrl = function () {
-        return 'https://api.fundsrouter.com/accounts;';
     };
     //CRUD Operations - Only here for the sake of verbosity and flexibility.
     //Any operations that have standard http://url/up/to/entity/{id} are
@@ -52,24 +49,10 @@ var apiAccountDataRepositoryImpl = (function (_super) {
     apiAccountDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
         return this.buildRequestAndParseAsModel('https://api.fundsrouter.com/accounts/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
-    //Dynamically generated operations from linked resources (the exciting part)
-    apiAccountDataRepositoryImpl.prototype.getAccountEntries = function (modelItem) {
-        return null; /* this.buildRequestAndParseAsTList<apiAccountEntry>(
-          modelItem.accountEntries,
-          'GET',
-          null
-        );*/
-    };
-    apiAccountDataRepositoryImpl.prototype.getAccountPermissions = function (modelItem) {
-        return null; /* this.buildRequestAndParseAsTList<apiAccountPermission>(
-          modelItem.accountPermissions,
-          'GET',
-          null
-        );*/
-    };
     apiAccountDataRepositoryImpl = __decorate([
         inversify_1.injectable(),
-        __param(0, inversify_1.inject('ApiRequestDecorator'))
+        __param(0, inversify_1.inject('ApiRequestDecorator')),
+        __param(1, inversify_1.inject('Parser'))
     ], apiAccountDataRepositoryImpl);
     return apiAccountDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));

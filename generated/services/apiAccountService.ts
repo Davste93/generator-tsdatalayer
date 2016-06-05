@@ -55,10 +55,5 @@ saveItem(modelItem : apiAccount, modelId : string) : Promise<apiAccount> {
 }
 
 
-  getAccountEntries(modelItem : apiAccount) : Promise<List<apiAccountEntry>> {
-    return this.apiAccountDataLayer.getAccountEntries(modelItem);
-  }
-  getAccountPermissions(modelItem : apiAccount) : Promise<List<apiAccountPermission>> {
-    return this.apiAccountDataLayer.getAccountPermissions(modelItem);
-  }
+
 }

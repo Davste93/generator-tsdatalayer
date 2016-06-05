@@ -10,6 +10,26 @@ var apiLegalEntity = (function (_super) {
     function apiLegalEntity() {
         _super.apply(this, arguments);
     }
+    Object.defineProperty(apiLegalEntity.prototype, "userRef", {
+        get: function () {
+            return this._userRef;
+        },
+        set: function (value) {
+            this._userRef = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(apiLegalEntity.prototype, "accounts", {
+        get: function () {
+            return this._accounts;
+        },
+        set: function (value) {
+            this._accounts = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return apiLegalEntity;
 }(tsmvc_1.Model));
 exports.apiLegalEntity = apiLegalEntity;

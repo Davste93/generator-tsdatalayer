@@ -14,20 +14,17 @@ describe("ApiAccountEntryService E2E", () =>{
   })
 
 
-  describe("find", () => {
-    it("should call dataLayer", (done)=>{
-
-      service.findAll().then(f => {
-        console.log(f);
-        done();
-      }).catch(c => {
-        console.log(c);
-        done();
-      });
-
-
-    });
-  });
+  // describe("find", () => {
+  //   it("should call dataLayer", (done)=>{
+  //     service.findAll().then(f => {
+  //       console.log(f);
+  //       done();
+  //     }).catch(c => {
+  //       console.log(c);
+  //       done();
+  //     });
+  //   });
+  // });
 
   describe("findAll", () => {
     it("should call dataLayer", ()=>{
@@ -72,17 +69,4 @@ describe("ApiAccountEntryService E2E", () =>{
       expect(service.apiAccountEntryDataLayer.saveItem).toHaveBeenCalledWith(model, mockID);
     });
   });
-
-  //Custom methods:
-  // describe("getAccount", () => {
-  //   it("should call dataLayer", ()=>{
-  //     spyOn(service.apiAccountEntryDataLayer, "getAccount");
-  //
-  //     var model = new apiAccountEntry();
-  //
-  //     service.getAccount(model);
-  //     expect(service.apiAccountEntryDataLayer.saveItem).toHaveBeenCalledWith(model, mockID);
-  //   });
-  // });
-
 });

@@ -20,16 +20,13 @@ var apiFee_1 = require("../models/apiFee");
 //Linked Resources
 var apiFeeDataRepositoryImpl = (function (_super) {
     __extends(apiFeeDataRepositoryImpl, _super);
-    function apiFeeDataRepositoryImpl(requestDecorator) {
+    function apiFeeDataRepositoryImpl(requestDecorator, requestParser) {
         _super.call(this);
         this.requestDecorator = requestDecorator;
+        this.parser = requestParser;
     }
     apiFeeDataRepositoryImpl.prototype.getModelType = function () {
         return apiFee_1.apiFee;
-    };
-    //TODO: This method probably must be removed/optional.
-    apiFeeDataRepositoryImpl.prototype.getUrl = function () {
-        return 'https://api.fundsrouter.com/fees;';
     };
     //CRUD Operations - Only here for the sake of verbosity and flexibility.
     //Any operations that have standard http://url/up/to/entity/{id} are
@@ -55,7 +52,8 @@ var apiFeeDataRepositoryImpl = (function (_super) {
     };
     apiFeeDataRepositoryImpl = __decorate([
         inversify_1.injectable(),
-        __param(0, inversify_1.inject('ApiRequestDecorator'))
+        __param(0, inversify_1.inject('ApiRequestDecorator')),
+        __param(1, inversify_1.inject('Parser'))
     ], apiFeeDataRepositoryImpl);
     return apiFeeDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));

@@ -46,9 +46,5 @@ saveItem(modelItem : <%= model.name %>, modelId : string) : Promise<<%= model.na
 }
 
 
-<% Object.keys(model.operations.custom).forEach( k => {  ops = model.operations.custom[k]; -%>
-  <%= k %>(modelItem : <%= model.name %>) : Promise<<%- ops.isList? `List<${ops.model}>` : ops.model %>> {
-    return this.<%= model.name %>DataLayer.<%= k %>(modelItem);
-  }
-<% }) -%>
+
 }

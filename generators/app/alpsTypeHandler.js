@@ -12,8 +12,6 @@ app.convertibleTypes = {
 };
 
 
-
-
 app.isNativeOrConvertible = function(type) {
   return (modelutils.isNativeType(type) || !_.isUndefined(app.convertibleTypes[type])) ;
 };

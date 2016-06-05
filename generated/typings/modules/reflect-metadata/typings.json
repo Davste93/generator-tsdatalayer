@@ -1,7 +1,7 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "/home/david/Documents/Code/generator-tsdatalayer/generated/node_modules/reflect-metadata/package.json",
+    "src": "/home/dstellini/Documents/code/generator-tsdatalayer/generated/node_modules/reflect-metadata/package.json",
     "raw": "npm:reflect-metadata",
     "main": "Reflect.js",
     "typings": "typings.d.ts",

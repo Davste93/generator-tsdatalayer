@@ -19,16 +19,13 @@ var inversify_1 = require("inversify");
 var apiAccountRule_1 = require("../models/apiAccountRule");
 var apiAccountRuleDataRepositoryImpl = (function (_super) {
     __extends(apiAccountRuleDataRepositoryImpl, _super);
-    function apiAccountRuleDataRepositoryImpl(requestDecorator) {
+    function apiAccountRuleDataRepositoryImpl(requestDecorator, requestParser) {
         _super.call(this);
         this.requestDecorator = requestDecorator;
+        this.parser = requestParser;
     }
     apiAccountRuleDataRepositoryImpl.prototype.getModelType = function () {
         return apiAccountRule_1.apiAccountRule;
-    };
-    //TODO: This method probably must be removed/optional.
-    apiAccountRuleDataRepositoryImpl.prototype.getUrl = function () {
-        return 'https://api.fundsrouter.com/accountrules;';
     };
     //CRUD Operations - Only here for the sake of verbosity and flexibility.
     //Any operations that have standard http://url/up/to/entity/{id} are
@@ -52,17 +49,10 @@ var apiAccountRuleDataRepositoryImpl = (function (_super) {
     apiAccountRuleDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
         return this.buildRequestAndParseAsModel('https://api.fundsrouter.com/accountrules/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
-    //Dynamically generated operations from linked resources (the exciting part)
-    apiAccountRuleDataRepositoryImpl.prototype.getAccountPermissions = function (modelItem) {
-        return null; /* this.buildRequestAndParseAsTList<apiAccountPermission>(
-          modelItem.accountPermissions,
-          'GET',
-          null
-        );*/
-    };
     apiAccountRuleDataRepositoryImpl = __decorate([
         inversify_1.injectable(),
-        __param(0, inversify_1.inject('ApiRequestDecorator'))
+        __param(0, inversify_1.inject('ApiRequestDecorator')),
+        __param(1, inversify_1.inject('Parser'))
     ], apiAccountRuleDataRepositoryImpl);
     return apiAccountRuleDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));

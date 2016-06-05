@@ -50,7 +50,5 @@ saveItem(modelItem : apiAccountEntry, modelId : string) : Promise<apiAccountEntr
 }
 
 
-  getAccount(modelItem : apiAccountEntry) : Promise<apiAccount> {
-    return this.apiAccountEntryDataLayer.getAccount(modelItem);
-  }
+
 }

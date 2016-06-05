@@ -20,6 +20,8 @@ var BasicAuthDecorator = (function () {
     }
     BasicAuthDecorator.prototype.decorateRequest = function (request) {
         request.headers = _.extend(request.headers || {}, {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'Authorization': 'Basic ' + this._base64EncodedAuthHeader
         });
         return request;

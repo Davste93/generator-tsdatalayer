@@ -9,6 +9,5 @@ import {apiAccount} from "../models/apiAccount";
 
 
 export interface apiAccountEntryDataRepository extends DataRepository<apiAccountEntry> {
-  //Dynamically generated operations from linked resources
-    getAccount(modelItem : apiAccountEntry) : Promise<apiAccount>;
-  }
+
+}

@@ -1,4 +1,4 @@
-import {ApiRepository, List, Model, ApiRequestDecorator} from  "tsmvc";
+import {ApiRepository, List, Model, ApiRequestDecorator, Parser} from  "tsmvc";
 import {Promise} from "es6-promise";
 import {injectable, inject} from "inversify";
 
@@ -14,20 +14,18 @@ import {apiFeeDataRepository} from "./apiFeeDataRepository";
 export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements apiFeeDataRepository
 {
     constructor(
-      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator
+      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator,
+      @inject('Parser') requestParser : Parser<apiFee>
     ) {
       super();
       this.requestDecorator = requestDecorator;
+      this.parser = requestParser;
     }
 
   getModelType() : {new (): apiFee} {
     return apiFee;
   }
 
-  //TODO: This method probably must be removed/optional.
-  getUrl() : string{
-    return 'https://api.fundsrouter.com/fees;'
-  }
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
   //Any operations that have standard http://url/up/to/entity/{id} are
@@ -82,6 +80,5 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
     );
   }
 
-  //Dynamically generated operations from linked resources (the exciting part)
-  
+
 }

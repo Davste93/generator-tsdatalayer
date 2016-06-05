@@ -32,9 +32,6 @@ var apiAccountRuleService = (function () {
     apiAccountRuleService.prototype.saveItem = function (modelItem, modelId) {
         return this.apiAccountRuleDataLayer.saveItem(modelItem, modelId);
     };
-    apiAccountRuleService.prototype.getAccountPermissions = function (modelItem) {
-        return this.apiAccountRuleDataLayer.getAccountPermissions(modelItem);
-    };
     apiAccountRuleService = __decorate([
         inversify_1.injectable(),
         __param(0, inversify_1.inject('apiAccountPermissionDataRepository')),

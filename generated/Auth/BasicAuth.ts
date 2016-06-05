@@ -19,6 +19,8 @@ import {inject, injectable, named} from "inversify";
 
     decorateRequest(request : any) : any {
       request.headers = _.extend(request.headers || {}, {
+        'Accept' : 'application/json',
+        'Content-Type' : 'application/json',
         'Authorization' : 'Basic ' + this._base64EncodedAuthHeader
       })
 

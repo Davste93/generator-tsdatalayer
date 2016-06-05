@@ -16,8 +16,7 @@
         "data/**.ts",
         "services/**.ts",
         "spec/**/*.ts",
-        "typings/index.d.ts",
-        "customTypings/**.d.ts"
+        "typings/index.d.ts"
     ],
     "atom": {
         "rewriteTsconfig": true
@@ -49,9 +48,9 @@
         "services/apiFeeService.ts",
         "services/serviceManager.ts",
         "spec/mocks/MockDataRepository.ts",
+        "spec/service/apiAccount.e2e.spec.ts",
         "spec/service/apiAccountEntryService.e2e.spec.ts",
         "spec/service/apiAccountEntryService.spec.ts",
-        "typings/index.d.ts",
-        "customTypings/typings.d.ts"
+        "typings/index.d.ts"
     ]
 }

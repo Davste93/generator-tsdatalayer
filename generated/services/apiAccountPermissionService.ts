@@ -55,10 +55,5 @@ saveItem(modelItem : apiAccountPermission, modelId : string) : Promise<apiAccoun
 }
 
 
-  getAccountRule(modelItem : apiAccountPermission) : Promise<apiAccountRule> {
-    return this.apiAccountPermissionDataLayer.getAccountRule(modelItem);
-  }
-  getAccount(modelItem : apiAccountPermission) : Promise<apiAccount> {
-    return this.apiAccountPermissionDataLayer.getAccount(modelItem);
-  }
+
 }

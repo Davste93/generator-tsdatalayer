@@ -10,6 +10,16 @@ var apiFee = (function (_super) {
     function apiFee() {
         _super.apply(this, arguments);
     }
+    Object.defineProperty(apiFee.prototype, "fixed", {
+        get: function () {
+            return this._fixed;
+        },
+        set: function (value) {
+            this._fixed = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     return apiFee;
 }(tsmvc_1.Model));
 exports.apiFee = apiFee;

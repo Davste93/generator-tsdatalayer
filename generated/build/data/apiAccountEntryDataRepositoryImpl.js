@@ -19,16 +19,13 @@ var inversify_1 = require("inversify");
 var apiAccountEntry_1 = require("../models/apiAccountEntry");
 var apiAccountEntryDataRepositoryImpl = (function (_super) {
     __extends(apiAccountEntryDataRepositoryImpl, _super);
-    function apiAccountEntryDataRepositoryImpl(requestDecorator) {
+    function apiAccountEntryDataRepositoryImpl(requestDecorator, requestParser) {
         _super.call(this);
         this.requestDecorator = requestDecorator;
+        this.parser = requestParser;
     }
     apiAccountEntryDataRepositoryImpl.prototype.getModelType = function () {
         return apiAccountEntry_1.apiAccountEntry;
-    };
-    //TODO: This method probably must be removed/optional.
-    apiAccountEntryDataRepositoryImpl.prototype.getUrl = function () {
-        return 'https://api.fundsrouter.com/accountentries;';
     };
     //CRUD Operations - Only here for the sake of verbosity and flexibility.
     //Any operations that have standard http://url/up/to/entity/{id} are
@@ -52,17 +49,10 @@ var apiAccountEntryDataRepositoryImpl = (function (_super) {
     apiAccountEntryDataRepositoryImpl.prototype.saveItem = function (modelItem, modelId) {
         return this.buildRequestAndParseAsModel('https://api.fundsrouter.com/accountentries/{id}/'.replace('{id}', modelId), 'PUT', modelItem);
     };
-    //Dynamically generated operations from linked resources (the exciting part)
-    apiAccountEntryDataRepositoryImpl.prototype.getAccount = function (modelItem) {
-        return null; /* this.buildRequestAndParseAsT<apiAccount>(
-          modelItem.account,
-          'GET',
-          null
-        );*/
-    };
     apiAccountEntryDataRepositoryImpl = __decorate([
         inversify_1.injectable(),
-        __param(0, inversify_1.inject('ApiRequestDecorator'))
+        __param(0, inversify_1.inject('ApiRequestDecorator')),
+        __param(1, inversify_1.inject('Parser'))
     ], apiAccountEntryDataRepositoryImpl);
     return apiAccountEntryDataRepositoryImpl;
 }(tsmvc_1.ApiRepository));

@@ -1,4 +1,4 @@
-import {ApiRepository, List, Model, ApiRequestDecorator} from  "tsmvc";
+import {ApiRepository, List, Model, ApiRequestDecorator, Parser} from  "tsmvc";
 import {Promise} from "es6-promise";
 import {injectable, inject} from "inversify";
 
@@ -16,20 +16,18 @@ import {apiAccountPermission} from "../models/apiAccountPermission";
 export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> implements apiAccountDataRepository
 {
     constructor(
-      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator
+      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator,
+      @inject('Parser') requestParser : Parser<apiAccount>
     ) {
       super();
       this.requestDecorator = requestDecorator;
+      this.parser = requestParser;
     }
 
   getModelType() : {new (): apiAccount} {
     return apiAccount;
   }
 
-  //TODO: This method probably must be removed/optional.
-  getUrl() : string{
-    return 'https://api.fundsrouter.com/accounts;'
-  }
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
   //Any operations that have standard http://url/up/to/entity/{id} are
@@ -84,20 +82,5 @@ export class apiAccountDataRepositoryImpl extends ApiRepository<apiAccount> impl
     );
   }
 
-  //Dynamically generated operations from linked resources (the exciting part)
-    getAccountEntries(modelItem : apiAccount) : Promise<List<apiAccountEntry>> {
-    return null; /* this.buildRequestAndParseAsTList<apiAccountEntry>(
-      modelItem.accountEntries,
-      'GET',
-      null
-    );*/
-  }
-    getAccountPermissions(modelItem : apiAccount) : Promise<List<apiAccountPermission>> {
-    return null; /* this.buildRequestAndParseAsTList<apiAccountPermission>(
-      modelItem.accountPermissions,
-      'GET',
-      null
-    );*/
-  }
-  
+
 }
