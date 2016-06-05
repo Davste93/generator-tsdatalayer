@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "blue-tape": "^0.2.0",
+    "brfs": "^1.4.3",
     "browserify": "^13.0.1",
     "chai": "^3.5.0",
     "jasmine": "^2.4.1",
@@ -32,7 +33,9 @@
     "karma-chrome-launcher": "^1.0.1",
     "karma-jasmine": "^1.0.2",
     "karma-requirejs": "^1.0.0",
+    "karma-source-map-support": "^1.1.0",
     "requirejs": "^2.2.0",
+    "tsify": "^0.16.0",
     "watchify": "^3.7.0"
   }
 }
