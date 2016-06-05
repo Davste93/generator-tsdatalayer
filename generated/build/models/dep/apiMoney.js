@@ -4,32 +4,34 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var tsmvc_1 = require("tsmvc");
+var typedjson_1 = require("typedjson");
 var apiMoney = (function (_super) {
     __extends(apiMoney, _super);
     function apiMoney() {
         _super.apply(this, arguments);
     }
-    Object.defineProperty(apiMoney.prototype, "currency", {
-        get: function () {
-            return this._currency;
-        },
-        set: function (value) {
-            this._currency = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
-    Object.defineProperty(apiMoney.prototype, "value", {
-        get: function () {
-            return this._value;
-        },
-        set: function (value) {
-            this._value = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    __decorate([
+        typedjson_1.JsonMember, 
+        __metadata('design:type', String)
+    ], apiMoney.prototype, "currency", void 0);
+    __decorate([
+        typedjson_1.JsonMember, 
+        __metadata('design:type', Number)
+    ], apiMoney.prototype, "value", void 0);
+    apiMoney = __decorate([
+        typedjson_1.JsonObject, 
+        __metadata('design:paramtypes', [])
+    ], apiMoney);
     return apiMoney;
 }(tsmvc_1.Model));
 exports.apiMoney = apiMoney;

@@ -1,92 +1,46 @@
 "use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var inversify_1 = require("inversify");
 require("reflect-metadata");
-var Dog = (function () {
-    function Dog() {
+//
+// function logType(target : any, key : string) {
+//   var t = Reflect.getMetadata("design:type", target, key);
+//   console.log(`${key} type: ${t.name}`);
+// }
+//
+// class Demo{
+//   @logType // apply property decorator
+//   public attr1 : string;
+// }
+const typedjson_1 = require("typedjson");
+let Person = class Person {
+    getFullname() {
+        return this.firstName + " " + this.lastName;
     }
-    return Dog;
-}());
-var Human = (function () {
-    function Human() {
-    }
-    return Human;
-}());
-var HateosParser = (function () {
-    function HateosParser() {
-    }
-    HateosParser.prototype.parse = function () {
-        return "Hello HATEOAS!";
-    };
-    HateosParser = __decorate([
-        inversify_1.injectable()
-    ], HateosParser);
-    return HateosParser;
-}());
-var ApiParser = (function () {
-    function ApiParser() {
-    }
-    ApiParser.prototype.parse = function () {
-        return "Hello JSON!";
-    };
-    ApiParser = __decorate([
-        inversify_1.injectable()
-    ], ApiParser);
-    return ApiParser;
-}());
-var DataRepository = (function () {
-    function DataRepository() {
-    }
-    return DataRepository;
-}());
-var DogDataRepository = (function (_super) {
-    __extends(DogDataRepository, _super);
-    function DogDataRepository(parser) {
-        _super.call(this);
-        this.parser = parser;
-    }
-    DogDataRepository = __decorate([
-        inversify_1.injectable(),
-        __param(0, inversify_1.inject('Parser'))
-    ], DogDataRepository);
-    return DogDataRepository;
-}(DataRepository));
-var HumanDataRepository = (function (_super) {
-    __extends(HumanDataRepository, _super);
-    function HumanDataRepository(parser) {
-        _super.call(this);
-        this.parser = parser;
-    }
-    HumanDataRepository = __decorate([
-        inversify_1.injectable(),
-        __param(0, inversify_1.inject('Parser'))
-    ], HumanDataRepository);
-    return HumanDataRepository;
-}(DataRepository));
-var kernel = new inversify_1.Kernel();
-kernel.bind("DogDataRepository").to(DogDataRepository);
-kernel.bind("HumanDataRepository").to(HumanDataRepository);
-console.log('got here1');
-kernel.bind("Parser").to(HateosParser).when(function (request) {
-    return request.parentRequest.serviceIdentifier === 'DogDataRepository';
-});
-kernel.bind("Parser").to(ApiParser).when(function (request) {
-    return request.parentRequest.serviceIdentifier !== 'DogDataRepository';
-});
-var dogDataRepository = kernel.get("DogDataRepository");
-var humanDataRepository = kernel.get("HumanDataRepository");
-console.log(dogDataRepository.parser.parse());
-console.log(humanDataRepository.parser.parse());
+};
+__decorate([
+    typedjson_1.JsonMember, 
+    __metadata('design:type', String)
+], Person.prototype, "firstName", void 0);
+__decorate([
+    typedjson_1.JsonMember, 
+    __metadata('design:type', String)
+], Person.prototype, "lastName", void 0);
+Person = __decorate([
+    typedjson_1.JsonObject, 
+    __metadata('design:paramtypes', [])
+], Person);
+function test(log) {
+    var person = typedjson_1.TypedJSON.parse('{ "firstName": "John", "lastName": "Doe" }', Person);
+    person instanceof Person; // true
+    person.getFullname(); // "John Doe"
+    return person.getFullname() === "John Doe" && person instanceof Person;
+}
+exports.test = test;

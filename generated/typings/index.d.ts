@@ -6,3 +6,4 @@
 /// <reference path="modules/reflect-metadata/index.d.ts" />
 /// <reference path="modules/request/index.d.ts" />
 /// <reference path="modules/tsmvc/index.d.ts" />
+/// <reference path="modules/typedjson/index.d.ts" />

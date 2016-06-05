@@ -1,73 +1,35 @@
 import {injectable, inject, Kernel, IKernel, IRequest} from "inversify";
 import "reflect-metadata";
+//
+// function logType(target : any, key : string) {
+//   var t = Reflect.getMetadata("design:type", target, key);
+//   console.log(`${key} type: ${t.name}`);
+// }
+//
+// class Demo{
+//   @logType // apply property decorator
+//   public attr1 : string;
+// }
 
-interface Parser<T>{
-  parse() : string;
+import {JsonObject, JsonMember, TypedJSON} from "typedjson";
+@JsonObject
+class Person {
+    @JsonMember
+    firstName: string;
+
+    @JsonMember
+    lastName: string;
+
+    public getFullname() {
+        return this.firstName + " " + this.lastName;
+    }
 }
 
-class Dog {
-  name : string;
-}
-class Human{
-  surname : string;
-}
+export function test(log: boolean) {
+    var person = TypedJSON.parse('{ "firstName": "John", "lastName": "Doe" }', Person);
 
-@injectable()
-class HateosParser<T> implements Parser<T> {
-  parse() : string {
-    return "Hello HATEOAS!";
+    person instanceof Person; // true
+    person.getFullname(); // "John Doe"
+
+    return person.getFullname() === "John Doe" && person instanceof Person;
   }
-}
-
-@injectable()
-class ApiParser<T> implements Parser<T> {
-  parse() : string {
-    return "Hello JSON!";
-  }
-}
-
-
-abstract class DataRepository<T> {
-  parser : Parser<T>;
-}
-
-@injectable()
-class DogDataRepository extends DataRepository<Dog> {
-
-  constructor(
-    @inject('Parser') parser : Parser<Dog>
-  ) {
-    super();
-    this.parser = parser;
-  }
-}
-
-@injectable()
-class HumanDataRepository extends DataRepository<Human> {
-  constructor(
-    @inject('Parser')  parser : Parser<Human>
-  ) {
-    super();
-    this.parser = parser;
-  }
-}
-
-let kernel : IKernel = new Kernel();
-
-kernel.bind<DogDataRepository>("DogDataRepository").to(DogDataRepository);
-kernel.bind<HumanDataRepository>("HumanDataRepository").to(HumanDataRepository);
-
-console.log('got here1');
-kernel.bind<Parser<any>>("Parser").to(HateosParser).when((request: IRequest) => {
-    return request.parentRequest.serviceIdentifier === 'DogDataRepository';
-});
-
-kernel.bind<Parser<any>>("Parser").to(ApiParser).when((request: IRequest) => {
-    return request.parentRequest.serviceIdentifier !== 'DogDataRepository';
-});
-
-var dogDataRepository = kernel.get<DogDataRepository>("DogDataRepository");
-var humanDataRepository = kernel.get<HumanDataRepository>("HumanDataRepository");
-
-console.log(dogDataRepository.parser.parse());
-console.log(humanDataRepository.parser.parse());

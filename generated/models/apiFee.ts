@@ -1,14 +1,11 @@
 import {Model, indexKey, List} from  "tsmvc";
+import {JsonObject, JsonMember} from "typedjson";
 
 import {apiMoney} from "./dep/apiMoney";
 
+
+@JsonObject
 export class apiFee  extends Model {
-    private _fixed : apiMoney;
-    get fixed():apiMoney {
-        return this._fixed;
-    }
-    set fixed(value : apiMoney) {
-        this._fixed = value;
-    }
-    
+    @JsonMember
+    fixed : apiMoney;
 }
