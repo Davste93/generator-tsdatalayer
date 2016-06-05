@@ -60,7 +60,7 @@ var DogDataRepository = (function (_super) {
     }
     DogDataRepository = __decorate([
         inversify_1.injectable(),
-        __param(0, inversify_1.inject('Parser<Dog>'))
+        __param(0, inversify_1.inject('Parser'))
     ], DogDataRepository);
     return DogDataRepository;
 }(DataRepository));
@@ -77,22 +77,16 @@ var HumanDataRepository = (function (_super) {
     return HumanDataRepository;
 }(DataRepository));
 var kernel = new inversify_1.Kernel();
-//kernel.bind<Parser<any>>("Parser").to(ApiParser);
-//kernel.bind<Parser<any>>("Parser").to(HateosParser);
-// kernel.bind<Parser<Human>>("Parser<Human>").to(HateosParser);
-// kernel.bind<Parser<any>>("Parser").to(HateosParser).whenTargetNamed("DogDataRepository");
-// kernel.bind<Parser<Human>>("Parser").to(ApiParser).whenTargetNamed("HumanDataRepository");
 kernel.bind("DogDataRepository").to(DogDataRepository);
+kernel.bind("HumanDataRepository").to(HumanDataRepository);
 console.log('got here1');
-kernel.bind("Parser<Dog>").to(HateosParser).when(function (request) {
-    debugger;
-    console.log('got here 2');
-    return true;
+kernel.bind("Parser").to(HateosParser).when(function (request) {
+    return request.parentRequest.serviceIdentifier === 'DogDataRepository';
 });
-kernel.bind("Parser<Dog>").to(ApiParser).when(function (request) {
-    debugger;
-    console.log('got here 3');
-    return false;
+kernel.bind("Parser").to(ApiParser).when(function (request) {
+    return request.parentRequest.serviceIdentifier !== 'DogDataRepository';
 });
 var dogDataRepository = kernel.get("DogDataRepository");
+var humanDataRepository = kernel.get("HumanDataRepository");
 console.log(dogDataRepository.parser.parse());
+console.log(humanDataRepository.parser.parse());

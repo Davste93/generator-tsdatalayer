@@ -45,6 +45,9 @@ var ServiceManager = (function () {
         kernel.bind("string").toConstantValue("test").whenTargetNamed("username");
         kernel.bind("string").toConstantValue("test").whenTargetNamed("password");
     };
+    ServiceManager.bindParsers = function () {
+        kernel.bind("ApiRequestDecorator").to(BasicAuth_1.BasicAuthDecorator);
+    };
     //Equivalent of static constructor, called when this class is imported.
     ServiceManager.initialize = function () {
         if (kernel != null) {

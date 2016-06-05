@@ -23,6 +23,16 @@
     "urlsafe-base64": "^1.0.0"
   },
   "devDependencies": {
-    "jasmine": "^2.4.1"
+    "blue-tape": "^0.2.0",
+    "browserify": "^13.0.1",
+    "chai": "^3.5.0",
+    "jasmine": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-browserify": "^5.0.5",
+    "karma-chrome-launcher": "^1.0.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-requirejs": "^1.0.0",
+    "requirejs": "^2.2.0",
+    "watchify": "^3.7.0"
   }
 }

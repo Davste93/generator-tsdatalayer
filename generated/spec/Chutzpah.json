@@ -1,9 +1,0 @@
-{
-    "Compile": {
-        "Mode": "External",
-        "Extensions": [ ".ts" ],
-        "ExtensionsWithNoOutput": [ ".d.ts" ],
-        "SourceDirectory": "../",
-        "OutDirectory": "../"
-    }
-}
