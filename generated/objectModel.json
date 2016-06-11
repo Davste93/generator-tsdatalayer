@@ -49,9 +49,8 @@
 			},
 			"custom": {
 				"getAccount": {
-					"url": "https://api.fundsrouter.com/profile/accounts",
+					"url": "https://api.fundsrouter.com/accounts/{{account}}",
 					"model": "apiAccount",
-					"accessorProperty": "account",
 					"isList": false
 				}
 			}
@@ -111,35 +110,11 @@
 			},
 			"custom": {
 				"getAccountPermissions": {
-					"url": "https://api.fundsrouter.com/profile/accountpermissions",
+					"url": "https://api.fundsrouter.com/accountpermissions/{{accountPermissions}}",
 					"model": "apiAccountPermission",
-					"accessorProperty": "accountPermissions",
 					"isList": true
 				}
 			}
-		}
-	},
-	{
-		"name": "apiFee",
-		"properties": [
-			{
-				"title": "Fixed",
-				"readOnly": false,
-				"type": "apiMoney",
-				"isDepEntity": true,
-				"name": "fixed"
-			}
-		],
-		"isDepEntity": false,
-		"operations": {
-			"crud": {
-				"create": "https://api.fundsrouter.com/fees",
-				"find": "https://api.fundsrouter.com/fees/{id}/",
-				"findAll": "https://api.fundsrouter.com/fees",
-				"update": "https://api.fundsrouter.com/fees/{id}/",
-				"delete": "https://api.fundsrouter.com/fees/{id}/"
-			},
-			"custom": {}
 		}
 	},
 	{
@@ -187,15 +162,13 @@
 			},
 			"custom": {
 				"getAccountRule": {
-					"url": "https://api.fundsrouter.com/profile/accountrules",
+					"url": "https://api.fundsrouter.com/accountrules/{{accountRule}}",
 					"model": "apiAccountRule",
-					"accessorProperty": "accountRule",
 					"isList": false
 				},
 				"getAccount": {
-					"url": "https://api.fundsrouter.com/profile/accounts",
+					"url": "https://api.fundsrouter.com/accounts/{{account}}",
 					"model": "apiAccount",
-					"accessorProperty": "account",
 					"isList": false
 				}
 			}
@@ -223,9 +196,8 @@
 		"operations": {
 			"custom": {
 				"getAccounts": {
-					"url": "https://api.fundsrouter.com/profile/accounts",
+					"url": "https://api.fundsrouter.com/accounts/{{accounts}}",
 					"model": "apiAccount",
-					"accessorProperty": "accounts",
 					"isList": true
 				}
 			}
@@ -294,18 +266,39 @@
 			},
 			"custom": {
 				"getAccountEntries": {
-					"url": "https://api.fundsrouter.com/profile/accountentries",
+					"url": "https://api.fundsrouter.com/accountentries/{{accountEntries}}",
 					"model": "apiAccountEntry",
-					"accessorProperty": "accountEntries",
 					"isList": true
 				},
 				"getAccountPermissions": {
-					"url": "https://api.fundsrouter.com/profile/accountpermissions",
+					"url": "https://api.fundsrouter.com/accountpermissions/{{accountPermissions}}",
 					"model": "apiAccountPermission",
-					"accessorProperty": "accountPermissions",
 					"isList": true
 				}
 			}
+		}
+	},
+	{
+		"name": "apiFee",
+		"properties": [
+			{
+				"title": "Fixed",
+				"readOnly": false,
+				"type": "apiMoney",
+				"isDepEntity": true,
+				"name": "fixed"
+			}
+		],
+		"isDepEntity": false,
+		"operations": {
+			"crud": {
+				"create": "https://api.fundsrouter.com/fees",
+				"find": "https://api.fundsrouter.com/fees/{id}/",
+				"findAll": "https://api.fundsrouter.com/fees",
+				"update": "https://api.fundsrouter.com/fees/{id}/",
+				"delete": "https://api.fundsrouter.com/fees/{id}/"
+			},
+			"custom": {}
 		}
 	}
 ]

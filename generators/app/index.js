@@ -87,22 +87,24 @@ generateBasic: function() {
     });
   });
 }
-  // //Configurations will be loaded here.
-  // //Ask for user input
-  // prompting: function() {
-  //   var done = this.async();
-  //   this.prompt({
-  //     type: 'input',
-  //     name: 'name',
-  //     message: 'Your source file:',
-  //     //Defaults to the project's folder name if the input is skipped
-  //     default: this.appname
-  //   }, function(answers) {
-  //     this.props = answers
-  //     this.log(answers.name);
-  //     done();
-  //   }.bind(this));
-  // }
+  //Configurations will be loaded here.
+  //Ask for user input
+  prompting: function() {
+    var done = this.async();
+    this.prompt({
+      type: 'list',
+      name: 'name',
+      message: 'Hello! I can take care of the grunt work and boring data layer stuff in your application. Do you want me to ' +
+      'connect to a HATEOAS endpoint, or would you like to load the object model directly from a JSON file?',
+      choices: ['JSON', 'HATEOAS endpoint']
+      //Defaults to the project's folder name if the input is skipped
+      default: this.appname
+    }, function(answers) {
+      this.props = answers
+      this.log(answers.name);
+      done();
+    }.bind(this));
+  }
 
 });
 

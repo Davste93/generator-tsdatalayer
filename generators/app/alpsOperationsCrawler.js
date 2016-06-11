@@ -69,10 +69,20 @@ _.each(om, currentModel => {
                     currentModel.operations.custom = {};
                   }
 
+
                   currentModel.operations.custom[funcName] = {
-                    url : urlData.uri || ''.replace('/profile/', '/'),
+                    //This looks like magic, but basically, for alps, we know the format for
+                    // non-basic CRUD operations follows something like:
+                    // http://api/externalEntity/idFromOurProperties.
+                    // However, for other projects, it may easily be:
+                    // http://api/externalEntity?idFromOurProperties
+                    // or:
+                    // http://api/externalEntity/idFromOurProperties.
+                    // So, to solve this issue, we will use the format:
+                    // http://api/externalEntity/{{idFromOurProperties}},
+                    // where anything between curly brackets can be a property.
+                    url : (urlData.uri || '').replace('/profile/', '/') + '/{{' + p.name + '}}',
                     model : urlData.className,
-                    accessorProperty : p.name,
                     isList : urlData.isList
                   };
                 }
