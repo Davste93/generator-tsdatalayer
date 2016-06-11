@@ -3,9 +3,9 @@ import {ServiceManager} from "../../services/serviceManager";
 import {apiAccountEntry} from "../../models/apiAccountEntry";
 import {apiAccountEntryService} from "../../services/apiAccountEntryService";
 
-describe("ApiAccountEntryService", () =>{
+describe("apiAccountEntryService", () =>{
 
-  var mockID : string = "PDMgdHlwZXNjcmlwdA==";
+  var mockID : string = "testMockID";
   var service;
 
   beforeEach(() => {
@@ -14,7 +14,7 @@ describe("ApiAccountEntryService", () =>{
   })
 
   it("should be resolved", () =>{
-    expect(service.apiAccountDataLayer).toBeDefined();
+    expect(service.apiAccountEntryDataLayer).toBeDefined();
   });
 
   describe("find", () => {

@@ -18,16 +18,17 @@ var modelDir = generateDir + 'models/';
 var modelDepDir = generateDir + 'models/dep/';
 var dataDir = generateDir + 'data/';
 var serviceDir = generateDir + 'services/';
-
+var serviceSpecDir = generateDir + 'spec/services/';
 var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
 
-
-  //Returns import string from a given model.
+/** This method performs the generation of the basic app skeleton.
+The app is pointed to a URL with HATEOAS support, and the app, entities,
+data layer, services and tests will be generated from the endpoint.
+In the (near) future, additional support will be provided for JSON endpoints.
+*/
 
 generateBasic: function() {
-
-
   var self = this;
 
   alpsCrawler.profileCrawler(rootUrl).then( om => {
@@ -64,6 +65,10 @@ generateBasic: function() {
 
         self.template('_modelDataRepositoryImpl.ts', dataDir + m.name + 'DataRepositoryImpl.ts');
         self.template('_modelDataRepository.ts', dataDir + m.name + 'DataRepository.ts');
+
+        self.template('_service.spec.ts', serviceSpecDir + m.name + '.spec.ts');
+        self.template('_service.e2e.spec.ts', serviceSpecDir + m.name + '.e2e.spec.ts');
+
 
         self.svcDeps = self.dependencies.concat(m.name);
         self.template('_service.ts', serviceDir + m.name + 'Service.ts');
