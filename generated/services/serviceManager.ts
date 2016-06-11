@@ -6,12 +6,12 @@ import {ApiRequestDecorator, Parser} from "tsmvc";
 import {apiAccountEntryDataRepository} from '../data/apiAccountEntryDataRepository';
 import {apiAccountEntryDataRepositoryImpl} from '../data/apiAccountEntryDataRepositoryImpl';
 import {apiAccountEntryService} from './apiAccountEntryService';
-import {apiFeeDataRepository} from '../data/apiFeeDataRepository';
-import {apiFeeDataRepositoryImpl} from '../data/apiFeeDataRepositoryImpl';
-import {apiFeeService} from './apiFeeService';
 import {apiAccountRuleDataRepository} from '../data/apiAccountRuleDataRepository';
 import {apiAccountRuleDataRepositoryImpl} from '../data/apiAccountRuleDataRepositoryImpl';
 import {apiAccountRuleService} from './apiAccountRuleService';
+import {apiFeeDataRepository} from '../data/apiFeeDataRepository';
+import {apiFeeDataRepositoryImpl} from '../data/apiFeeDataRepositoryImpl';
+import {apiFeeService} from './apiFeeService';
 import {apiAccountPermissionDataRepository} from '../data/apiAccountPermissionDataRepository';
 import {apiAccountPermissionDataRepositoryImpl} from '../data/apiAccountPermissionDataRepositoryImpl';
 import {apiAccountPermissionService} from './apiAccountPermissionService';
@@ -27,8 +27,8 @@ var kernel : IKernel = null;
 
 export class ServiceManager {
 	public static apiAccountEntryService : apiAccountEntryService;
-	public static apiFeeService : apiFeeService;
 	public static apiAccountRuleService : apiAccountRuleService;
+	public static apiFeeService : apiFeeService;
 	public static apiAccountPermissionService : apiAccountPermissionService;
 	public static apiAccountService : apiAccountService;
 
@@ -36,8 +36,8 @@ export class ServiceManager {
   static bindDependentDataLayers() {
   //Data Layer bindings
 		kernel.bind<apiAccountEntryDataRepository>("apiAccountEntryDataRepository").to(apiAccountEntryDataRepositoryImpl);
-		kernel.bind<apiFeeDataRepository>("apiFeeDataRepository").to(apiFeeDataRepositoryImpl);
 		kernel.bind<apiAccountRuleDataRepository>("apiAccountRuleDataRepository").to(apiAccountRuleDataRepositoryImpl);
+		kernel.bind<apiFeeDataRepository>("apiFeeDataRepository").to(apiFeeDataRepositoryImpl);
 		kernel.bind<apiAccountPermissionDataRepository>("apiAccountPermissionDataRepository").to(apiAccountPermissionDataRepositoryImpl);
 		kernel.bind<apiAccountDataRepository>("apiAccountDataRepository").to(apiAccountDataRepositoryImpl);
 
@@ -47,8 +47,8 @@ export class ServiceManager {
   static bindServices() {
   //Service bindings
 		kernel.bind<apiAccountEntryService>("apiAccountEntryService").to(apiAccountEntryService);
-		kernel.bind<apiFeeService>("apiFeeService").to(apiFeeService);
 		kernel.bind<apiAccountRuleService>("apiAccountRuleService").to(apiAccountRuleService);
+		kernel.bind<apiFeeService>("apiFeeService").to(apiFeeService);
 		kernel.bind<apiAccountPermissionService>("apiAccountPermissionService").to(apiAccountPermissionService);
 		kernel.bind<apiAccountService>("apiAccountService").to(apiAccountService);
 
@@ -57,8 +57,8 @@ export class ServiceManager {
   static resolveServices() {
   //Service resolve
 		ServiceManager.apiAccountEntryService = kernel.get<apiAccountEntryService>("apiAccountEntryService");
-		ServiceManager.apiFeeService = kernel.get<apiFeeService>("apiFeeService");
 		ServiceManager.apiAccountRuleService = kernel.get<apiAccountRuleService>("apiAccountRuleService");
+		ServiceManager.apiFeeService = kernel.get<apiFeeService>("apiFeeService");
 		ServiceManager.apiAccountPermissionService = kernel.get<apiAccountPermissionService>("apiAccountPermissionService");
 		ServiceManager.apiAccountService = kernel.get<apiAccountService>("apiAccountService");
 

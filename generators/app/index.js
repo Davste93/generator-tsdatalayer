@@ -9,6 +9,7 @@ var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var _ = require('underscore');
 var alpsCrawler = require('./alpsCrawler');
+var fs = require('fs');
 var generateDir = 'generated/';
 
 
@@ -22,6 +23,8 @@ var serviceSpecDir = generateDir + 'spec/services/';
 var tsdatalayerGenerator = yeoman.generators.Base.extend({
 
 
+
+
 /** This method performs the generation of the basic app skeleton.
 The app is pointed to a URL with HATEOAS support, and the app, entities,
 data layer, services and tests will be generated from the endpoint.
@@ -31,8 +34,16 @@ In the (near) future, additional support will be provided for JSON endpoints.
 generateBasic: function() {
   var self = this;
 
+  //The profile crawler returns an object model from ALPS.
   alpsCrawler.profileCrawler(rootUrl).then( om => {
     self.models = om;
+
+    //Let's save the model to disk, so that we have the option of modifying it
+    //and reloading directly from this model.
+    debugger;
+    this.fs.write(this.destinationPath(generateDir + 'objectModel.json'), JSON.stringify(om, null, "\t"));
+
+
     self.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
 
     _.each(om, function(m){
