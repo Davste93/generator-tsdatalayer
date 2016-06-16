@@ -47,21 +47,25 @@ var tsdatalayerGenerator = yeoman.generators.Base.extend({
   /** This method retrieves an object model. It can either build it by crawling
   a HATEOAS endpoint, or it can load up a JSON file. */
   getObjectModel: function() {
+    var done = this.async();
+    var self = this;
+
     if (this.props.objectModelSource === 'HATEOAS') {
       //The profile crawler returns an object model from ALPS.
       alpsCrawler.profileCrawler(this.props.endpointUrl).then(om => {
-        this.models = om;
-
+        self.models = om;
         //If we've loaded the object model, save it to disk.
         //Todo: Add this as a config.
-        var outputPath = this.destinationPath('last.objectModel.json');
-        this.fs.write(outputPath, JSON.stringify(om, null, "\t"));
-        this.log("I've downloaded and processed the object model! It's going to be writen to " + outputPath)
+        var outputPath = self.destinationPath('last.objectModel.json');
+        self.fs.write(outputPath, JSON.stringify(om, null, "\t"));
+        self.log("I've downloaded and processed the object model! It's going to be writen to " + outputPath)
+        done();
       });
     } else {
       //TODO: check if it exists:
       var objectModel = this.fs.read(this.destinationPath(this.props.omJsonFile));
       this.models = JSON.parse(objectModel);
+      done();
     }
 
   },
@@ -82,7 +86,6 @@ var tsdatalayerGenerator = yeoman.generators.Base.extend({
     var serviceSpecDir = this.destinationPath('spec/services/');
 
     var self = this;
-
     //We have one service manager, we can write that straight away:
     self.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
 
