@@ -28,11 +28,11 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
 
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
-  //Any operations that have standard http://url/up/to/entity/{id} are
+  //Any operations that have standard http://url/up/to/entity/{{id}} are
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.find %>'.replace('{id}', modelID),
+      '<%= model.operations.crud.find %>'.replace('{{id}}', modelID),
       'GET',
       null
     );
@@ -65,7 +65,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
 
   removeItem(modelID : string) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.delete %>'.replace('{id}', modelID),
+      '<%= model.operations.crud.delete %>'.replace('{{id}}', modelID),
       'DELETE',
       null
     );
@@ -74,7 +74,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
 
   saveItem(modelItem : <%= model.name %>, modelId : string) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.update %>'.replace('{id}', modelId),
+      '<%= model.operations.crud.update %>'.replace('{{id}}', modelId),
       'PUT',
       modelItem
     );

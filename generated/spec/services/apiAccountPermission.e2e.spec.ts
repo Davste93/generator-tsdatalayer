@@ -21,11 +21,11 @@ describe("apiAccountPermission E2E", () =>{
 
         if (apiAccountPermissionList.size() > 0) {
           expect(firstModel instanceof apiAccountPermission).toBeTruthy();
-          console.log(firstModel);
+          //console.log(firstModel);
           //todo: recursive type testing
           //expect(firstModel.balance instanceof apiMoney).toBeTruthy();
         } else {
-          console.log("E2E test for apiAccountPermission is of size 0. API returned no results.");
+          //console.log("E2E test for apiAccountPermission is of size 0. API returned no results.");
         }
 
         done();

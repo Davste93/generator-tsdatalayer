@@ -29,7 +29,7 @@ modelUtils.getResourceDeps = function(m){
 
   if (!_.isUndefined(m.operations) && !_.isUndefined(m.operations.custom))
  {
-    console.log(m.operations.custom);
+    //console.log(m.operations.custom);
       _.each(Object.keys(m.operations.custom), k => {
          deps.push(m.operations.custom[k].model);
      });

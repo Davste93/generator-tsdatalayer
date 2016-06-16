@@ -8,7 +8,7 @@ var opsCrawler = require('./alpsOperationsCrawler');
 
 var app = {};
 
-//Helper functions:
+//I'm aware this is breaking best practices, needs to be refactored.
 Object.defineProperty(Object.prototype, 'map', {
     value: function(f, ctx) {
         ctx = ctx || this;
@@ -63,7 +63,6 @@ app.profileCrawler = function(url){
         Promise.all(entityCrawlerPromises).then( () => {
           var result = app.generatedModelsToArray();
           opsCrawler.addOperationsToOM(result);
-          console.log(result);
           resolve(result);
         });
       });

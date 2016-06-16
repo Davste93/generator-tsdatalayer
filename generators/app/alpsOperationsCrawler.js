@@ -7,11 +7,11 @@ var en = require('lingo').en;
 /* "model": "user",
  "operations": {
     crud : {
-     "create": "/user/{id}/",
-     "read": "/user/{id}/",
+     "create": "/user/{{id}}/",
+     "read": "/user/{{id}}/",
      "readAll": "/user/",
-     "update": "/user/{id}/",
-     "delete": "/user/{id}/"
+     "update": "/user/{{id}}/",
+     "delete": "/user/{{id}}/"
    },
    custom : {
      "getAddresses": {
@@ -42,10 +42,10 @@ _.each(om, currentModel => {
       currentModel.operations = {
         crud : {
           "create": url.uri,
-          "find": url.uri + "/{id}/",
+          "find": url.uri + "/{{id}}/",
           "findAll": url.uri,
-          "update": url.uri + "/{id}/",
-          "delete": url.uri + "/{id}/"
+          "update": url.uri + "/{{id}}/",
+          "delete": url.uri + "/{{id}}/"
         },
         custom : {}
       };
@@ -54,12 +54,12 @@ _.each(om, currentModel => {
       //2. Get custom calls:
       _.each(currentModel.properties, p => {
             if (p.isResource === true){
-              console.log('getting resource ' + p.name);
+              //console.log('getting resource ' + p.name);
               var urlData = app.getFromResourceMap(p.name.toLowerCase());
                 if (!_.isUndefined(urlData)) {
 
                   var funcName = 'get' + p.name[0].toUpperCase() + p.name.slice(1);
-                  console.log('funcname set.' + currentModel.operations);
+                  //console.log('funcname set.' + currentModel.operations);
 
                   if (_.isUndefined(currentModel.operations)) {
                     currentModel.operations = {};
@@ -86,13 +86,13 @@ _.each(om, currentModel => {
                     isList : urlData.isList
                   };
                 }
-                console.log('finished');
+                //console.log('finished');
             }
       });
 
   });
 
-  console.log(om);
+  //console.log(om);
 
 };
 

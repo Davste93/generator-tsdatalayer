@@ -21,11 +21,11 @@ describe("<%=model.name%> E2E", () =>{
 
         if (<%=model.name%>List.size() > 0) {
           expect(firstModel instanceof <%=model.name%>).toBeTruthy();
-          console.log(firstModel);
+          //console.log(firstModel);
           //todo: recursive type testing
           //expect(firstModel.balance instanceof apiMoney).toBeTruthy();
         } else {
-          console.log("E2E test for <%=model.name%> is of size 0. API returned no results.");
+          //console.log("E2E test for <%=model.name%> is of size 0. API returned no results.");
         }
 
         done();

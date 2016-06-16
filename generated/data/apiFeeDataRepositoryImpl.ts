@@ -28,11 +28,11 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
-  //Any operations that have standard http://url/up/to/entity/{id} are
+  //Any operations that have standard http://url/up/to/entity/{{id}} are
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'https://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/fees/{{id}}/'.replace('{{id}}', modelID),
       'GET',
       null
     );
@@ -65,7 +65,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
   removeItem(modelID : string) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'https://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/fees/{{id}}/'.replace('{{id}}', modelID),
       'DELETE',
       null
     );
@@ -74,7 +74,7 @@ export class apiFeeDataRepositoryImpl extends ApiRepository<apiFee> implements a
 
   saveItem(modelItem : apiFee, modelId : string) : Promise<apiFee> {
     return this.buildRequestAndParseAsModel(
-      'https://api.fundsrouter.com/fees/{id}/'.replace('{id}', modelId),
+      'https://api.fundsrouter.com/fees/{{id}}/'.replace('{{id}}', modelId),
       'PUT',
       modelItem
     );

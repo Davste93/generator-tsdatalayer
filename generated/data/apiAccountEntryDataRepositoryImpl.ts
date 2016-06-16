@@ -29,11 +29,11 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
 
 
   //CRUD Operations - Only here for the sake of verbosity and flexibility.
-  //Any operations that have standard http://url/up/to/entity/{id} are
+  //Any operations that have standard http://url/up/to/entity/{{id}} are
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<apiAccountEntry> {
     return this.buildRequestAndParseAsModel(
-      'https://api.fundsrouter.com/accountentries/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/accountentries/{{id}}/'.replace('{{id}}', modelID),
       'GET',
       null
     );
@@ -66,7 +66,7 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
 
   removeItem(modelID : string) : Promise<apiAccountEntry> {
     return this.buildRequestAndParseAsModel(
-      'https://api.fundsrouter.com/accountentries/{id}/'.replace('{id}', modelID),
+      'https://api.fundsrouter.com/accountentries/{{id}}/'.replace('{{id}}', modelID),
       'DELETE',
       null
     );
@@ -75,7 +75,7 @@ export class apiAccountEntryDataRepositoryImpl extends ApiRepository<apiAccountE
 
   saveItem(modelItem : apiAccountEntry, modelId : string) : Promise<apiAccountEntry> {
     return this.buildRequestAndParseAsModel(
-      'https://api.fundsrouter.com/accountentries/{id}/'.replace('{id}', modelId),
+      'https://api.fundsrouter.com/accountentries/{{id}}/'.replace('{{id}}', modelId),
       'PUT',
       modelItem
     );

@@ -42,10 +42,10 @@
 		"operations": {
 			"crud": {
 				"create": "https://api.fundsrouter.com/accountentries",
-				"find": "https://api.fundsrouter.com/accountentries/{id}/",
+				"find": "https://api.fundsrouter.com/accountentries/{{id}}/",
 				"findAll": "https://api.fundsrouter.com/accountentries",
-				"update": "https://api.fundsrouter.com/accountentries/{id}/",
-				"delete": "https://api.fundsrouter.com/accountentries/{id}/"
+				"update": "https://api.fundsrouter.com/accountentries/{{id}}/",
+				"delete": "https://api.fundsrouter.com/accountentries/{{id}}/"
 			},
 			"custom": {
 				"getAccount": {
@@ -74,48 +74,6 @@
 			}
 		],
 		"isDepEntity": true
-	},
-	{
-		"name": "apiAccountRule",
-		"properties": [
-			{
-				"title": "Allowed to tx out",
-				"readOnly": false,
-				"type": "boolean",
-				"name": "allowedToTxOut"
-			},
-			{
-				"title": "Description",
-				"readOnly": false,
-				"type": "string",
-				"name": "description"
-			},
-			{
-				"title": "Account permissions",
-				"readOnly": false,
-				"type": "string",
-				"format": "uri",
-				"isResource": true,
-				"name": "accountPermissions"
-			}
-		],
-		"isDepEntity": false,
-		"operations": {
-			"crud": {
-				"create": "https://api.fundsrouter.com/accountrules",
-				"find": "https://api.fundsrouter.com/accountrules/{id}/",
-				"findAll": "https://api.fundsrouter.com/accountrules",
-				"update": "https://api.fundsrouter.com/accountrules/{id}/",
-				"delete": "https://api.fundsrouter.com/accountrules/{id}/"
-			},
-			"custom": {
-				"getAccountPermissions": {
-					"url": "https://api.fundsrouter.com/accountpermissions/{{accountPermissions}}",
-					"model": "apiAccountPermission",
-					"isList": true
-				}
-			}
-		}
 	},
 	{
 		"name": "apiAccountPermission",
@@ -155,10 +113,10 @@
 		"operations": {
 			"crud": {
 				"create": "https://api.fundsrouter.com/accountpermissions",
-				"find": "https://api.fundsrouter.com/accountpermissions/{id}/",
+				"find": "https://api.fundsrouter.com/accountpermissions/{{id}}/",
 				"findAll": "https://api.fundsrouter.com/accountpermissions",
-				"update": "https://api.fundsrouter.com/accountpermissions/{id}/",
-				"delete": "https://api.fundsrouter.com/accountpermissions/{id}/"
+				"update": "https://api.fundsrouter.com/accountpermissions/{{id}}/",
+				"delete": "https://api.fundsrouter.com/accountpermissions/{{id}}/"
 			},
 			"custom": {
 				"getAccountRule": {
@@ -198,6 +156,71 @@
 				"getAccounts": {
 					"url": "https://api.fundsrouter.com/accounts/{{accounts}}",
 					"model": "apiAccount",
+					"isList": true
+				}
+			}
+		}
+	},
+	{
+		"name": "apiFee",
+		"properties": [
+			{
+				"title": "Fixed",
+				"readOnly": false,
+				"type": "apiMoney",
+				"isDepEntity": true,
+				"name": "fixed"
+			}
+		],
+		"isDepEntity": false,
+		"operations": {
+			"crud": {
+				"create": "https://api.fundsrouter.com/fees",
+				"find": "https://api.fundsrouter.com/fees/{{id}}/",
+				"findAll": "https://api.fundsrouter.com/fees",
+				"update": "https://api.fundsrouter.com/fees/{{id}}/",
+				"delete": "https://api.fundsrouter.com/fees/{{id}}/"
+			},
+			"custom": {}
+		}
+	},
+	{
+		"name": "apiAccountRule",
+		"properties": [
+			{
+				"title": "Allowed to tx out",
+				"readOnly": false,
+				"type": "boolean",
+				"name": "allowedToTxOut"
+			},
+			{
+				"title": "Description",
+				"readOnly": false,
+				"type": "string",
+				"name": "description"
+			},
+			{
+				"title": "Account permissions",
+				"readOnly": false,
+				"type": "string",
+				"format": "uri",
+				"isResource": true,
+				"name": "accountPermissions"
+			}
+		],
+		"isDepEntity": false,
+		"operations": {
+			"crud": {
+				"create": "https://api.fundsrouter.com/accountrules",
+				"find": "https://api.fundsrouter.com/accountrules/{{id}}/",
+				"findAll": "https://api.fundsrouter.com/accountrules",
+				"update": "https://api.fundsrouter.com/accountrules/{{id}}/",
+				"delete": "https://api.fundsrouter.com/accountrules/{{id}}/"
+			},
+			"custom": {
+				"getAccountPermissions": {
+					"url": "https://api.fundsrouter.com/accountpermissions/{{accountPermissions}}",
+					"model": "apiAccountPermission",
 					"isList": true
 				}
 			}
@@ -259,10 +282,10 @@
 		"operations": {
 			"crud": {
 				"create": "https://api.fundsrouter.com/accounts",
-				"find": "https://api.fundsrouter.com/accounts/{id}/",
+				"find": "https://api.fundsrouter.com/accounts/{{id}}/",
 				"findAll": "https://api.fundsrouter.com/accounts",
-				"update": "https://api.fundsrouter.com/accounts/{id}/",
-				"delete": "https://api.fundsrouter.com/accounts/{id}/"
+				"update": "https://api.fundsrouter.com/accounts/{{id}}/",
+				"delete": "https://api.fundsrouter.com/accounts/{{id}}/"
 			},
 			"custom": {
 				"getAccountEntries": {
@@ -276,29 +299,6 @@
 					"isList": true
 				}
 			}
-		}
-	},
-	{
-		"name": "apiFee",
-		"properties": [
-			{
-				"title": "Fixed",
-				"readOnly": false,
-				"type": "apiMoney",
-				"isDepEntity": true,
-				"name": "fixed"
-			}
-		],
-		"isDepEntity": false,
-		"operations": {
-			"crud": {
-				"create": "https://api.fundsrouter.com/fees",
-				"find": "https://api.fundsrouter.com/fees/{id}/",
-				"findAll": "https://api.fundsrouter.com/fees",
-				"update": "https://api.fundsrouter.com/fees/{id}/",
-				"delete": "https://api.fundsrouter.com/fees/{id}/"
-			},
-			"custom": {}
 		}
 	}
 ]
