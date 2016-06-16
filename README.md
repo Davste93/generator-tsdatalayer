@@ -1,5 +1,6 @@
 # generator-tsdatalayer
 WARNING, THIS IS A VERY EARLY, UNDOCUMENTED, EXPERIMENTAL RELEASE:
+
 This library generates the model/datalayer/service part of an application that has a HATEOAS endpoint.
 It can also generate the code from a model defined from a JSON file.
 
