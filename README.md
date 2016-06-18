@@ -27,7 +27,7 @@ It then builds the data layers, services, and tests for those services - based o
 
 This provides the following advantages:
 
-1. **Strong types throughout your project:**
+1. **Strong types throughout your project:** Strongly typed access to API is provided straight out of the box without any extra effort needed.
 ![enter image description here](https://raw.githubusercontent.com/davidstellini/generator-tsdatalayer/master/serviceExample.gif)
 2. **API Updates:** Whenever the API is updated, you can just run `yo tsdatalayer update` which will update all your models, services and data layers again. At this point,  any breaking-changes by the API will be highlighted by the typescript compiler.
 3. **Real instances over type assertion:** The `reflect-metadata` library is used alongside the `typed-json` library to deserialize models and create real instances instead of using type assertion. **This means that you can be sure that the services returns only models that are valid instances and contain only your properties post-deserialization.** You can rely on types (and nested types) such as: `apiAccountInstance.balance instanceof apiMoney` to evaluate to true under all circumstances. 
