@@ -68,5 +68,3 @@ WARNING, THIS IS A VERY EARLY, UNDOCUMENTED, EXPERIMENTAL RELEASE:
 
 ### Example ###
 Work in progress. This project will be updated as an example consumer of this library:  https://github.com/davidstellini/bvl-pay
-Generation example:
-![generation example](https://raw.githubusercontent.com/davidstellini/generator-tsdatalayer/master/generationExample.gif)
