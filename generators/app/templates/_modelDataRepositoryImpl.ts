@@ -1,5 +1,4 @@
 import {ApiRepository, List, Model, ApiRequestDecorator, Parser} from  "tsmvc";
-import {Promise} from "es6-promise";
 import {injectable, inject} from "inversify";
 
 //Current Import

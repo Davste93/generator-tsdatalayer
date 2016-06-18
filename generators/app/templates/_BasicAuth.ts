@@ -3,6 +3,9 @@ import * as base64 from "urlsafe-base64";
 import * as _ from "underscore";
 import {inject, injectable, named} from "inversify";
 
+/* A basic authentication decorator which recieves the username and password via dependency injection.
+If it sounds like a bad idea, it's because it is - there are better ways to solve this problem, however
+the scope of this library is to get you up and running quickly. */
 @injectable()
  export class BasicAuthDecorator implements ApiRequestDecorator {
     username : string;

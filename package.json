@@ -1,9 +1,9 @@
 {
   "name": "generator-tsdatalayer",
+  "version" : "0.0.1",
   "esnext": true,
   "dependencies": {
     "chalk": "^1.0.0",
-    "inversify": "^2.0.0-alpha.6",
     "lingo": "0.0.5",
     "request": "^2.69.0",
     "tense": "^1.0.0",

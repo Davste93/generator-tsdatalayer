@@ -8,10 +8,39 @@ var alpsCrawler = require('./alpsCrawler');
 var fs = require('fs');
 
 
+var configFilename = 'tsdatalayer.json';
+
 var tsdatalayerGenerator = yeoman.generators.Base.extend({
+
+  constructor: function () {
+     yeoman.generators.Base.apply(this, arguments);
+     this.argument('update', { required : false });
+   },
+
   /* Configuration */
   prompting: function() {
     var done = this.async();
+
+    if (this.update) {
+      //This is an update, there's no need to prompt the user for information.
+      //We will just connect to the last endpoint.
+      var lastCfg = JSON.parse(this.fs.read(this.destinationPath(configFilename)));
+      this.props = {
+        "objectModelSource" : lastCfg.objectModelSource,
+        "endpointUrl" : lastCfg.endpointUrl,
+        "omJsonFile" : lastCfg.omJsonFile,
+        "dest" : lastCfg.dest
+      }
+
+      this.log(`I'm updating your ${lastCfg.dest} folder, with the following datasource:\n` +
+      `${lastCfg.objectModelSource} [${lastCfg.endpointUrl || lastCfg.omJsonFile}]`
+      );
+
+
+      done();
+      return;
+    }
+
     this.prompt([{
       type: 'list',
       name: 'objectModelSource',
@@ -36,12 +65,38 @@ var tsdatalayerGenerator = yeoman.generators.Base.extend({
       name: 'omJsonFile',
       message: 'Which JSON file has your object model?',
       default: 'last.objectModel.json'
+    },
+    {type: 'input',
+    name: 'dest',
+    message: 'Where should I place the generated files?',
+    default: 'src/app/generated'
     }], function(answers) {
-      this.props = answers
+      this.props = answers;
+      this.fs.write(this.destinationPath(configFilename), JSON.stringify(answers, null, "\t"));
+
       done();
     }.bind(this));
   },
 
+  installingDependencies: function() {
+    if (this.update) {
+      //We only install dependencies the first time.
+      return;
+    }
+
+    this.npmInstall(['inversify@2.0.0-beta.8', 'underscore', 'urlsafe-base64', 'tsmvc']); //The inversify library is constantly throwing out breaking changes.
+    //We will wait until it's stable before ugprading again. For this reason, we're locking the version.
+
+    //Install typed dependencies.
+    this.npmInstall(['inversify-dts', 'typedjson', 'typings'], { 'saveDev': true }, ()=> {
+      this.spawnCommand('typings', ['install', '--save', '--global', 'npm:inversify-dts/inversify/inversify.d.ts']);
+      this.spawnCommand('typings', ['install', '--save', '--global', 'dt~node']);
+      this.spawnCommand('typings', ['install', '--save', '--global', 'dt~underscore']);
+      this.spawnCommand('typings', ['install', '--save', '--global', 'dt~jasmine']);
+      this.spawnCommand('typings', ['install', '--save', '--global', 'dt~urlsafe-base64']);
+      this.spawnCommand('typings', ['install', '--save', 'npm:typedjson/js/index.d.ts']);
+    });
+  },
 
 
   /** This method retrieves an object model. It can either build it by crawling
@@ -79,15 +134,19 @@ var tsdatalayerGenerator = yeoman.generators.Base.extend({
   writing: function() {
     var modelutils = require('./modelutils');
 
-    var modelDir = this.destinationPath('models/');
-    var modelDepDir = this.destinationPath('models/dep/');
-    var dataDir = this.destinationPath('data/');
-    var serviceDir = this.destinationPath('services/');
-    var serviceSpecDir = this.destinationPath('spec/services/');
+    var modelDir = this.destinationPath(this.props.dest + '/models/');
+    var modelDepDir = this.destinationPath(this.props.dest + '/models/dep/');
+    var dataDir = this.destinationPath(this.props.dest + '/data/');
+    var serviceDir = this.destinationPath(this.props.dest + '/services/');
+    var serviceSpecDir = this.destinationPath(this.props.dest + '/spec/services/');
+    var authDir = this.destinationPath(this.props.dest + '/Auth/');
+    var responseParserDir = this.destinationPath(this.props.dest + '/ApiResponseParsers/');
 
     var self = this;
     //We have one service manager, we can write that straight away:
     self.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
+    self.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
+    self.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
 
     //For each entity:
     _.each(this.models, function(model) {

@@ -1,7 +1,5 @@
 import {List, Service} from "tsmvc";
-
 import {injectable, inject} from "inversify";
-import {Promise} from "es6-promise";
 
 //Current Import + Linked
 <% svcDeps.forEach(function(d){%>import {<%= d %>} from "../models/<%= d %>";
