@@ -9,7 +9,7 @@ An example implementing this library can be found here: https://github.com/david
 ## Installation ##
 *The generator is mostly meant to integrate with existing projects, however, if you are starting from scratch, simply run `npm init` in a directory prior to following these steps.*
 
-1. Install yeoman.
+1. Install yeoman (http://yeoman.io/)
 2. Run `yo tsdatalayer` and follow the prompts, you can choose to generate code from a HATEOAS endpoint or an existing JSON file with the object model.
 3. The generator will connect to your endpoint (or JSON file) and generate the models, data layers, service and service configuration.
 4. The generator will then install npm dependencies to your project.
