@@ -2,7 +2,7 @@
 It generates strongly typed code from an API endpoint. This means that when the API changes, any code you wrote that has been broken by these changes **won't even compile**. This gives you the benefit 
 of knowing about it before it as early on as possible.
 
-## Why use this library? ##
+## How does it work? ##
 This generator connects to a HATEOAS endpoint, such as one provided by [SPRING data rest](http://projects.spring.io/spring-data-rest/).
 It then crawls the endpoint recursively, making requests to retrieve the schema and builds typescript models from the web service response.
 
@@ -21,6 +21,9 @@ It builds models like the one below, with full support for complex entities:
         accountPermissions : string;
     }
 
+It then builds the data layers, services, and tests for those services - based on these models.
+
+## Why use this library? ##
 This provides the following advantages:
 1. **Strong types throughout your project:**
 ![enter image description here](https://raw.githubusercontent.com/davidstellini/generator-tsdatalayer/master/serviceExample.gif)
@@ -28,10 +31,8 @@ This provides the following advantages:
 3. **Real instances over type assertion:** The `reflect-metadata` library is used alongside the `typed-json` library to deserialize models and create real instances instead of using type assertion. **This means that you can be sure that the services returns only models that are valid instances and contain only your properties post-deserialization.** You can rely on types (and nested types) such as: `apiAccountInstance.balance instanceof apiMoney` to evaluate to true under all circumstances. 
 4. **Automated tests**:  The generator builds unit tests for your services and one end to end test per service that calls the API backend.
 
-### Example ###
-Work in progress. This project will be updated as an example:  https://github.com/davidstellini/bvl-pay
 
-### Usage ###
+## Usage ##
 WARNING, THIS IS A VERY EARLY, UNDOCUMENTED, EXPERIMENTAL RELEASE:
 
 *The generator is mostly meant to integrate with existing projects, however, if you are starting from scratch, simply run `npm init` in a directory prior to following these steps.*
@@ -62,3 +63,6 @@ WARNING, THIS IS A VERY EARLY, UNDOCUMENTED, EXPERIMENTAL RELEASE:
         }
       }
 ```
+
+### Example ###
+Work in progress. This project will be updated as an example consumer of this library:  https://github.com/davidstellini/bvl-pay
