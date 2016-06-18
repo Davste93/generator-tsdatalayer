@@ -1,6 +1,6 @@
 {
   "name": "generator-tsdatalayer",
-  "version" : "0.0.1",
+  "version" : "0.0.2",
   "esnext": true,
   "dependencies": {
     "chalk": "^1.0.0",
