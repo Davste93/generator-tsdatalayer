@@ -24,7 +24,9 @@ It builds models like the one below, with full support for complex entities:
 It then builds the data layers, services, and tests for those services - based on these models.
 
 ## Why use this library? ##
+
 This provides the following advantages:
+
 1. **Strong types throughout your project:**
 ![enter image description here](https://raw.githubusercontent.com/davidstellini/generator-tsdatalayer/master/serviceExample.gif)
 2. **API Updates:** Whenever the API is updated, you can just run `yo tsdatalayer update` which will update all your models, services and data layers again. At this point,  any breaking-changes by the API will be highlighted by the typescript compiler.
@@ -66,3 +68,4 @@ WARNING, THIS IS A VERY EARLY, UNDOCUMENTED, EXPERIMENTAL RELEASE:
 
 ### Example ###
 Work in progress. This project will be updated as an example consumer of this library:  https://github.com/davidstellini/bvl-pay
+
