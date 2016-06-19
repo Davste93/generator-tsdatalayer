@@ -21,7 +21,7 @@ It builds models like the one below, with full support for complex entities:
         accountPermissions : string;
     }
 
-It then builds the data layers, services, and tests for those services - based on these models.
+It then builds the data layers, services, and tests - based on these models.
 
 ## Why use this library? ##
 
