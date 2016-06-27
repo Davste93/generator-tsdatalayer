@@ -71,6 +71,7 @@ app.profileCrawler = function(url){
 
 app.entityCrawler = function(url){
   return new Promise( (resolve, reject) => {
+    //Get schema+json
     request({
         url: url,
         headers: {
@@ -78,22 +79,35 @@ app.entityCrawler = function(url){
           Authorization : "Basic dGVzdDp0ZXN0"
         }
     },
-    function(error, response, body) {
-      body = JSON.parse(body);
+    function(error, response, schemaString) {
+      //Todo: Chain promise, need to check if this library supports it
+      //Get HAL
+        request({
+            url: url,
+            headers: {
+              Accept: 'application/hal+json',
+              Authorization : "Basic dGVzdDp0ZXN0"
+            }
+        },
+        function(error, response, halString) {
 
-      //First, we need our typescript object:
-      body.sourceUrl = url;
-      app.entityHandler(body);
+          var schema = JSON.parse(schemaString);
+          var hal = JSON.parse(halString);
+          //First, we need our typescript object:
+          schema.sourceUrl = url;
+          app.entityHandler(schema, hal);
 
 
-      resolve();
+          resolve();
     });
   });
-};
+});
+}
 
 //Returns an array of entity + deps. A "DepEntity" is an entity which we
 //can't directly read or write, so it should be flagged as such
-app.entityHandler = function(entity, entityName, isDepEntity){
+app.entityHandler = function(entity, hal, entityName, isDepEntity){
+
   if (!_.isObject(entity)){
     return null;
   }
@@ -107,10 +121,10 @@ app.entityHandler = function(entity, entityName, isDepEntity){
     opsCrawler.addToResourceMap(model.name, entity.sourceUrl);
   }
 
-  model.properties = entity.properties.map( (p, i, arr) => {
-    var currentProperty = arr[i];
-    currentProperty = typeHandler.convertTypesInProperty(currentProperty);
-    currentProperty.name = i;
+  model.properties = entity.properties.map( (p, key, arr) => {
+    var currentProperty = arr[key];
+    currentProperty = typeHandler.convertTypesInProperty(currentProperty, hal, key);
+    currentProperty.name = key;
 
     return currentProperty;
   });
@@ -132,11 +146,12 @@ app.dependencyHandler = function(deps){
 
   _.each(deps, (d, k) => {
     if (d.type === 'object'){
-      app.entityHandler(d, k, true);
+      app.entityHandler(d, null, k, true);
     }
   });
 
   return depModels;
 };
+
 
 module.exports = app;

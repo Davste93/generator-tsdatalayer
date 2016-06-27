@@ -3,7 +3,7 @@
   "version" : "0.0.3",
   "esnext": true,
   "scripts" : {
-    "debug" : "iron-node /usr/local/bin/yo ts-datalayer debug"
+    "debug" : "iron-node generators/app/debug.js"
   },
   "dependencies": {
     "chalk": "^1.0.0",

@@ -12,6 +12,8 @@ app.convertibleTypes = {
 };
 
 
+
+
 app.isNativeOrConvertible = function(type) {
   return (modelutils.isNativeType(type) || !_.isUndefined(app.convertibleTypes[type])) ;
 };
@@ -25,7 +27,7 @@ app.tryConvertNativeType = function(type){
 };
 
 //Converts property and handles all type-related stuff
-app.convertTypesInProperty = function(prop) {
+app.convertTypesInProperty = function(prop, hal, entityName) {
   //Short circuit complex entity name, remove $ref and set type to entityName
   if (!_.isUndefined(prop.$ref)) {
     if (prop.type === "object"){
@@ -45,7 +47,7 @@ app.convertTypesInProperty = function(prop) {
   prop = app.dateTypeHandler(prop);
 
   //Check for resource:
-  prop = app.resourceTypeHandler(prop);
+  prop = app.resourceTypeHandler(prop, hal, entityName);
 
   //return the converted property.
   return prop;
@@ -64,12 +66,18 @@ app.dateTypeHandler = function(prop){
 };
 
 
- app.resourceTypeHandler = function(prop) {
+ app.resourceTypeHandler = function(prop, hal, entityName) {
    if (prop.type === "string" && prop.format === 'uri'){
+     debugger;
+     var x = app.findDeep(hal, {'name' : entityName});
        prop.isResource = true;
    }
    return prop;
  };
+
+
+
+ //Recursive find (todo)
 
 
 module.exports = app;
