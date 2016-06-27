@@ -117,8 +117,13 @@ app.getFromResourceMap = function(key) {
 
   if (!ret.isList){
     var pluralKey = en.pluralize(key);
-    ret.uri = app._resourceMap[pluralKey].uri;
-    ret.className = app._resourceMap[pluralKey].className;
+
+    if (Array.prototype.indexOf(app._resourceMap, pluralKey) < 0 ){
+       console.log('The entity name ' + pluralKey + ' could not be found ');
+    } else {
+      ret.uri = app._resourceMap[pluralKey].uri;
+      ret.className = app._resourceMap[pluralKey].className;
+    }
   } else {
     ret.uri = app._resourceMap[key].uri;
     ret.className = app._resourceMap[key].className;

@@ -2,6 +2,9 @@
   "name": "generator-tsdatalayer",
   "version" : "0.0.3",
   "esnext": true,
+  "scripts" : {
+    "debug" : "iron-node /usr/local/bin/yo ts-datalayer debug"
+  },
   "dependencies": {
     "chalk": "^1.0.0",
     "lingo": "0.0.5",
