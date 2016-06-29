@@ -3,6 +3,7 @@ import * as _ from 'underscore';
 import {Entity} from './Entity';
 import {ResourceList} from './ResourceList';
 import {AlpsEntityFactory} from './AlpsEntityFactory';
+import { TypeHandler } from './TypeHandler';
 
 export class EntityCrawler {
 
@@ -43,11 +44,13 @@ export class EntityCrawler {
           // First, we need to add each entity to the resource map.
           this.resourceList.addRange(entities); // This allows easy lookups to each entity.
 
+          for (let entity of entities) {
+            TypeHandler.resolvePropertyTypes(entity, this.resourceList);
+          }
 
-          // let result = app.generatedModelsToArray();
-          // opsCrawler.addOperationsToOM(result);
-          // TODO: Convert internal model to om
-           return this.internalModel;
+          debugger;
+          let serializedEntities = this.entitiesToSerializableOM(entities);
+           return serializedEntities;
         });
       });
   }
@@ -74,14 +77,28 @@ export class EntityCrawler {
         headers : _.extend( this.requestConfiguration.headers, {Accept: 'application/hal+json'}),
         body : this.requestConfiguration.body
       }).then(response => {
-        debugger;
         return response.body;
       })
     ]).then( (values) => {
       let schema = values[0];
       let hal    = values[1];
-
-      return AlpsEntityFactory.makeEntity(schema, hal);
+      return AlpsEntityFactory.makeEntity(schema, hal, entityUrl, this.resourceList, false);
     });
+  }
+
+  entitiesToSerializableOM(entities: Entity[]) {
+    let serializableOMEntities = _.clone(entities);
+
+    // The point of this is to allow only up to the second level.
+    for (let entity of serializableOMEntities) {
+      for (let property of entity.properties || []){
+        let type = new Entity();
+        type.name = property.type.name;
+        type.isResource = property.type.isResource;
+        property.type = type;
+      }
+    }
+
+    return serializableOMEntities;
   }
 }

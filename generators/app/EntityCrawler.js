@@ -1,8 +1,10 @@
 "use strict";
 var popsicle_1 = require('popsicle');
 var _ = require('underscore');
+var Entity_1 = require('./Entity');
 var ResourceList_1 = require('./ResourceList');
 var AlpsEntityFactory_1 = require('./AlpsEntityFactory');
+var TypeHandler_1 = require('./TypeHandler');
 var EntityCrawler = (function () {
     function EntityCrawler(requestConfiguration) {
         if (requestConfiguration === void 0) { requestConfiguration = {}; }
@@ -29,11 +31,18 @@ var EntityCrawler = (function () {
             }
             return Promise.all(entityCrawlerPromises).then(function (entities) {
                 _this.resourceList.addRange(entities);
-                return _this.internalModel;
+                for (var _i = 0, entities_1 = entities; _i < entities_1.length; _i++) {
+                    var entity = entities_1[_i];
+                    TypeHandler_1.TypeHandler.resolvePropertyTypes(entity, _this.resourceList);
+                }
+                debugger;
+                var serializedEntities = _this.entitiesToSerializableOM(entities);
+                return serializedEntities;
             });
         });
     };
     EntityCrawler.prototype.crawlEntity = function (entityUrl) {
+        var _this = this;
         var schema = {};
         var hal = {};
         return Promise.all([
@@ -51,14 +60,27 @@ var EntityCrawler = (function () {
                 headers: _.extend(this.requestConfiguration.headers, { Accept: 'application/hal+json' }),
                 body: this.requestConfiguration.body
             }).then(function (response) {
-                debugger;
                 return response.body;
             })
         ]).then(function (values) {
             var schema = values[0];
             var hal = values[1];
-            return AlpsEntityFactory_1.AlpsEntityFactory.makeEntity(schema, hal);
+            return AlpsEntityFactory_1.AlpsEntityFactory.makeEntity(schema, hal, entityUrl, _this.resourceList, false);
         });
+    };
+    EntityCrawler.prototype.entitiesToSerializableOM = function (entities) {
+        var serializableOMEntities = _.clone(entities);
+        for (var _i = 0, serializableOMEntities_1 = serializableOMEntities; _i < serializableOMEntities_1.length; _i++) {
+            var entity = serializableOMEntities_1[_i];
+            for (var _a = 0, _b = entity.properties || []; _a < _b.length; _a++) {
+                var property = _b[_a];
+                var type = new Entity_1.Entity();
+                type.name = property.type.name;
+                type.isResource = property.type.isResource;
+                property.type = type;
+            }
+        }
+        return serializableOMEntities;
     };
     return EntityCrawler;
 }());

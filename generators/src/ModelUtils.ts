@@ -1,10 +1,26 @@
-export const nativeTypes = ['number', 'Object', 'Date', 'string', 'boolean', 'symbol', 'void', 'null', 'undefined', 'any'];
-
 import { Entity } from './Entity';
+import * as _ from 'underscore';
+
+let tense = new (require('tense'))();
+
+export const nativeTypes = ['number', 'Object', 'Date', 'string', 'boolean', 'symbol', 'void', 'null', 'undefined', 'any'];
 export class ModelUtils {
   public static isNativeType(type: string) {
     return _.contains(nativeTypes, type);
   };
+
+
+  private static toCamelCase(sourceStr: string): string {
+    return sourceStr.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+      return index === 0 ? letter.toLowerCase() : letter.toUpperCase();
+    }).replace(/\s+/g, '');
+  }
+
+  public static convertTitleToValidTypeName(title: string) {
+    return this.toCamelCase(tense.singularize(title));
+  }
+
+
 
   // getDependencies = function(model: Entity){
   //   let deps = [];

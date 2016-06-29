@@ -1,24 +1,27 @@
 "use strict";
+var _ = require('underscore');
 var ResourceList = (function () {
     function ResourceList() {
-        this.resources = [];
+        this.entityDictionary = {};
     }
     ResourceList.prototype.add = function (entity) {
-        this.resources.push(entity);
+        if (!entity.url) {
+            throw new Error('You cannot add an entity with an invalid URL.');
+        }
+        this.entityDictionary[entity.url] = entity;
     };
     ResourceList.prototype.addRange = function (entities) {
-        this.resources = this.resources.concat(entities);
-    };
-    ResourceList.prototype.get = function (url, entityName) {
-        if (url === null && entityName === null) {
-            return null;
+        for (var _i = 0, entities_1 = entities; _i < entities_1.length; _i++) {
+            var entity = entities_1[_i];
+            this.add(entity);
         }
-        for (var _i = 0, _a = this.resources; _i < _a.length; _i++) {
-            var entity = _a[_i];
-            if ((url && entity.url === url) ||
-                (entityName && entity.name === entityName)) {
-                return entity;
-            }
+    };
+    ResourceList.prototype.get = function (url) {
+        if (!_.isUndefined(this.entityDictionary[url])) {
+            return this.entityDictionary[url];
+        }
+        else {
+            console.warn("Unknown lookup:" + url);
         }
     };
     return ResourceList;

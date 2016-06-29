@@ -1,27 +1,30 @@
 // Allows you to access entities by name or by URL.
 import {Entity} from './Entity';
+import * as _ from 'underscore';
+
 export class ResourceList {
 
-  resources: Array<Entity> = [];
+  entityDictionary = {};
 
   add(entity: Entity): void {
-    this.resources.push(entity);
+    if (!entity.url) {
+      throw new Error('You cannot add an entity with an invalid URL.');
+    }
+
+    this.entityDictionary[entity.url] = entity;
   }
 
   addRange(entities: Entity[]) {
-    this.resources = this.resources.concat(entities);
+    for (let entity of entities){
+        this.add(entity);
+    }
   }
 
-  get(url?: string, entityName?: string): Entity {
-    if (url === null && entityName === null) {
-      return null;
-    }
-
-    for (let entity of this.resources) {
-      if ((url && entity.url === url) ||
-          (entityName && entity.name === entityName)) {
-            return entity
-      }
+  get(url: string): Entity {
+    if (!_.isUndefined(this.entityDictionary[url])) {
+      return this.entityDictionary[url];
+    } else {
+      console.warn("Unknown lookup:" + url);
     }
   }
 }
