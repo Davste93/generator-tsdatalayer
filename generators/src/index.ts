@@ -1,26 +1,26 @@
-"use strict";
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
-var yo = require('yeoman-generator');
-var EntityCrawler_1 = require('./EntityCrawler');
-var TSDataLayer = (function (_super) {
-    __extends(TSDataLayer, _super);
-    function TSDataLayer(args, options) {
-        _super.call(this, args, options);
-    }
-    TSDataLayer.prototype.generateObjectModel = function () {
-        var crawler = new EntityCrawler_1.EntityCrawler({
-            headers: {
-                'Authorization': 'Basic dGVzdDp0ZXN0' }
-        });
-        crawler.crawlFromRoot('https://api.fundsrouter.com/profile');
-    };
-    return TSDataLayer;
-}(yo.generators.Base));
+import * as yo from 'yeoman-generator';
+import {EntityCrawler} from './EntityCrawler';
+
+class TSDataLayer extends yo.generators.Base {
+  constructor(args, options) {
+    super(args, options);
+  }
+
+  generateObjectModel(): void {
+    let crawler: EntityCrawler = new EntityCrawler(
+      {
+        headers: {
+        'Authorization' : 'Basic dGVzdDp0ZXN0'}
+      });
+
+      crawler.crawlFromRoot('https://api.fundsrouter.com/profile');
+  }
+}
 module.exports = TSDataLayer;
+
+
+
+
 // 'use strict';
 // let util = require('util');
 // let path = require('path');

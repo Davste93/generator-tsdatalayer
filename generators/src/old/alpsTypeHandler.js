@@ -1,7 +1,9 @@
+'use strict';
 var app = {};
 
 var _ = require('underscore');
 var modelutils = require('./modelutils');
+var resourceMap = require('./alpsResourceMap');
 
 app.convertibleTypes = {
   "integer" : "number",
@@ -68,13 +70,37 @@ app.dateTypeHandler = function(prop){
 
  app.resourceTypeHandler = function(prop, hal, entityName) {
    if (prop.type === "string" && prop.format === 'uri'){
+     //This is a resource. Let's find it:
+     var propertyHal = app.findDeep(hal, 'name', entityName);
+     var propertyUrl = propertyHal.rt.split('#')[0];
      debugger;
-     var x = app.findDeep(hal, {'name' : entityName});
-       prop.isResource = true;
+     var type = resourceMap.getFromResourceMap(propertyUrl);
+
+
+     prop.resourceUrl = propertyHal;
+     prop.isResource = true;
    }
    return prop;
  };
 
+
+app.findDeep = function(haystack, needle, value) {
+  var ret = null;
+  _.find(haystack, (childHaystack) => {
+    if (childHaystack.hasOwnProperty(needle) && childHaystack[needle] === value) {
+      ret = childHaystack;
+      return true;
+    }
+    if (_.isObject(childHaystack) || _.isArray(childHaystack)){
+      ret = app.findDeep(childHaystack, needle, value);
+      if (ret != null) {
+        return true;
+      }
+    }
+  });
+
+  return ret;
+}
 
 
  //Recursive find (todo)

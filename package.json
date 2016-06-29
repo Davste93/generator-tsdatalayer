@@ -1,14 +1,15 @@
 {
   "name": "generator-tsdatalayer",
-  "version" : "0.0.3",
+  "version": "0.0.3",
   "esnext": true,
-  "scripts" : {
-    "debug" : "iron-node generators/app/debug.js"
+  "scripts": {
+    "debug": "iron-node generators/app/debug.js"
   },
   "dependencies": {
     "chalk": "^1.0.0",
+    "core-js": "^2.4.0",
     "lingo": "0.0.5",
-    "request": "^2.69.0",
+    "popsicle": "^6.2.1",
     "tense": "^1.0.0",
     "underscore": "^1.8.3",
     "yeoman-generator": "^0.21.1",

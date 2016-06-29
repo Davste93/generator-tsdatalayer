@@ -5,7 +5,7 @@ var tense = new (require('tense'))();
 
 var typeHandler = require('./alpsTypeHandler');
 var opsCrawler = require('./alpsOperationsCrawler');
-
+var resourceMap = require('./alpsResourceMap');
 var app = {};
 
 //I'm aware this is breaking best practices, needs to be refactored.
@@ -118,7 +118,7 @@ app.entityHandler = function(entity, hal, entityName, isDepEntity){
   model.name = tense.singularize(entityName || entity.title).toCamelCase();
 
   if (!_.isUndefined(entity.sourceUrl)) {
-    opsCrawler.addToResourceMap(model.name, entity.sourceUrl);
+    resourceMap.addToResourceMap(model.name, entity.sourceUrl);
   }
 
   model.properties = entity.properties.map( (p, key, arr) => {

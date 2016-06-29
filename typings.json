@@ -1,0 +1,11 @@
+{
+  "globalDependencies": {
+    "core-js": "registry:dt/core-js#0.0.0+20160602141332",
+    "node": "registry:dt/node#6.0.0+20160621231320",
+    "underscore": "registry:dt/underscore#1.7.0+20160622050840",
+    "yeoman-generator": "registry:dt/yeoman-generator#0.0.0+20160623193335"
+  },
+  "dependencies": {
+    "popsicle": "npm:popsicle"
+  }
+}
