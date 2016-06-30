@@ -27,4 +27,16 @@ export class ResourceList {
       console.warn("Unknown lookup:" + url);
     }
   }
+
+  getAllDependentResources(): Entity[] {
+    let entities = new Array<Entity>();
+    for (let entityKey in this.entityDictionary) {
+      let entity = this.entityDictionary[entityKey];
+      if (!entity.isResource) {
+        entities.push(entity);
+      }
+    }
+
+    return entities;
+  }
 }

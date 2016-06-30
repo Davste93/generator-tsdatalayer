@@ -19,7 +19,7 @@ export class EntityCrawler {
     this.resourceList = new ResourceList();
   }
 
-  crawlFromRoot(profileUrl: string): Promise<any> {
+  crawlFromRoot(profileUrl: string): Promise<Entity[]> {
     return request({
         method : 'GET',
         url : profileUrl,
@@ -44,12 +44,13 @@ export class EntityCrawler {
           // First, we need to add each entity to the resource map.
           this.resourceList.addRange(entities); // This allows easy lookups to each entity.
 
-          for (let entity of entities) {
+          let allEntities = entities.concat(this.resourceList.getAllDependentResources());
+
+          for (let entity of allEntities) {
             TypeHandler.resolvePropertyTypes(entity, this.resourceList);
           }
 
-          debugger;
-          let serializedEntities = this.entitiesToSerializableOM(entities);
+          let serializedEntities = this.entitiesToSerializableOM(allEntities);
            return serializedEntities;
         });
       });

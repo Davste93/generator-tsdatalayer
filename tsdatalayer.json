@@ -1,5 +1,5 @@
 {
-  "headers" : {
-    "Authorization" : "Basic dGVzdDp0ZXN0"
-  }
+	"objectModelSource": "HATEOAS",
+	"endpointUrl": "https://api.fundsrouter.com/profile",
+	"dest": "src/app/generated"
 }

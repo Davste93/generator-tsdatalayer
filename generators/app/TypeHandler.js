@@ -22,7 +22,7 @@ var TypeHandler = (function () {
             entity.name = convertibleTypes[entity.name];
             entity.isResource = false;
             entity.url = null;
-            return true;
+            return true; //sucessfully converted
         }
         if (ModelUtils_1.ModelUtils.isNativeType(entity.name)) {
             entity.isResource = false;
@@ -32,10 +32,13 @@ var TypeHandler = (function () {
         return false;
     };
     ;
+    // Converts property and handles all type-related stuff
     TypeHandler.parseProperty = function (prop, hal, entityName, isDefinition) {
         var property = new Property_1.Property();
         property.name = entityName;
+        // property.type = prop.type;
         property.type = new Entity_1.Entity();
+        // Check for dates:
         if (this.dateTypeHandler(prop, property.type)) {
             return property;
         }
@@ -43,14 +46,17 @@ var TypeHandler = (function () {
             return property;
         }
         if (this.isNativeOrConvertible(prop.type)) {
+            // Check if complex entityname was a convertible type.
             property.type.name = prop.type;
             property.type.url = prop.name;
             this.tryConvertNativeType(property.type);
             return property;
         }
+        // convert / check for resource, and return the converted property.
         return property;
     };
     ;
+    // Supply a property and it will return modified property with dates ready for consumption
     TypeHandler.dateTypeHandler = function (prop, propType) {
         var cpropRef = prop.$ref;
         if (prop.type === 'string' && cpropRef && ~cpropRef.indexOf('localDateTime')) {
@@ -71,8 +77,12 @@ var TypeHandler = (function () {
     };
     TypeHandler.typeHandler = function (prop, hal, entityName, propType) {
         if (prop.type === 'string' && prop.format === 'uri') {
+            // This is a resource. Let's find it:
             var propertyHal = this.findDeep(hal, 'name', entityName);
             var propertyUrl = propertyHal.rt.split('#')[0];
+            // Since we don't have all the entities in the ResourceMap at this point,
+            // Create an empty entity with just the URL. It should be enough to attach
+            // the real entity later.
             propType.isResource = true;
             propType.url = propertyUrl;
             return true;

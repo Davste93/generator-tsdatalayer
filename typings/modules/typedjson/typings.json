@@ -1,0 +1,8 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/typedjson/js/index.d.ts",
+    "raw": "npm:typedjson/js/index.d.ts",
+    "typings": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/typedjson/js/index.d.ts"
+  }
+}

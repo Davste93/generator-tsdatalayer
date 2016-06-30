@@ -22,19 +22,19 @@ export class ModelUtils {
 
 
 
-  // getDependencies = function(model: Entity){
-  //   let deps = [];
-  //   _.each(model.properties, p => {
-  //       if (!this.isNativeType(p.type) ) {
-  //         // No duplicates by "Type" key
-  //           if (_.isUndefined(_.findWhere(deps, {type : p.type}))) {
-  //               deps.push(p);
-  //           }
-  //       }
-  //   });
-  //
-  //   return deps;
-  // };
+  public static getDependencies(model: Entity): Array<string> {
+    let deps = new Array<string>();
+    _.each(model.properties, p => {
+        if (!this.isNativeType(p.type.name) ) {
+          // No duplicates by "Type" key
+            if (_.isUndefined(_.findWhere(deps, {type : p.type}))) {
+                deps.push(p.type.name);
+            }
+        }
+    });
+
+    return deps;
+  };
   //
 
   // getResourceDeps = function(model: Entity){

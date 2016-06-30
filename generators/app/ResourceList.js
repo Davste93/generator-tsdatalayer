@@ -24,6 +24,16 @@ var ResourceList = (function () {
             console.warn("Unknown lookup:" + url);
         }
     };
+    ResourceList.prototype.getAllDependentResources = function () {
+        var entities = new Array();
+        for (var entityKey in this.entityDictionary) {
+            var entity = this.entityDictionary[entityKey];
+            if (!entity.isResource) {
+                entities.push(entity);
+            }
+        }
+        return entities;
+    };
     return ResourceList;
 }());
 exports.ResourceList = ResourceList;

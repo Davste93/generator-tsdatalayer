@@ -1,0 +1,249 @@
+[
+	{
+		"properties": [
+			{
+				"name": "fixed",
+				"type": {
+					"name": "apiMoney"
+				}
+			}
+		],
+		"url": "https://api.fundsrouter.com/profile/fees",
+		"name": "apiFee",
+		"isResource": true
+	},
+	{
+		"properties": [
+			{
+				"name": "amount",
+				"type": {
+					"name": "apiMoney"
+				}
+			},
+			{
+				"name": "description",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "runningBalance",
+				"type": {
+					"name": "number",
+					"isResource": false
+				}
+			},
+			{
+				"name": "account",
+				"type": {
+					"name": "apiAccount",
+					"isResource": true
+				}
+			},
+			{
+				"name": "timestamp",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			}
+		],
+		"url": "https://api.fundsrouter.com/profile/accountentries",
+		"name": "apiAccountEntry",
+		"isResource": true
+	},
+	{
+		"properties": [
+			{
+				"name": "state",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "createdOn",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "accountEntries",
+				"type": {
+					"name": "apiAccountEntry",
+					"isResource": true
+				}
+			}
+		],
+		"url": "https://api.fundsrouter.com/profile/accounttransactions",
+		"name": "apiAccountTransaction",
+		"isResource": true
+	},
+	{
+		"properties": [
+			{
+				"name": "allow",
+				"type": {
+					"name": "apiLegalEntity",
+					"isResource": true
+				}
+			},
+			{
+				"name": "accountRule",
+				"type": {
+					"name": "apiAccountRule",
+					"isResource": true
+				}
+			},
+			{
+				"name": "onBehalfOf",
+				"type": {
+					"name": "apiLegalEntity",
+					"isResource": true
+				}
+			},
+			{
+				"name": "account",
+				"type": {
+					"name": "apiAccount",
+					"isResource": true
+				}
+			}
+		],
+		"url": "https://api.fundsrouter.com/profile/accountpermissions",
+		"name": "apiAccountPermission",
+		"isResource": true
+	},
+	{
+		"properties": [
+			{
+				"name": "allowedToTxOut",
+				"type": {
+					"name": "boolean",
+					"isResource": false
+				}
+			},
+			{
+				"name": "description",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "accountPermissions",
+				"type": {
+					"name": "apiAccountPermission",
+					"isResource": true
+				}
+			}
+		],
+		"url": "https://api.fundsrouter.com/profile/accountrules",
+		"name": "apiAccountRule",
+		"isResource": true
+	},
+	{
+		"properties": [
+			{
+				"name": "accounts",
+				"type": {
+					"name": "apiAccount",
+					"isResource": true
+				}
+			},
+			{
+				"name": "email",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			}
+		],
+		"url": "https://api.fundsrouter.com/profile/legalentities",
+		"name": "apiLegalEntity",
+		"isResource": true
+	},
+	{
+		"properties": [
+			{
+				"name": "balance",
+				"type": {
+					"name": "apiMoney"
+				}
+			},
+			{
+				"name": "currency",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "accountNumber",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "createdOn",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "friendlyName",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "accountEntries",
+				"type": {
+					"name": "apiAccountEntry",
+					"isResource": true
+				}
+			},
+			{
+				"name": "accountPermissions",
+				"type": {
+					"name": "apiAccountPermission",
+					"isResource": true
+				}
+			}
+		],
+		"url": "https://api.fundsrouter.com/profile/accounts",
+		"name": "apiAccount",
+		"isResource": true
+	},
+	{
+		"properties": [],
+		"url": "bigDecimal",
+		"name": "number",
+		"isResource": false
+	},
+	{
+		"properties": [
+			{
+				"name": "currency",
+				"type": {
+					"name": "string",
+					"isResource": false
+				}
+			},
+			{
+				"name": "value",
+				"type": {
+					"name": "number",
+					"isResource": false
+				}
+			}
+		],
+		"url": "apiMoney",
+		"name": "apiMoney"
+	}
+]

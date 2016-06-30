@@ -31,12 +31,12 @@ var EntityCrawler = (function () {
             }
             return Promise.all(entityCrawlerPromises).then(function (entities) {
                 _this.resourceList.addRange(entities);
-                for (var _i = 0, entities_1 = entities; _i < entities_1.length; _i++) {
-                    var entity = entities_1[_i];
+                var allEntities = entities.concat(_this.resourceList.getAllDependentResources());
+                for (var _i = 0, allEntities_1 = allEntities; _i < allEntities_1.length; _i++) {
+                    var entity = allEntities_1[_i];
                     TypeHandler_1.TypeHandler.resolvePropertyTypes(entity, _this.resourceList);
                 }
-                debugger;
-                var serializedEntities = _this.entitiesToSerializableOM(entities);
+                var serializedEntities = _this.entitiesToSerializableOM(allEntities);
                 return serializedEntities;
             });
         });
