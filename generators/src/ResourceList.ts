@@ -28,6 +28,17 @@ export class ResourceList {
     }
   }
 
+  getByName(name: string): Entity {
+    for (let entityKey in this.entityDictionary) {
+      let entity = this.entityDictionary[entityKey];
+      if (entity.name === name) {
+        return entity;
+      }
+    }
+    return null;
+  }
+
+
   getAllDependentResources(): Entity[] {
     let entities = new Array<Entity>();
     for (let entityKey in this.entityDictionary) {

@@ -24,15 +24,6 @@ var ResourceList = (function () {
             console.warn("Unknown lookup:" + url);
         }
     };
-    ResourceList.prototype.getByName = function (name) {
-        for (var entityKey in this.entityDictionary) {
-            var entity = this.entityDictionary[entityKey];
-            if (entity.name === name) {
-                return entity;
-            }
-        }
-        return null;
-    };
     ResourceList.prototype.getAllDependentResources = function () {
         var entities = new Array();
         for (var entityKey in this.entityDictionary) {

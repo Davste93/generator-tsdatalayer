@@ -5,7 +5,6 @@ var Entity_1 = require('./Entity');
 var ResourceList_1 = require('./ResourceList');
 var AlpsEntityFactory_1 = require('./AlpsEntityFactory');
 var TypeHandler_1 = require('./TypeHandler');
-var OperationsCrawler_1 = require('./OperationsCrawler');
 var EntityCrawler = (function () {
     function EntityCrawler(requestConfiguration) {
         if (requestConfiguration === void 0) { requestConfiguration = {}; }
@@ -76,7 +75,6 @@ var EntityCrawler = (function () {
     };
     EntityCrawler.prototype.entitiesToSerializableOM = function (entities) {
         var serializableOMEntities = _.clone(entities);
-        var omEntities = OperationsCrawler_1.OperationsCrawler.convertEntitiesToOM(serializableOMEntities);
         // The point of this is to allow only up to the second level.
         for (var _i = 0, serializableOMEntities_1 = serializableOMEntities; _i < serializableOMEntities_1.length; _i++) {
             var entity = serializableOMEntities_1[_i];
@@ -88,7 +86,7 @@ var EntityCrawler = (function () {
                 property.type = type;
             }
         }
-        return omEntities;
+        return serializableOMEntities;
     };
     return EntityCrawler;
 }());

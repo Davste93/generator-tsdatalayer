@@ -4,6 +4,8 @@ import {Entity} from './Entity';
 import {ResourceList} from './ResourceList';
 import {AlpsEntityFactory} from './AlpsEntityFactory';
 import { TypeHandler } from './TypeHandler';
+import { OperationsCrawler } from './OperationsCrawler';
+import { ObjectModel } from './ObjectModel';
 
 export class EntityCrawler {
 
@@ -19,7 +21,7 @@ export class EntityCrawler {
     this.resourceList = new ResourceList();
   }
 
-  crawlFromRoot(profileUrl: string): Promise<Entity[]> {
+  crawlFromRoot(profileUrl: string): Promise<ObjectModel[]> {
     return request({
         method : 'GET',
         url : profileUrl,
@@ -51,7 +53,7 @@ export class EntityCrawler {
           }
 
           let serializedEntities = this.entitiesToSerializableOM(allEntities);
-           return serializedEntities;
+         return serializedEntities;
         });
       });
   }
@@ -83,13 +85,15 @@ export class EntityCrawler {
     ]).then( (values) => {
       let schema = values[0];
       let hal    = values[1];
+      debugger;
       return AlpsEntityFactory.makeEntity(schema, hal, entityUrl, this.resourceList, false);
     });
   }
 
-  entitiesToSerializableOM(entities: Entity[]) {
+  entitiesToSerializableOM(entities: Entity[]): ObjectModel[] {
     let serializableOMEntities = _.clone(entities);
 
+    let omEntities = OperationsCrawler.convertEntitiesToOM(serializableOMEntities);
     // The point of this is to allow only up to the second level.
     for (let entity of serializableOMEntities) {
       for (let property of entity.properties || []){
@@ -100,6 +104,7 @@ export class EntityCrawler {
       }
     }
 
-    return serializableOMEntities;
+
+    return omEntities;
   }
 }

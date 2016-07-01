@@ -9,11 +9,9 @@ var EntityCrawler_1 = require('./EntityCrawler');
 var ModelUtils_1 = require('./ModelUtils');
 var _ = require('underscore');
 var tsDataLayerGenerator = require('./generatorConfig');
-// JS imports
 var util = require('util');
 var path = require('path');
 var chalk = require('chalk');
-// let fs = require('fs');
 var TSDataLayerConfig = (function () {
     function TSDataLayerConfig() {
     }
@@ -27,7 +25,7 @@ var TSDataLayer = (function (_super) {
         this.option('update', {
             desc: 'testing'
         });
-        this.update = true; // TODO this.options['update'];
+        this.update = true;
     }
     TSDataLayer.prototype.prompting = function () {
         tsDataLayerGenerator.prompting(this);
@@ -44,10 +42,7 @@ var TSDataLayer = (function (_super) {
                 'Authorization': 'Basic dGVzdDp0ZXN0' }
         });
         if (this.props.objectModelSource === 'HATEOAS') {
-            // The profile crawler returns an object model from ALPS.
             crawler.crawlFromRoot(this.props.endpointUrl).then(function (entities) {
-                // If we've loaded the object model, save it to disk.
-                // Todo: Add this as a config.
                 _this.models = entities;
                 var outputPath = _this.destinationPath('last.objectModel.json');
                 _this.fs.write(outputPath, JSON.stringify(entities, null, '\t'));
@@ -56,7 +51,6 @@ var TSDataLayer = (function (_super) {
             });
         }
         else {
-            // TODO: check if it exists:
             var objectModel = this.fs.read(this.destinationPath(this.props.omJsonFile));
             this.models = JSON.parse(objectModel);
             done();
@@ -71,11 +65,6 @@ var TSDataLayer = (function (_super) {
         var serviceSpecDir = this.destinationPath(this.props.dest + '/spec/services/');
         var authDir = this.destinationPath(this.props.dest + '/Auth/');
         var responseParserDir = this.destinationPath(this.props.dest + '/ApiResponseParsers/');
-        // We have one service manager, we can write that straight away:
-        //  this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
-        //  this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
-        //  this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
-        // For each entity:
         for (var _i = 0, _a = this.models; _i < _a.length; _i++) {
             var model = _a[_i];
             this.model = model;

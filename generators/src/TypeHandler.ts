@@ -75,9 +75,11 @@ export class TypeHandler {
 
 
   public static resolvePropertyTypes(entity: Entity, resourceList: ResourceList) {
+    console.log(entity.name);
     for (let property of entity.properties) {
-      if (property.type.url) {
-        property.type = resourceList.get(property.type.url);
+      console.log('-' + property.type.name + " : " + property.type.url);
+      if (!ModelUtils.isNativeType(property.type.name) && property.type.url) {
+        let type = resourceList.get(property.type.url);
       };
     }
   }

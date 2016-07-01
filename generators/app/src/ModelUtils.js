@@ -22,7 +22,6 @@ var ModelUtils = (function () {
         var deps = new Array();
         _.each(model.properties, function (p) {
             if (!_this.isNativeType(p.type.name)) {
-                // No duplicates by "Type" key
                 if (_.isUndefined(_.findWhere(deps, { type: p.type }))) {
                     deps.push(p);
                 }

@@ -31,7 +31,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
   //handled out of the box by APIRepository (this is the overriden method).
   find(modelID : string) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.find %>'.replace('{{id}}', modelID),
+      '<%= model.operations.find %>'.replace('{{id}}', modelID),
       'GET',
       null
     );
@@ -39,7 +39,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
 
   findAll() : Promise<List<<%= model.name %>>> {
     return this.buildRequestAndParseAsModelList(
-      '<%= model.operations.crud.findAll %>',
+      '<%= model.operations.findAll %>',
       'GET',
       null
     );
@@ -48,7 +48,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
   //Finds all entities
   findAllWith(query : string) : Promise<List<<%= model.name %>>> {
       return this.buildRequestAndParseAsModelList(
-        '<%= model.operations.crud.findAll %>/' + query,
+        '<%= model.operations.findAll %>/' + query,
         'GET',
         null
       );
@@ -56,7 +56,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
 
   addItem(modelItem : <%= model.name %>) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.create %>',
+      '<%= model.operations.create %>',
       'POST',
       modelItem
     );
@@ -64,7 +64,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
 
   removeItem(modelID : string) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.delete %>'.replace('{{id}}', modelID),
+      '<%= model.operations.delete %>'.replace('{{id}}', modelID),
       'DELETE',
       null
     );
@@ -73,7 +73,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
 
   saveItem(modelItem : <%= model.name %>, modelId : string) : Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
-      '<%= model.operations.crud.update %>'.replace('{{id}}', modelId),
+      '<%= model.operations.update %>'.replace('{{id}}', modelId),
       'PUT',
       modelItem
     );

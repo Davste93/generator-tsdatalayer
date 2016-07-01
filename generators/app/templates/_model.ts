@@ -7,6 +7,6 @@ import {JsonObject, JsonMember} from "typedjson";
 export class <%= model.name %>  extends Model {
 <% model.properties.forEach(function(property){ -%>
     @JsonMember
-    <%=property.name-%>: <%-property.type.name-%>;
+    <%=property.name-%> : <%-property.type.name-%>;
 <% }) -%>
 }

@@ -1,7 +1,10 @@
 import { Base } from 'yeoman-generator';
 import { EntityCrawler } from './EntityCrawler';
 import { Entity } from './Entity';
+import { ObjectModel } from './ObjectModel';
 import { ModelUtils } from './ModelUtils';
+import { OperationsCrawler } from './OperationsCrawler';
+
 import * as _ from 'underscore';
 
 import * as tsDataLayerGenerator from './generatorConfig';
@@ -23,7 +26,7 @@ export class TSDataLayer extends Base {
   props: TSDataLayerConfig;
   configFilename: string = 'tsdatalayer.json';
   update: boolean;
-  models: Entity[];
+  models: ObjectModel[];
 
   constructor(args, options) {
     super(args, options);
@@ -31,7 +34,7 @@ export class TSDataLayer extends Base {
       desc : 'testing'
     });
 
-    this.update = true // TODO this.options['update'];
+    this.update = true; // TODO this.options['update'];
   }
 
   prompting(): void {
@@ -52,12 +55,12 @@ export class TSDataLayer extends Base {
 
     if (this.props.objectModelSource === 'HATEOAS') {
       // The profile crawler returns an object model from ALPS.
-      crawler.crawlFromRoot(this.props.endpointUrl).then(om => {
-        this.models = om;
+      crawler.crawlFromRoot(this.props.endpointUrl).then(entities => {
         // If we've loaded the object model, save it to disk.
         // Todo: Add this as a config.
+        this.models =  entities;
         let outputPath = this.destinationPath('last.objectModel.json');
-        this.fs.write(outputPath, JSON.stringify(om, null, '\t'));
+        this.fs.write(outputPath, JSON.stringify(entities, null, '\t'));
         this.log(`I've downloaded and processed the object model! It's going to be writen to ` + outputPath)
         done();
       });
@@ -91,7 +94,6 @@ export class TSDataLayer extends Base {
      let responseParserDir = this.destinationPath(this.props.dest + '/ApiResponseParsers/');
 
      // We have one service manager, we can write that straight away:
-     this.sourceRoot('./generators/src/templates');
     //  this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
     //  this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
     //  this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
@@ -103,39 +105,40 @@ export class TSDataLayer extends Base {
        debugger;
        if (!model.isResource) {
          for (let p of ModelUtils.getDependencies(model)) {
-           this.strImports += `import {${p}} from './${p}';\n`;
+
+           if (!ModelUtils.isNativeType(p.type.name)) {
+             this.strImports += `import {${p.type.name}} from './${p.type.name}';\n`;
+             this.template('_model.ts', modelDepDir + model.name + '.ts');
+           }
          }
+       } else {
+         _.each(ModelUtils.getDependencies(model), p => {
+            if (!p.type.isResource) {
+              if (!ModelUtils.isNativeType(p.type.name)) {
+                this.strImports += `import {${p}} from './dep/${p}';\n`;
+              }
+           } else {
+                this.strImports += `import {${p}} from './${p}';\n`;
+           }
+         });
 
-         this.template('_model.ts', modelDepDir + model.name + '.ts');
+         this.strImports = '';
+         let dependencies = ModelUtils.getDependencies(model);
+         _.each(dependencies, dep => {
+           this.strImports += `import {${dep.name}} from '../models/${dep.name}';\n`;
+         });
+
+         this.template('_modelDataRepositoryImpl.ts', dataDir + model.name + 'DataRepositoryImpl.ts');
+        //    this.template('_modelDataRepository.ts', dataDir + model.name + 'DataRepository.ts');
+         //
+        //    this.template('_service.spec.ts', serviceSpecDir + model.name + '.spec.ts');
+        //    this.template('_service.e2e.spec.ts', serviceSpecDir + model.name + '.e2e.spec.ts');
+         //
+         //
+        //    this.svcDeps = this.dependencies.concat(model.name);
+        //    this.template('_service.ts', serviceDir + model.name + 'Service.ts');
+        //  }
        }
-
-      //  else {
-      //    _.each(modelutils.getDependencies(model), p => {
-      //      if (p.isDepEntity) {
-      //        this.strImports += `import {${p.type}} from './dep/${p.type}';\n`;
-      //      } else {
-      //        this.strImports += `import {${p.type}} from './${p.type}';\n`;
-      //      }
-      //    });
-       //
-      //    this.template('_model.ts', modelDir + model.name + '.ts');
-       //
-      //    this.strImports = '';
-      //    this.dependencies = modelutils.getResourceDeps(model);
-      //    _.each(this.dependencies, mName => {
-      //      this.strImports += `import {${mName}} from '../models/${mName}';\n`;
-      //    });
-       //
-      //    this.template('_modelDataRepositoryImpl.ts', dataDir + model.name + 'DataRepositoryImpl.ts');
-      //    this.template('_modelDataRepository.ts', dataDir + model.name + 'DataRepository.ts');
-       //
-      //    this.template('_service.spec.ts', serviceSpecDir + model.name + '.spec.ts');
-      //    this.template('_service.e2e.spec.ts', serviceSpecDir + model.name + '.e2e.spec.ts');
-       //
-       //
-      //    this.svcDeps = this.dependencies.concat(model.name);
-      //    this.template('_service.ts', serviceDir + model.name + 'Service.ts');
-      //  }
      }
    }
 }

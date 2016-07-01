@@ -1,7 +1,7 @@
 {
   "resolution": "main",
   "tree": {
-    "src": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/popsicle/package.json",
+    "src": "/home/david/Documents/Code/generator-tsdatalayer/node_modules/popsicle/package.json",
     "raw": "npm:popsicle",
     "main": "dist/common.js",
     "browser": {
@@ -16,7 +16,7 @@
     "global": false,
     "dependencies": {
       "any-promise": {
-        "src": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/any-promise/package.json",
+        "src": "/home/david/Documents/Code/generator-tsdatalayer/node_modules/any-promise/package.json",
         "raw": "npm:any-promise",
         "main": "index.js",
         "browser": {
@@ -53,7 +53,7 @@
         "type": "typings"
       },
       "make-error-cause": {
-        "src": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/make-error-cause/package.json",
+        "src": "/home/david/Documents/Code/generator-tsdatalayer/node_modules/make-error-cause/package.json",
         "raw": "npm:make-error-cause",
         "main": "dist/index.js",
         "version": "1.1.1",
@@ -71,7 +71,7 @@
         "name": "make-error-cause"
       },
       "throwback": {
-        "src": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/throwback/package.json",
+        "src": "/home/david/Documents/Code/generator-tsdatalayer/node_modules/throwback/package.json",
         "raw": "npm:throwback",
         "main": "dist/index.js",
         "typings": "dist/index.d.ts",
@@ -79,7 +79,7 @@
         "global": false,
         "dependencies": {
           "any-promise": {
-            "src": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/any-promise/package.json",
+            "src": "/home/david/Documents/Code/generator-tsdatalayer/node_modules/any-promise/package.json",
             "raw": "npm:any-promise",
             "main": "index.js",
             "browser": {

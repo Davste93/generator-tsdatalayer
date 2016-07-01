@@ -1,7 +1,6 @@
 {
   "globalDependencies": {
     "core-js": "registry:dt/core-js#0.0.0+20160602141332",
-    "inversify-dts": "npm:inversify-dts/inversify/inversify.d.ts",
     "jasmine": "registry:dt/jasmine#2.2.0+20160621224255",
     "node": "registry:dt/node#6.0.0+20160621231320",
     "underscore": "registry:dt/underscore#1.7.0+20160622050840",
@@ -11,5 +10,11 @@
   "dependencies": {
     "popsicle": "npm:popsicle",
     "typedjson": "npm:typedjson/js/index.d.ts"
+  },
+  "globalDevDependencies": {
+    "underscore": "registry:dt/underscore#1.7.0+20160622050840"
+  },
+  "devDependencies": {
+    "popsicle": "npm:popsicle"
   }
 }

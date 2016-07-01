@@ -1,8 +1,0 @@
-{
-  "resolution": "main",
-  "tree": {
-    "src": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/inversify-dts/inversify/inversify.d.ts",
-    "raw": "npm:inversify-dts/inversify/inversify.d.ts",
-    "typings": "/home/dstellini/Documents/code/generator-tsdatalayer/node_modules/inversify-dts/inversify/inversify.d.ts"
-  }
-}

@@ -1,5 +1,6 @@
 import { Entity } from './Entity';
 import * as _ from 'underscore';
+import { Property } from './Property';
 
 let tense = new (require('tense'))();
 
@@ -22,19 +23,21 @@ export class ModelUtils {
 
 
 
-  public static getDependencies(model: Entity): Array<string> {
-    let deps = new Array<string>();
+  public static getDependencies(model: Entity): Array<Property> {
+    let deps = new Array<Property>();
     _.each(model.properties, p => {
         if (!this.isNativeType(p.type.name) ) {
           // No duplicates by "Type" key
             if (_.isUndefined(_.findWhere(deps, {type : p.type}))) {
-                deps.push(p.type.name);
+                deps.push(p);
             }
         }
     });
 
     return deps;
   };
+
+
   //
 
   // getResourceDeps = function(model: Entity){
