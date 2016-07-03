@@ -4,4 +4,3 @@ function __export(m) {
 }
 __export(require('./environment'));
 __export(require('./prompting'));
-__export(require('./writer'));

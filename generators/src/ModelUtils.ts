@@ -18,7 +18,11 @@ export class ModelUtils {
   }
 
   public static convertTitleToValidTypeName(title: string) {
-    return this.toCamelCase(tense.singularize(title));
+    let camelCaseResult = this.toCamelCase(tense.singularize(title));
+    if (camelCaseResult.length > 0) {
+      camelCaseResult = camelCaseResult.charAt(0).toUpperCase() + camelCaseResult.slice(1)
+    }
+    return camelCaseResult;
   }
 
 
@@ -28,9 +32,12 @@ export class ModelUtils {
     _.each(model.properties, p => {
         if (!this.isNativeType(p.type.name) ) {
           // No duplicates by "Type" key
-            if (_.isUndefined(_.findWhere(deps, {type : p.type}))) {
-                deps.push(p);
-            }
+
+          if (_.isUndefined(_.find(deps, dep => {
+           return  dep.type.name === p.type.name;
+         }))) {
+            deps.push(p);
+         }
         }
     });
 

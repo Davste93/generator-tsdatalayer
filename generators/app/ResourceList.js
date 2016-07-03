@@ -21,7 +21,7 @@ var ResourceList = (function () {
             return this.entityDictionary[url];
         }
         else {
-            console.warn("Unknown lookup:" + url);
+            console.warn('Unknown lookup:' + url);
         }
     };
     ResourceList.prototype.getByName = function (name) {

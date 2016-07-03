@@ -10,9 +10,7 @@
     "exclude": [
         "node_modules",
         "generators/src/old",
-        "generators/src/templates"
-    ],
-    "atom" : {
-      "compileOnSave" : true
-    }
+        "generators/src/templates",
+        "generators/app/templates"
+    ]
 }

@@ -1,35 +1,34 @@
-import {ApiRepository, List, Model, ApiRequestDecorator, Parser} from  "tsmvc";
-import {injectable, inject} from "inversify";
+import {ApiRepository, List, Model, ApiRequestDecorator, Parser} from  'tsmvc';
+import {injectable, inject} from 'inversify';
 
-//Current Import
-import {<%= model.name %>} from "../models/<%= model.name %>";
-import {<%= model.name %>DataRepository} from "./<%= model.name %>DataRepository";
+// Current Import
+import {<%= model.name %>} from '../models/<%= model.name %>';
+import {<%= model.name %>DataRepository} from './<%= model.name %>DataRepository';
 
-//Linked Resources
+// Linked Resources
 <%- strImports %>
 
 
 @injectable()
-export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model.name %>> implements <%= model.name %>DataRepository
-{
+export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model.name %>> implements <%= model.name %>DataRepository {
     constructor(
-      @inject('ApiRequestDecorator') requestDecorator : ApiRequestDecorator,
-      @inject('Parser') requestParser : Parser<<%= model.name %>>
+      @inject('ApiRequestDecorator') requestDecorator: ApiRequestDecorator,
+      @inject('Parser') requestParser: Parser<<%= model.name %>>
     ) {
       super();
       this.requestDecorator = requestDecorator;
       this.parser = requestParser;
     }
 
-  getModelType() : {new (): <%= model.name %>} {
+  getModelType(): {new (): <%= model.name %>} {
     return <%= model.name %>;
   }
 
 
-  //CRUD Operations - Only here for the sake of verbosity and flexibility.
-  //Any operations that have standard http://url/up/to/entity/{{id}} are
-  //handled out of the box by APIRepository (this is the overriden method).
-  find(modelID : string) : Promise<<%= model.name %>> {
+  // CRUD Operations - Only here for the sake of verbosity and flexibility.
+  // Any operations that have standard http:// url/up/to/entity/{{id}} are
+  // handled out of the box by APIRepository (this is the overriden method).
+  find(modelID: string): Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
       '<%= model.operations.find %>'.replace('{{id}}', modelID),
       'GET',
@@ -37,7 +36,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     );
   }
 
-  findAll() : Promise<List<<%= model.name %>>> {
+  findAll(): Promise<List<<%= model.name %>>> {
     return this.buildRequestAndParseAsModelList(
       '<%= model.operations.findAll %>',
       'GET',
@@ -45,8 +44,8 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     );
   }
 
-  //Finds all entities
-  findAllWith(query : string) : Promise<List<<%= model.name %>>> {
+  // Finds all entities
+  findAllWith(query: string): Promise<List<<%= model.name %>>> {
       return this.buildRequestAndParseAsModelList(
         '<%= model.operations.findAll %>/' + query,
         'GET',
@@ -54,7 +53,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
       );
     }
 
-  addItem(modelItem : <%= model.name %>) : Promise<<%= model.name %>> {
+  addItem(modelItem: <%= model.name %>): Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
       '<%= model.operations.create %>',
       'POST',
@@ -62,7 +61,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
     );
   }
 
-  removeItem(modelID : string) : Promise<<%= model.name %>> {
+  removeItem(modelID: string): Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
       '<%= model.operations.delete %>'.replace('{{id}}', modelID),
       'DELETE',
@@ -71,7 +70,7 @@ export class <%= model.name %>DataRepositoryImpl extends ApiRepository<<%= model
   }
 
 
-  saveItem(modelItem : <%= model.name %>, modelId : string) : Promise<<%= model.name %>> {
+  saveItem(modelItem: <%= model.name %>, modelId: string): Promise<<%= model.name %>> {
     return this.buildRequestAndParseAsModel(
       '<%= model.operations.update %>'.replace('{{id}}', modelId),
       'PUT',

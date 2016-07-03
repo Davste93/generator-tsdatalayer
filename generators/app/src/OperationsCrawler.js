@@ -25,7 +25,6 @@ var OperationsCrawler = (function () {
                 };
                 _.each(currentEntity.properties, function (p) {
                     if (p.type.isResource) {
-                        debugger;
                     }
                 });
             }

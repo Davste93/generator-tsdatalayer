@@ -5,7 +5,7 @@ import { Entity } from './Entity';
 import { ModelUtils } from './ModelUtils';
 
 export class OperationsCrawler {
-//This method will need to generate something similar to the following on each model:
+// This method will need to generate something similar to the following on each model:
 /* "model": "user",
  "operations": {
     crud : {
@@ -32,7 +32,6 @@ export class OperationsCrawler {
 // Call only after all the schema has been populated
 
 public static convertEntitiesToOM(entities: Array<Entity>): ObjectModel[] {
-debugger;
   let objectModelList = new Array<ObjectModel>();
 _.each(entities, currentEntity => {
     let url = currentEntity.url.replace('/profile/', '/'); // Requests are made to same url minus /profile/
@@ -56,8 +55,6 @@ _.each(entities, currentEntity => {
       //   //2. Get custom calls:
         _.each(currentEntity.properties, p => {
               if (p.type.isResource) {
-
-                debugger;
                 // var urlData = app.getFromResourceMap(p.name.toLowerCase());
                 //   if (!_.isUndefined(urlData)) {
                 //

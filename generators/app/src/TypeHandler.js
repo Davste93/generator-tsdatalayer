@@ -64,11 +64,9 @@ var TypeHandler = (function () {
         console.log(entity.name);
         for (var _i = 0, _a = entity.properties; _i < _a.length; _i++) {
             var property = _a[_i];
-            console.log('-' + property.type.name + " : " + property.type.url);
-            if (!ModelUtils_1.ModelUtils.isNativeType(property.type.name) && property.type.url) {
-                var type = resourceList.get(property.type.url);
+            if (property.type.url) {
+                property.type = resourceList.get(property.type.url);
             }
-            ;
         }
     };
     TypeHandler.typeHandler = function (prop, hal, entityName, propType) {

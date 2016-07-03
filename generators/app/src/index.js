@@ -73,10 +73,10 @@ var TSDataLayer = (function (_super) {
             if (!model.isResource) {
                 for (var _b = 0, _c = ModelUtils_1.ModelUtils.getDependencies(model); _b < _c.length; _b++) {
                     var p = _c[_b];
-                    if (!ModelUtils_1.ModelUtils.isNativeType(p.type.name)) {
-                        this.strImports += "import {" + p.type.name + "} from './" + p.type.name + "';\n";
-                        this.template('_model.ts', modelDepDir + model.name + '.ts');
-                    }
+                    this.strImports += "import {" + p.type.name + "} from './" + p.type.name + "';\n";
+                }
+                if (!ModelUtils_1.ModelUtils.isNativeType(model.name)) {
+                    this.template('_model.ts', modelDepDir + model.name + '.ts');
                 }
             }
             else {

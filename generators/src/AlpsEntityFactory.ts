@@ -4,6 +4,9 @@ import {AlpsPropertyFactory} from './AlpsPropertyFactory';
 import { ResourceList } from './ResourceList';
 import { TypeHandler } from './TypeHandler';
 
+// let tense = new (require('tense'))();
+
+
 export class AlpsEntityFactory {
 
   // Creates an entity. Any non complex dependent types are added to the resource list.

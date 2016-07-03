@@ -8,6 +8,7 @@ import { OperationsCrawler } from './OperationsCrawler';
 import * as _ from 'underscore';
 
 import * as tsDataLayerGenerator from './generatorConfig';
+import { GeneratorWriter } from './generatorConfig';
 
 // JS imports
 let util = require('util');
@@ -86,7 +87,7 @@ export class TSDataLayer extends Base {
    strImports: string;
    writing() {
      let modelDir = this.destinationPath(this.props.dest + '/models/');
-     let modelDepDir = this.destinationPath(this.props.dest + '/models/dep/');
+     // let modelDepDir = this.destinationPath(this.props.dest + '/models/dep/');
      let dataDir = this.destinationPath(this.props.dest + '/data/');
      let serviceDir = this.destinationPath(this.props.dest + '/services/');
      let serviceSpecDir = this.destinationPath(this.props.dest + '/spec/services/');
@@ -94,42 +95,19 @@ export class TSDataLayer extends Base {
      let responseParserDir = this.destinationPath(this.props.dest + '/ApiResponseParsers/');
 
      // We have one service manager, we can write that straight away:
-    //  this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
-    //  this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
-    //  this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
+      this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
+      this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
+      this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
 
      // For each entity:
      for (let model of this.models) {
        this.model = model;
-       this.strImports = '';
-       debugger;
-       if (!model.isResource) {
-         for (let p of ModelUtils.getDependencies(model)) {
 
-           if (!ModelUtils.isNativeType(p.type.name)) {
-             this.strImports += `import {${p.type.name}} from './${p.type.name}';\n`;
-             this.template('_model.ts', modelDepDir + model.name + '.ts');
-           }
-         }
-       } else {
-         _.each(ModelUtils.getDependencies(model), p => {
-            if (!p.type.isResource) {
-              if (!ModelUtils.isNativeType(p.type.name)) {
-                this.strImports += `import {${p}} from './dep/${p}';\n`;
-              }
-           } else {
-                this.strImports += `import {${p}} from './${p}';\n`;
-           }
-         });
+       // Write the model
+       GeneratorWriter.writeModel(model, this, modelDir);
+       GeneratorWriter.writeDataLayer(model, this, dataDir);
 
-         this.strImports = '';
-         let dependencies = ModelUtils.getDependencies(model);
-         _.each(dependencies, dep => {
-           this.strImports += `import {${dep.name}} from '../models/${dep.name}';\n`;
-         });
 
-         this.template('_modelDataRepositoryImpl.ts', dataDir + model.name + 'DataRepositoryImpl.ts');
-        //    this.template('_modelDataRepository.ts', dataDir + model.name + 'DataRepository.ts');
          //
         //    this.template('_service.spec.ts', serviceSpecDir + model.name + '.spec.ts');
         //    this.template('_service.e2e.spec.ts', serviceSpecDir + model.name + '.e2e.spec.ts');
@@ -138,8 +116,11 @@ export class TSDataLayer extends Base {
         //    this.svcDeps = this.dependencies.concat(model.name);
         //    this.template('_service.ts', serviceDir + model.name + 'Service.ts');
         //  }
+
+        // If it's not a native type, write it.
+
        }
-     }
+
    }
 }
 

@@ -66,7 +66,6 @@ var EntityCrawler = (function () {
         ]).then(function (values) {
             var schema = values[0];
             var hal = values[1];
-            debugger;
             return AlpsEntityFactory_1.AlpsEntityFactory.makeEntity(schema, hal, entityUrl, _this.resourceList, false);
         });
     };

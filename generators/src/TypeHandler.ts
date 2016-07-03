@@ -22,7 +22,7 @@ export class TypeHandler {
         entity.name = convertibleTypes[entity.name];
         entity.isResource = false;
         entity.url = null;
-        return true; //sucessfully converted
+        return true; // sucessfully converted
       }
 
       if (ModelUtils.isNativeType(entity.name)) {
@@ -77,10 +77,11 @@ export class TypeHandler {
   public static resolvePropertyTypes(entity: Entity, resourceList: ResourceList) {
     console.log(entity.name);
     for (let property of entity.properties) {
-      console.log('-' + property.type.name + " : " + property.type.url);
-      if (!ModelUtils.isNativeType(property.type.name) && property.type.url) {
-        let type = resourceList.get(property.type.url);
-      };
+      if (property.type.url) {// && ModelUtils.isNativeType(resourceList.get(property.type.url).name)) {
+      //   let type = resourceList.get(property.type.url);
+      // } else {
+        property.type = resourceList.get(property.type.url);
+       }
     }
   }
 

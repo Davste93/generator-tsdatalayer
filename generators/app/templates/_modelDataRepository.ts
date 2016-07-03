@@ -1,9 +1,9 @@
-import {DataRepository, List} from "tsmvc";
+import {DataRepository, List} from 'tsmvc';
 
-//Current Import
-import {<%= model.name %>} from "../models/<%= model.name %>";
+// Current Import
+import {<%= model.name %>} from '../models/<%= model.name %>';
 
-//Linked Resources
+// Linked Resources
 <%- strImports %>
 
 export interface <%= model.name %>DataRepository extends DataRepository<<%= model.name %>> {

@@ -6,14 +6,11 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 var yeoman_generator_1 = require('yeoman-generator');
 var EntityCrawler_1 = require('./EntityCrawler');
-var ModelUtils_1 = require('./ModelUtils');
-var _ = require('underscore');
 var tsDataLayerGenerator = require('./generatorConfig');
-// JS imports
+var generatorConfig_1 = require('./generatorConfig');
 var util = require('util');
 var path = require('path');
 var chalk = require('chalk');
-// let fs = require('fs');
 var TSDataLayerConfig = (function () {
     function TSDataLayerConfig() {
     }
@@ -27,7 +24,7 @@ var TSDataLayer = (function (_super) {
         this.option('update', {
             desc: 'testing'
         });
-        this.update = true; // TODO this.options['update'];
+        this.update = true;
     }
     TSDataLayer.prototype.prompting = function () {
         tsDataLayerGenerator.prompting(this);
@@ -44,10 +41,7 @@ var TSDataLayer = (function (_super) {
                 'Authorization': 'Basic dGVzdDp0ZXN0' }
         });
         if (this.props.objectModelSource === 'HATEOAS') {
-            // The profile crawler returns an object model from ALPS.
             crawler.crawlFromRoot(this.props.endpointUrl).then(function (entities) {
-                // If we've loaded the object model, save it to disk.
-                // Todo: Add this as a config.
                 _this.models = entities;
                 var outputPath = _this.destinationPath('last.objectModel.json');
                 _this.fs.write(outputPath, JSON.stringify(entities, null, '\t'));
@@ -56,58 +50,26 @@ var TSDataLayer = (function (_super) {
             });
         }
         else {
-            // TODO: check if it exists:
             var objectModel = this.fs.read(this.destinationPath(this.props.omJsonFile));
             this.models = JSON.parse(objectModel);
             done();
         }
     };
     TSDataLayer.prototype.writing = function () {
-        var _this = this;
         var modelDir = this.destinationPath(this.props.dest + '/models/');
-        var modelDepDir = this.destinationPath(this.props.dest + '/models/dep/');
         var dataDir = this.destinationPath(this.props.dest + '/data/');
         var serviceDir = this.destinationPath(this.props.dest + '/services/');
         var serviceSpecDir = this.destinationPath(this.props.dest + '/spec/services/');
         var authDir = this.destinationPath(this.props.dest + '/Auth/');
         var responseParserDir = this.destinationPath(this.props.dest + '/ApiResponseParsers/');
-        // We have one service manager, we can write that straight away:
-        //  this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
-        //  this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
-        //  this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
-        // For each entity:
+        this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
+        this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
+        this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
         for (var _i = 0, _a = this.models; _i < _a.length; _i++) {
             var model = _a[_i];
             this.model = model;
-            this.strImports = '';
-            debugger;
-            if (!model.isResource) {
-                for (var _b = 0, _c = ModelUtils_1.ModelUtils.getDependencies(model); _b < _c.length; _b++) {
-                    var p = _c[_b];
-                    if (!ModelUtils_1.ModelUtils.isNativeType(p.type.name)) {
-                        this.strImports += "import {" + p.type.name + "} from './" + p.type.name + "';\n";
-                        this.template('_model.ts', modelDepDir + model.name + '.ts');
-                    }
-                }
-            }
-            else {
-                _.each(ModelUtils_1.ModelUtils.getDependencies(model), function (p) {
-                    if (!p.type.isResource) {
-                        if (!ModelUtils_1.ModelUtils.isNativeType(p.type.name)) {
-                            _this.strImports += "import {" + p + "} from './dep/" + p + "';\n";
-                        }
-                    }
-                    else {
-                        _this.strImports += "import {" + p + "} from './" + p + "';\n";
-                    }
-                });
-                this.strImports = '';
-                var dependencies = ModelUtils_1.ModelUtils.getDependencies(model);
-                _.each(dependencies, function (dep) {
-                    _this.strImports += "import {" + dep.name + "} from '../models/" + dep.name + "';\n";
-                });
-                this.template('_modelDataRepositoryImpl.ts', dataDir + model.name + 'DataRepositoryImpl.ts');
-            }
+            generatorConfig_1.GeneratorWriter.writeModel(model, this, modelDir);
+            generatorConfig_1.GeneratorWriter.writeDataLayer(model, this, dataDir);
         }
     };
     return TSDataLayer;

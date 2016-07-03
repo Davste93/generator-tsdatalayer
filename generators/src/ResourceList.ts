@@ -24,7 +24,7 @@ export class ResourceList {
     if (!_.isUndefined(this.entityDictionary[url])) {
       return this.entityDictionary[url];
     } else {
-      console.warn("Unknown lookup:" + url);
+      console.warn('Unknown lookup:' + url);
     }
   }
 

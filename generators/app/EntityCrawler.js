@@ -31,16 +31,14 @@ var EntityCrawler = (function () {
                 }
             }
             return Promise.all(entityCrawlerPromises).then(function (entities) {
-                // We now have a list of entities! However we still have work to do,
-                // the entity list needs to be converted to an object model.
-                // First, we need to add each entity to the resource map.
-                _this.resourceList.addRange(entities); // This allows easy lookups to each entity.
+                _this.resourceList.addRange(entities);
                 var allEntities = entities.concat(_this.resourceList.getAllDependentResources());
                 for (var _i = 0, allEntities_1 = allEntities; _i < allEntities_1.length; _i++) {
                     var entity = allEntities_1[_i];
                     TypeHandler_1.TypeHandler.resolvePropertyTypes(entity, _this.resourceList);
                 }
                 var serializedEntities = _this.entitiesToSerializableOM(allEntities);
+                debugger;
                 return serializedEntities;
             });
         });
@@ -50,7 +48,6 @@ var EntityCrawler = (function () {
         var schema = {};
         var hal = {};
         return Promise.all([
-            // Schema request
             popsicle_1.request({
                 method: 'GET',
                 url: entityUrl,
@@ -59,7 +56,6 @@ var EntityCrawler = (function () {
             }).then(function (response) {
                 return response.body;
             }),
-            // HAL request
             popsicle_1.request({
                 method: 'GET',
                 url: entityUrl,
@@ -77,7 +73,6 @@ var EntityCrawler = (function () {
     EntityCrawler.prototype.entitiesToSerializableOM = function (entities) {
         var serializableOMEntities = _.clone(entities);
         var omEntities = OperationsCrawler_1.OperationsCrawler.convertEntitiesToOM(serializableOMEntities);
-        // The point of this is to allow only up to the second level.
         for (var _i = 0, serializableOMEntities_1 = serializableOMEntities; _i < serializableOMEntities_1.length; _i++) {
             var entity = serializableOMEntities_1[_i];
             for (var _a = 0, _b = entity.properties || []; _a < _b.length; _a++) {

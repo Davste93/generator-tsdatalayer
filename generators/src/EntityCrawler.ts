@@ -53,6 +53,7 @@ export class EntityCrawler {
           }
 
           let serializedEntities = this.entitiesToSerializableOM(allEntities);
+          debugger;
          return serializedEntities;
         });
       });
@@ -85,7 +86,6 @@ export class EntityCrawler {
     ]).then( (values) => {
       let schema = values[0];
       let hal    = values[1];
-      debugger;
       return AlpsEntityFactory.makeEntity(schema, hal, entityUrl, this.resourceList, false);
     });
   }

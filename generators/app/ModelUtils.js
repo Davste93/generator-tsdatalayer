@@ -15,15 +15,20 @@ var ModelUtils = (function () {
         }).replace(/\s+/g, '');
     };
     ModelUtils.convertTitleToValidTypeName = function (title) {
-        return this.toCamelCase(tense.singularize(title));
+        var camelCaseResult = this.toCamelCase(tense.singularize(title));
+        if (camelCaseResult.length > 0) {
+            camelCaseResult = camelCaseResult.charAt(0).toUpperCase() + camelCaseResult.slice(1);
+        }
+        return camelCaseResult;
     };
     ModelUtils.getDependencies = function (model) {
         var _this = this;
         var deps = new Array();
         _.each(model.properties, function (p) {
             if (!_this.isNativeType(p.type.name)) {
-                // No duplicates by "Type" key
-                if (_.isUndefined(_.findWhere(deps, { type: p.type }))) {
+                if (_.isUndefined(_.find(deps, function (dep) {
+                    return dep.type.name === p.type.name;
+                }))) {
                     deps.push(p);
                 }
             }

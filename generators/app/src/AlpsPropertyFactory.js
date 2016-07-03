@@ -1,6 +1,5 @@
 "use strict";
 var TypeHandler_1 = require('./TypeHandler');
-var tense = new (require('tense'))();
 var AlpsPropertyFactory = (function () {
     function AlpsPropertyFactory() {
     }
