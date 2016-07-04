@@ -24,7 +24,7 @@ var TSDataLayer = (function (_super) {
         this.option('update', {
             desc: 'testing'
         });
-        this.update = true;
+        this.update = false;
     }
     TSDataLayer.prototype.prompting = function () {
         tsDataLayerGenerator.prompting(this);

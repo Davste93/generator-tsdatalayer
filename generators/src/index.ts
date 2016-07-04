@@ -35,7 +35,7 @@ export class TSDataLayer extends Base {
       desc : 'testing'
     });
 
-    this.update = true; // TODO this.options['update'];
+    this.update = false; // TODO this.options['update'];
   }
 
   prompting(): void {
