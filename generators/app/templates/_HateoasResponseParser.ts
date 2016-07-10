@@ -1,7 +1,7 @@
 import {Model, List, Parser} from 'tsmvc';
 import {injectable} from 'inversify';
 import {TypedJSON} from 'typedjson';
-
+import * as _ from 'underscore';
 
 @injectable()
 export class HateoasResponseParser<T> implements Parser<T> {
@@ -9,9 +9,22 @@ export class HateoasResponseParser<T> implements Parser<T> {
     const newObj = new objType();
     const relationships = objType['relationships'] || {};
 
-    json = JSON.stringify(json); // parser is expecting a string
+    let jsonStr = JSON.stringify(json); // parser is expecting a string
 
-    return TypedJSON.parse<T>(json, objType);;
+    let parsedObject: T = TypedJSON.parse<T>(jsonStr, objType);
+    let properties = objType.prototype.__typedJsonJsonObjectMetadataInformation__._dataMembers;
+
+    Object.keys(properties).forEach( prop => {
+      let p = <any> properties[prop];
+      if (p.type.name === 'Url') {
+        try {
+          // Add links
+          parsedObject[p.key] = json._links[p.key].href;
+        } catch (exception) {}
+      }
+    });
+
+    return parsedObject;
 }
 
 ParseList(objType: { new(): T; }, jsonString: string): List<T>{

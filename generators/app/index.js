@@ -24,7 +24,7 @@ var TSDataLayer = (function (_super) {
         this.option('update', {
             desc: 'testing'
         });
-        this.update = false;
+        this.update = true;
     }
     TSDataLayer.prototype.prompting = function () {
         tsDataLayerGenerator.prompting(this);
@@ -62,14 +62,15 @@ var TSDataLayer = (function (_super) {
         var serviceSpecDir = this.destinationPath(this.props.dest + '/spec/services/');
         var authDir = this.destinationPath(this.props.dest + '/Auth/');
         var responseParserDir = this.destinationPath(this.props.dest + '/ApiResponseParsers/');
-        this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
         this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
         this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
+        generatorConfig_1.GeneratorWriter.writeServiceManager(this.models, this, serviceDir);
         for (var _i = 0, _a = this.models; _i < _a.length; _i++) {
             var model = _a[_i];
             this.model = model;
             generatorConfig_1.GeneratorWriter.writeModel(model, this, modelDir);
             generatorConfig_1.GeneratorWriter.writeDataLayer(model, this, dataDir);
+            generatorConfig_1.GeneratorWriter.writeService(model, this, serviceDir);
         }
     };
     return TSDataLayer;

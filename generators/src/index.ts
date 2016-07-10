@@ -28,6 +28,8 @@ export class TSDataLayer extends Base {
   configFilename: string = 'tsdatalayer.json';
   update: boolean;
   models: ObjectModel[];
+  svcDeps: any;
+  svcMgrDeps: any;
 
   constructor(args, options) {
     super(args, options);
@@ -35,7 +37,7 @@ export class TSDataLayer extends Base {
       desc : 'testing'
     });
 
-    this.update = false; // TODO this.options['update'];
+    this.update = true; // TODO this.options['update'];
   }
 
   prompting(): void {
@@ -94,19 +96,21 @@ export class TSDataLayer extends Base {
      let authDir = this.destinationPath(this.props.dest + '/Auth/');
      let responseParserDir = this.destinationPath(this.props.dest + '/ApiResponseParsers/');
 
+     this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
+     this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
+
      // We have one service manager, we can write that straight away:
-      this.template('_serviceManager.ts', serviceDir + 'serviceManager.ts');
-      this.template('_BasicAuth.ts', authDir + 'BasicAuth.ts');
-      this.template('_HateoasResponseParser.ts', responseParserDir + 'HateoasResponseParser.ts');
+     GeneratorWriter.writeServiceManager(this.models, this, serviceDir);
 
      // For each entity:
      for (let model of this.models) {
        this.model = model;
 
+
        // Write the model
        GeneratorWriter.writeModel(model, this, modelDir);
        GeneratorWriter.writeDataLayer(model, this, dataDir);
-
+       GeneratorWriter.writeService(model, this, serviceDir);
 
          //
         //    this.template('_service.spec.ts', serviceSpecDir + model.name + '.spec.ts');

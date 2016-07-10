@@ -1,37 +1,39 @@
 import 'reflect-metadata';
-import {Kernel, IKernel, IRequest} from 'inversify';
+import {Kernel} from 'inversify';
+import * as inversify from 'inversify';
+
 import {BasicAuthDecorator} from '../Auth/BasicAuth';
 import {ApiRequestDecorator, Parser} from 'tsmvc';
 
-<%- models.map(d => { if (!d.isDepEntity) return `import {${d.name}DataRepository} from '../data/${d.name}DataRepository';
+<%- svcMgrDeps.map(d => { return `import {${d.name}DataRepository} from '../data/${d.name}DataRepository';
 import {${d.name}DataRepositoryImpl} from '../data/${d.name}DataRepositoryImpl';
 import {${d.name}Service} from './${d.name}Service';\n`} ).join(''); %>
 
 import {HateoasResponseParser} from '../ApiResponseParsers/HateoasResponseParser.ts'; // TODO: REMOVE!
 
 
-var kernel: IKernel = null;
+let kernel: inversify.interfaces.Kernel = null;
 
 export class ServiceManager {
-<%- models.map(d => {if (!d.isDepEntity)
+<%- svcMgrDeps.map(d => {
     return `\tpublic static ${d.name}Service: ${d.name}Service;\n`
-  } ).join(''); -%>
+  }).join(''); -%>
 
 
   static bindDependentDataLayers() {
   // Data Layer bindings
-<%- models.map(d => { if (!d.isDepEntity)return `\t\tkernel.bind<${d.name}DataRepository>('${d.name}DataRepository').to(${d.name}DataRepositoryImpl);\n`} ).join(''); %>
+<%- svcMgrDeps.map(d => { return `\t\tkernel.bind<${d.name}DataRepository>('${d.name}DataRepository').to(${d.name}DataRepositoryImpl);\n`;} ).join(''); %>
   }
 
 
   static bindServices() {
   // Service bindings
-<%- models.map(d => { if (!d.isDepEntity)return `\t\tkernel.bind<${d.name}Service>('${d.name}Service').to(${d.name}Service);\n`} ).join(''); %>
+<%- svcMgrDeps.map(d => { return `\t\tkernel.bind<${d.name}Service>('${d.name}Service').to(${d.name}Service);\n`;} ).join(''); %>
   }
 
   static resolveServices() {
   // Service resolve
-<%- models.map(d => { if (!d.isDepEntity)return `\t\tServiceManager.${d.name}Service = kernel.get<${d.name}Service>('${d.name}Service');\n`} ).join(''); %>
+<%- svcMgrDeps.map(d => { return `\t\tServiceManager.${d.name}Service = kernel.get<${d.name}Service>('${d.name}Service');\n`;} ).join(''); %>
   }
 
   static bindDecorators() {
@@ -43,7 +45,7 @@ export class ServiceManager {
   // TODO: NEEDS OWN CONFIG! DECIDE ABOUT OVERWRITING, PROMPTS ETC..
   static bindParsers() {
 
-    kernel.bind<Parser<any>>('Parser').to(HateoasResponseParser).when((request: IRequest) => {
+    kernel.bind<Parser<any>>('Parser').to(HateoasResponseParser).when((request: inversify.interfaces.Request) => {
         return true; // return request.parentRequest.serviceIdentifier === 'DogDataRepository'; // TODO: temporary
     });
   }

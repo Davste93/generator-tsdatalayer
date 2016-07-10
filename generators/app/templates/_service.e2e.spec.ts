@@ -1,9 +1,9 @@
 import {Service} from 'tsmvc';
-import {ServiceManager} from '../../services/serviceManager';
-import {<%=model.name%>} from '../../models/<%=model.name%>';
-import {<%=model.name%>Service} from '../../services/<%=model.name%>Service';
+import {ServiceManager} from './serviceManager';
+import {<%=model.name%>} from '../models/<%=model.name%>';
+import {<%=model.name%>Service} from './<%=model.name%>Service';
 
-describe('<%=model.name%> E2E', () =>{
+describe('<%=model.name%> E2E', () => {
 
   var mockID: string = 'PDMgdHlwZXNjcmlwdA==';
   var service;
@@ -15,9 +15,9 @@ describe('<%=model.name%> E2E', () =>{
 
 
   describe('findAll', () => {
-    it('should keep type information', (done)=>{
+    it('should keep type information', (done)=> {
       service.findAll().then(<%=model.name%>List => {
-        var firstModel = <%=model.name%>List.first();
+        let firstModel = <%=model.name%>List.first();
 
         if (<%=model.name%>List.size() > 0) {
           expect(firstModel instanceof <%=model.name%>).toBeTruthy();

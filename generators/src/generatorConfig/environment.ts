@@ -12,7 +12,7 @@ export function installingDependencies(generator: TSDataLayer): void {
   // We will wait until it's stable before ugprading again. For this reason, we're locking the version.
 
   // Install typed dependencies.
-  generator.npmInstall(['inversify-dts', 'typedjson', 'typings'], { 'saveDev': true }, () => {
+  generator.npmInstall(['inversify-dts', 'typedjson', 'typings', 'jasmine', 'karma-jasmine', 'karma-chrome-launcher'], { 'saveDev': true }, () => {
     generator.spawnCommand('typings', ['install', '--save', '--global', 'npm:inversify-dts/inversify/inversify.d.ts']);
     generator.spawnCommand('typings', ['install', '--save', '--global', 'dt~node']);
     generator.spawnCommand('typings', ['install', '--save', '--global', 'dt~underscore']);
